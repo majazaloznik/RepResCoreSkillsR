@@ -10,7 +10,7 @@ output:
 \newpage
 # Introduction
 ## Blurb
-
+test
 This short course covers the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
 
 ## Key Topics
