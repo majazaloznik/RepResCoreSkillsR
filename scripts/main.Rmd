@@ -1,0 +1,156 @@
+---
+title: "improveR"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+
+---
+
+\newpage
+# Introduction
+## Blurb
+
+This short course covers the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
+
+## Key Topics
+
+* Reproducible Research
+* R Studio and project management
+* Importing and cleaning data
+* Good coding practices in R
+* standard control structures
+* Vectorisation and `apply` functions
+* Writing your own funcitons
+* Data manipulation with `dplyr`
+* Piping/chaining commands
+
+
+## Course information
+
+**Intended audience**	Anyone interested in quantitative data analysis using open source tools.
+
+**Prior knowledge** Knowledge of R (as covered in R: An introduction).
+
+**Resources**	Course handbook
+
+**Software** RStudio & 	R 3.1.2
+
+**Format**	Presentation with practical exercises
+
+**Where next?**	R:
+
+\newpage
+
+# Reproducible Research [presentation only]
+
+## Why?
+
+* Reinhart Rogoff Excel spreadsheet
+
+
+
+#  Set-up [presentation and practical]
+## RStudio
+## Project management
+## Literate programming
+
+### Consistent coding style e.g.:
+* Google style guide
+* Hadley Wickham’s style guide
+
+### Commenting 
+
+## \* Bonus section: github
+
+## PRACTICAL: new R project
+
+* personalise RStudio settings (don't save .Rdata etc)
+* new project folder with subfolders (data, figures, scripts)
+* new Rproject
+
+
+
+
+# Workflow
+## Importing data
+The original data should be read-only!! 
+
+* url
+* unzip
+* (colClasses)
+
+## Data tidying
+* gather/ spread
+
+## PRACTICAL: Import and clean some data
+
+* download and import data
+* do some `tidyr` stuff with it
+* think about commenting and file structure!
+
+# Efficient Coding
+
+## Standard control structures
+
+### Conditional execution
+
+### Looping
+
+### PRACTICAL
+
+## Vecotrisation  and`apply` family of funcitons
+
+
+
+### PRACTICAL 
+
+benchmarking apply vs for loops
+
+
+## Writing your own functions
+
+### objects, types, environments
+
+### passing arguments
+
+### PRACTICAL 
+
+
+## Data manipulation with `dplyr`
+
+### Subsetting
+
+* `filter`
+* `sample`
+* `slice`
+* `distinct`
+* `select`
+
+### Grouping
+
+* `group_b`
+
+### Summarizing
+
+### Making new variables
+
+* `mutate`
+
+### Piping/chaining daisies 
+
+### PRACTICAL 
+
+## FINAL PRACTICAL
+
+something along the lines of: 
+
+* Fun1: a function to be called in summarize or mutate (e.g. z-score)
+
+* Fun2: a chain (that calls Fun1), and then filters the table in some way
+
+* Fun3: a plotting function that takes the result of Fun2
+
+
+
+<!-- http://stcorp.nl/R_course/ -->
