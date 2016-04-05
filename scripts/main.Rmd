@@ -10,7 +10,7 @@ output:
 \newpage
 # Introduction
 ## Blurb
-test
+
 This short course covers the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
 
 ## Key Topics
@@ -99,7 +99,7 @@ The original data should be read-only!!
 
 ### PRACTICAL
 
-## Vecotrisation  and`apply` family of funcitons
+## Vecotrisation  and `apply` family of funcitons
 
 
 
@@ -129,9 +129,11 @@ benchmarking apply vs for loops
 
 ### Grouping
 
-* `group_b`
+* `group_by`
 
 ### Summarizing
+
+* with own function
 
 ### Making new variables
 
@@ -147,9 +149,9 @@ something along the lines of:
 
 * Fun1: a function to be called in summarize or mutate (e.g. z-score)
 
-* Fun2: a chain (that calls Fun1), and then filters the table in some way
+* Fun2: a chain (that calls Fun1), and then filters the table in some way e.g. subset for each country
 
-* Fun3: a plotting function that takes the result of Fun2
+* Fun3: a nice plotting function that takes the result of Fun2 and plots it, using `paste()` for titles etc..
 
 
 
