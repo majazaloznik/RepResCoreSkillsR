@@ -72,7 +72,7 @@ RStudio makes it extremely easy to divide your work into separate projects, allo
 ## Literate programming
 
 ### Consistent coding style e.g.:
-![title](../figures/code_quality_2.png)
+![title](../../figures/code_quality_2.png)
 
 * [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
 * [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
