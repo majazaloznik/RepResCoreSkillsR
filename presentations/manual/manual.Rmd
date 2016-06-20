@@ -1,0 +1,190 @@
+---
+title: "improveR"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+
+---
+
+\newpage
+# Introduction
+## Blurb
+
+This short course covers the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
+
+## Key Topics
+
+* Reproducible Research
+* R Studio and project management
+* Importing and cleaning data
+* Good coding practices in R
+* standard control structures
+* Vectorisation and `apply` functions
+* Writing your own funcitons
+* Data manipulation with `dplyr`
+* Piping/chaining commands
+
+
+## Course information
+
+**Intended audience**	Anyone interested in quantitative data analysis using open source tools.
+
+**Prior knowledge** Knowledge of R (as covered in R: An introduction).
+
+**Resources**	Course handbook
+
+**Software** RStudio & 	R 3.1.2
+
+**Format**	Presentation with practical exercises
+
+**Where next?**	R:
+
+\newpage
+
+# Reproducible Research [presentation only]
+
+Reproducible reseach means making the data and the code of our analysis available in a way that is sufficient and easy for an independent researcher to recreate our findings. 
+
+This is the golden standard of scientific inquiry, and is increasinlgy and rightly becoming a requirement in academic publishing, and by funding bodies. 
+
+It is also a way of establishing better working habits, reduce the potential for error, develop a more streamlined research process, and make for easier collaboration. 
+
+Reproducible reseach does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to 
+
+## Why?
+
+* Reinhart Rogoff Excel spreadsheet
+
+Document everything! This means never running any code from the command prompt, always writing it into a script file and running it from there. 
+
+
+#  Set-up [presentation and practical]
+## RStudio
+## Project management
+
+A crucial requirement for conducting reproducible research, and one that has to be carefully considered before you embark on your analysis, is your plan on how the data, code and outputs will be organised. The project management structure proposed here is just a suggestion, and you should adapt it to your specific needs, but it is highly recommended that you stick to one such system consistently, instead of comming up with 'ad hoc ' solutions for every new project. 
+
+RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and acces your work. 
+
+
+
+## Literate programming
+
+### Consistent coding style e.g.:
+![title](../figures/code_quality_2.png)
+
+* [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
+* [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
+
+### Commenting 
+
+## \* Bonus section: github
+
+## PRACTICAL: new R project
+
+* personalise RStudio settings (don't save .Rdata etc)
+* new project folder with subfolders (data, figures, scripts)
+* new Rproject
+
+
+
+
+# Workflow
+## Importing data
+The original data should be read-only!! 
+
+* url
+* unzip
+* (colClasses)
+* APIs
+## Data tidying
+* gather/ spread
+
+## PRACTICAL: Import and clean some data
+
+* download and import data
+* do some `tidyr` stuff with it
+* think about commenting and file structure!
+
+
+
+# Efficient Coding
+
+## Standard control structures
+
+### Conditional execution
+
+### Looping
+
+### PRACTICAL
+
+## Vecotrisation  and `apply` family of funcitons
+
+
+
+### PRACTICAL 
+
+benchmarking apply vs for loops
+
+
+## Writing your own functions
+
+### objects, types, environments
+
+### passing arguments
+
+### PRACTICAL 
+
+
+## Data manipulation with `dplyr`
+
+### Subsetting
+
+* `filter`
+* `sample`
+* `slice`
+* `distinct`
+* `select`
+
+### Grouping
+
+* `group_by`
+
+### Summarizing
+
+* with own function
+
+### Making new variables
+
+* `mutate`
+
+### Piping/chaining daisies 
+
+### PRACTICAL 
+
+## FINAL PRACTICAL
+
+something along the lines of: 
+
+* Fun1: a function to be called in summarize or mutate (e.g. z-score)
+
+* Fun2: a chain (that calls Fun1), and then filters the table in some way e.g. subset for each country
+
+* Fun3: a nice plotting function that takes the result of Fun2 and plots it, using `paste()` for titles etc..
+
+
+## Accessing Data Using APIs
+
+APIs (Application Programming Interface) allow standardised data access to a variety of web resources. More and more websites are publishing them making it easy for developers and researchers to dynamically access or update content. 
+
+> When used in the context of web development, an API is typically defined as a set of Hypertext Transfer Protocol (HTTP) request messages, along with a definition of the structure of response messages, which is usually in an Extensible Markup Language (XML) or JavaScript Object Notation (JSON) format. 
+
+[Source: WIkipedia]
+
+With R we can easily handle both processes:
+
+* Input: The HTTP request
+* Output: The .json or .xml response
+
+We will use the `httr` package to 
