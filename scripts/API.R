@@ -120,14 +120,8 @@ ex.2 <- as.data.frame(ex.2)
 write.table(ex.2, "data/messy.02.txt")
 
 
-ex.3 <- mini2 %>% group_by(FIPS, time, SEX) %>%
-  summarise(population = sum(POP)) %>%
-  filter(SEX != "0") %>%
-  ungroup() %>%
-  mutate(FIPS=ifelse(FIPS=="NO", "Norway", ifelse(FIPS == "SI", "Slovenia", "UK"))) %>%
-  mutate(sex=ifelse(SEX=="1", "male", "female")) %>%
-  select(-SEX)%>%
-  unite( "double.key", time,sex)
+ex.3 <- ex.2 %>%
+  unite( "double.key", year,key)
  
 ex.3 <- as.data.frame(ex.3)
 write.table(ex.3, "data/messy.03.txt")

@@ -10,7 +10,7 @@ output:
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
-opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_knit$set(root.dir = "~/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 
@@ -94,11 +94,32 @@ Human readability of data files and outputs. Future-proof.
 
 ## PRACTICAL: new R project
 
-* personalise RStudio settings (don't save .Rdata etc)
-* new project folder with subfolders (data, figures, scripts)
-* new Rproject
 
+The complete documentation for this course is available as an RStudio project in a public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
 
+In this first part of the practical you will set up a new RStudio project mirroring the structure of the github repository for this course. 
+
+Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you online at the above adresses. 
+
+### Create new RStudio project
+
+1. Open RStudio
+2. Select the project menu in the top righthand corner and select `New Project`
+3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].  
+4. RStudio has now created a new project file in your folder, which you can see in the Files pane.
+5. Run the command `getwd()` in the console. RStudion automatically sets the working directory in the top level of your project folder. 
+6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at startup" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
+
+### Folder Structure
+
+1. Using the New Folder button in the Files pane, create three folders called (some equivalent of)
+  * data
+  * scripts
+  * figures
+  * presentations
+2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
+3. You can also download the manual and slides to your `presentation` folder. 
+4. Open the README.md file that was created automatically when you created the project. Write a short description of the project. the `.md` extensions stands for markdown, which is a simple formatting language for posting on the web. Have a look at the R markdown cheat sheet [https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for some handy tips. 
 
 
 # Workflow
@@ -251,7 +272,7 @@ messy.again
 
 ### Downloading and importing data
 
-First create a new `.R` file in your `scripts` folder or equivalent. Naming it something like `01-DataImport.R` will make your project management easier in the long run, but feel free to set up your own file naming system -- but try to stick with it!
+First create a new `.R` script file in your `scripts` folder or equivalent via the drop-down menu or using `Ctrl+Shift+N`. Naming  it something like `01-DataImport.R` will make your project management easier in the long run, but feel free to set up your own file naming system -- but try to stick with it!
 
 It is good practice to establish a header system for all your script files, such as the one below. The `#` lines are also a good way of making the code file structure easy to understand. Following the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml) rule "The maximum line length is 80 characters.", a nice little trick is to make these separators 80 hashtags long, which gives you a nice visual reference for when your code gets too wide. 
 

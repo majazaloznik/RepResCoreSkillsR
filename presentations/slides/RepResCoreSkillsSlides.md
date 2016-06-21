@@ -1,6 +1,7 @@
 R: Core Skills for Reproducible Research
 ========================================================
 width:1200
+
 Maja Zalo&#x17e;nik
 
 22.3.2016
@@ -19,6 +20,10 @@ incremental: true
 - Writing your own funcitons
 - Data manipulation with `dplyr`
 - Piping/chaining commands
+
+Rules
+========================================================
+- Don't forget to mention the rules! 
 
 RStudio
 ========================================================
@@ -68,6 +73,13 @@ Literate Programming
 
 Practical I. - project setup
 ========================================================
+The complete documentation for this course is available as an RStudio project in a public github repository:
+[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
+or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
+
+* find the instructions for Practical I in the manual
 
 Janitor work
 ========================================================
