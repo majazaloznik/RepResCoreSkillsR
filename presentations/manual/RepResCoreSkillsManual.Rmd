@@ -1,12 +1,20 @@
 ---
-title: "improveR"
+title: "R: Core Skills for Reproducible Research"
+subtitle: "Course Manual with Practical Exercises"
+author: "Maja Zalo&#x17e;nik"
 output: 
   pdf_document:
     toc: true
     number_sections: true
 
 ---
+```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
+require(knitr)
+opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_chunk$set(warning=FALSE, message=FALSE)
+options(scipen=999, digits=4)
 
+```
 \newpage
 # Introduction
 ## Blurb
@@ -42,7 +50,7 @@ This short course covers the core skills required for a budding R user to develo
 
 \newpage
 
-# Reproducible Research [presentation only]
+# Reproducible Research 
 
 Reproducible reseach means making the data and the code of our analysis available in a way that is sufficient and easy for an independent researcher to recreate our findings. 
 
@@ -59,7 +67,7 @@ Reproducible reseach does take a bit of upfront investment in learning the tools
 Document everything! This means never running any code from the command prompt, always writing it into a script file and running it from there. 
 
 
-#  Set-up [presentation and practical]
+#  Set-up 
 ## RStudio
 ## Project management
 
@@ -72,14 +80,17 @@ RStudio makes it extremely easy to divide your work into separate projects, allo
 ## Literate programming
 
 ### Consistent coding style e.g.:
-![title](../../figures/code_quality_2.png)
+![Code Quality part 2. (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
 
 * [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
 * [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
 
+### File formats
+Human readability of data files and outputs. Future-proof. 
+.txt files
+
 ### Commenting 
 
-## \* Bonus section: github
 
 ## PRACTICAL: new R project
 
@@ -91,21 +102,380 @@ RStudio makes it extremely easy to divide your work into separate projects, allo
 
 
 # Workflow
-## Importing data
-The original data should be read-only!! 
+> *Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets.* 
+<p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p>
 
-* url
-* unzip
-* (colClasses)
-* APIs
+## Importing data
+
+Regardless of whether your data is stored locally or downloaded from the web, you should never manipulate the original data directly. This is cruical for the integrety of your reproducible research process. 
+
+R has utilities for importing data from a wide variety of sources including proprietary formats. Ideally you want to be working with .csv files, as they are the cleanest and least problematic to import, but often you have no choice in the matter. In the practical we will import .csv, .xls and .sav files, including downloading and unzipping them. Here is a list of some common formats and the packages used for importing them, refer to the help pages for more details: 
+
+* comma separated values -- `read.csv()` 
+* tab-delimited text file -- `read.table()`
+* other delimited files -- `read.delim()`
+* Minitab -- `read.mtb()` from  `library(foreign)`
+* SPSS -- `read.spss()` from `library(foreign)`
+* Stata -- `read.dta()` from  `library(foreign)`
+* Excel -- `read.xls()` from `require(gdata)`
+* Excel -- `loadWorkbook()` from `library(XLConnect)`
+
+The basic import functions of the `read.table()` family all have a `nrows` argument, which is particularly useful if you do not know the structure of the data and are dealing with a large fine. In which case it is recommended you try a test import with e.g. `nrows=10`, and check the result before attempting to import the full file. 
+
+For a more comprehensive list of possible imput formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial)
+
+
+
+We will store all our data files in the `data` folder of our project, from where they will be imported into R. This means the original files remain *untouched* by the data analysis and should never be overwritten as the result of your analysis. 
+
+While you might find it easier to simply download a file into your folder, this poses the problem of loosing track of where the data was sourced from. It is therefore highly recommended you download the data programmatically if possible, and if not, that you use comments within the code to describe the source of the files. For example the `pop2010.csv` file we downloaded in the first practical should have been downloaded directly from within R, by doing it manually we are reducing the reproducibility of our project. We must therefore make sure we note the origin and date we accessed the data in our code!
+
+
 ## Data tidying
-* gather/ spread
+
+> *Tidy datasets are all alike but every messy dataset is messy in its own way.* – Hadley Wickham
+
+A great deal of data tidying can be done manually with the base R funcitons. Additionally there are several packages available with more specific functions. In this course we will use the `tidyr` package by Hadley Wickham, which is particularly well integrated with the `dplyr` package we will be using in the second part of this course. 
+
+The underlying principle of the `tidyr` package is *tidy data*, which must satisfy the following three principles:
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a table.
+
+Source: H. Wickham (2014) *Tidy Data* (available:  [http://vita.had.co.nz/papers/tidy-data.pdf](http://vita.had.co.nz/papers/tidy-data.pdf))
+
+This may seem trivial, but it is in fact common to encounter data that does not conform to these principles. The four workhorse funcitons of `tidyr` that should solve all your data tidying needs are:
+
+* `spread()`
+* `gather()`
+* `separate()` 
+* `unite()`
+
+
+### spread()
+
+Below we can see an example of a messy table, since each observation is in fact represented in two rows. Third column in fact contains variable names (`density` and `population`), while the fourth column contains their values. 
+
+```{r, echo=FALSE}
+messy.02 <- read.table("data/demo/messy.02.txt")
+messy.02
+```
+
+we can using `spread()` we can tidy this layout:  
+
+```{r, echo=c(3:4)}
+require(tidyr)
+require(dplyr)
+tidy.02 <- spread(messy.02, key, value)
+tidy.02
+```
+
+The sytnax for `spread()` takes the following form:
+
+`spread(data, key, value)`
+
+The *key--value* pair is the underlying logic of the tidy data table. We can decompose the data into a collection of key--value pairs such as this:
+
+Key : Value
+```{r, eval=FALSE}
+Country: Norway
+Country: Slovenia 
+Country: UK
+
+Year: 2010
+Year: 2050
+
+Population: 4891300
+Population: 2003136
+...
+
+Density: 16.07489
+Density: 20.91484
+...
+
+```
+
+In a tidy data table each cell contains a *value* and the *keys* are the column names. 
+
+### gather()
+
+Here is another messy table:
+```{r, echo=2}
+messy.01 <- read.table("data/demo/messy.01.txt")
+messy.01
+```
+
+Now we have three variables: the country, which is in the first column, the year, which is across the header row (representing the *keys*), and the population (representing the *values*), which is in the second and third columns. Using `gather()` we can tidy up the table, so that now each of the three variables has its own column, and each row is an observation:
+
+The sytnax for `gather()` takes the following form:
+
+`gather(data, key, value, ...)`
+
+where the `...` represents the columns we want to gather, in our case columns 2 and 3. The key and value arguments are the *names* of the two new variables, or columns we are creating: the *key* is currently in the column names of columns two and three - so we want it to become `year`, and the *values* are in the cells of those two columns, so we want it to become `population`.  
+
+
+```{r, echo=c(3,5)}
+require(tidyr)
+require(dplyr)
+tidy.01 <- gather(messy.01, year, population, 2:3)
+tidy.01 <-  mutate(tidy.01, year=ifelse(year=="X2010", 2010, 2050))
+tidy.01
+```
+
+
+### separate() and unite() 
+
+Separeate and unite are straightforward helper funcitons for the reshaping done by gather and spread. The following table for example requires spreading, but the `double.key` variable contains both *values* (years) and  *keys* (population and density):
+
+```{r, echo=FALSE}
+messy.03 <- read.table("data/demo/messy.03.txt")
+messy.03
+```
+
+These are separated simply by the following code into `year` and `key`, which can then be used to reshape the table as we did above. 
+
+```{r, echo=FALSE}
+tidy.03 <- separate(messy.03, double.key, c("year", "key"))
+tidy.03
+```
+
+The function `unite` is the inverse of `separate`, and merges the values of selected columns into a new single column. In both cases you can change the separator using the `sep=` argument. 
+```{r, echo=FALSE}
+messy.again <- unite(tidy.03, new.double.key, key, year,  sep = " in the year ")
+messy.again
+```
+
 
 ## PRACTICAL: Import and clean some data
 
-* download and import data
-* do some `tidyr` stuff with it
-* think about commenting and file structure!
+### Downloading and importing data
+
+First create a new `.R` file in your `scripts` folder or equivalent. Naming it something like `01-DataImport.R` will make your project management easier in the long run, but feel free to set up your own file naming system -- but try to stick with it!
+
+It is good practice to establish a header system for all your script files, such as the one below. The `#` lines are also a good way of making the code file structure easy to understand. Following the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml) rule "The maximum line length is 80 characters.", a nice little trick is to make these separators 80 hashtags long, which gives you a nice visual reference for when your code gets too wide. 
+
+```{r}
+###############################################################################
+## DATA IMPORT AND CLEANUP
+###############################################################################
+## 1.1  Import a .csv file
+## 1.2  Download and import an Excel file
+## 1.3  Download, unzip and import a .dat file 
+###############################################################################
+
+```
+
+Make sure your working directory is at the top of your project folder using `getwd()`. We are going to use the `read.csv()` funciton to import the data from the `pop2010.csv` file in the `data` folder. But just to be safe, we will first do a test run, importing only 10 rows, so we can inspect the result before importing the whole table:
+```{r }
+## 1.1  Import a .csv file
+###############################################################################
+# don't forget to note the source of the data!
+# downloaded manually from https://github.com/majazaloznik/RepResCoreSkillsR/
+# blob/master/data/pop2010.csv?raw=true" on 20.6.2016
+getwd()
+
+# test run
+population2010 <- read.csv("data/pop2010.csv", nrows=10)
+population2010
+```
+
+That looks good, the only thing is, I can tell you that all the data in this file is fron 2010, so we do not really need the last column. In order to skip it during import, we can use the `colClasses` argument, and setting the seventh argunemt to `NULL`
+
+```{r}
+# import full table except for 7th column (year)
+population2010 <- read.csv("data/pop2010.csv", 
+                           colClasses = c("integer",   # age
+                                          "integer",   # area 
+                                          "character", # name 
+                                          "integer",   # population
+                                          "integer",   # sex
+                                          "character", # country id (FIPS)
+                                          "NULL"))     # year - skip
+# check how it looks
+head(population2010)
+tail(population2010)
+```
+
+
+Comma separated values (`.csv`) is one of the preferred formats to import data from, but R allows you to import from a variety of other formats, although this can sometimes get a bit more messy. This time we will also first download the file, before importing a table from one of the spreadsheets. This is from [https://data.gov.uk/dataset/social_trends](https://data.gov.uk/dataset/social_trends), part of the government's open data access initiative and a great resource!
+
+
+```{r}
+## 1.2  Download and import an Excel file
+###############################################################################
+# url of the .xls file we want (using paste only to keep code under 80 chars:)
+data.url <- paste("http://www.ons.gov.uk/ons/rel/social-trends-rd/social-",
+            "trends/social-trends-41/income-and-wealth-data.xls", sep="")
+
+# download location 
+data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
+
+# download - Excel files are binary, so set the mode to "wb"!!
+download.file(data.url, data.location, mode="wb")
+```
+You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on peopple's perceptions of the current economic situation. Close the Excel file before proceding! Several solutions are available for importing Excel files into R, a nice overview can be found [http://www.r-bloggers.com/read-excel-files-from-r/](here). In this practical we will use the `xlsx` package:
+
+```{r}
+## Importing the data from an .xls file
+require(xlsx)
+# if you get an error telling you there is no package called ‘xlsx’ run:
+# install.packages("xlsx")
+
+# let's see what happens if we import the whole sheet
+economic.situation <- read.xlsx(data.location, sheetIndex = 3)
+```
+Have a look at `economic.situation`. ^[Are you getting an error? That may be because you still have the Excel file open!]  It is not ideal, empty rows and columns are imported, as is the text at the top and the bottom of the worksheet. Luckily, `read.xlsx` has plenty of arguments that allow us to specify more precisely what we want to import. In this case, we can go one step further, and note that there are actually three separate tables in this worksheet, so it might be easiest to import them separately:
+
+```{r}
+## using rowIndex and colIndex select each subtable individually:
+world.situation <- read.xlsx(data.location, sheetIndex = 3,
+                         rowIndex=c(4, 6:8), colIndex = c(1:7))
+
+UK.situation <- read.xlsx(data.location, sheetIndex = 3,
+                             rowIndex=c(4, 11:13), colIndex = c(1:7))
+
+household.situation <- read.xlsx(data.location, sheetIndex = 3,
+                          rowIndex=c(4, 16:18), colIndex = c(1:7))
+```
+
+
+Finally, sometimes we need to extract the data from a zipped file, this can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another format we will import an SPSS file as well.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and wellbeing. ] 
+```{r}
+## 1.3  Download, unzip and import a .dat file 
+###############################################################################
+# url of the .zip file we want
+data.zip.url <- paste("http://spss.allenandunwin.com.s3-website-ap-southeast-2.",
+                      "amazonaws.com/Files/survey.zip", sep="")
+temp <- tempfile()
+download.file(data.zip.url, temp)
+# check what is in the zip file using list (doens't extract anything)
+unzip(temp, list=TRUE)
+
+# Only one file, that's the one we want to extract to the data folder
+unzip(temp, "survey.sav", exdir = "data")
+unlink(temp)
+```
+
+You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R and the `foreign` package:
+
+```{r}
+require(foreign)
+# if you get an error telling you there is no package called ‘xlsx’ run:
+# install.packages("foreign")
+
+# import the data as a data frame:
+data.location <- paste("data","survey.sav", sep="/")
+ed.psy.survey <- read.spss(data.location,  to.data.frame=TRUE)
+# check what it looks like
+ed.psy.survey[1:5,1:5]
+```
+
+Now we have the data, before we continue we'll just do a bit of housekeeping and clear our workspace of the objects we don't need anymore (including the survey dataset, which we will not use in this practical)
+
+```{r}
+# CLEAN UP!
+rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, temp)
+```
+
+### Data Tidying
+
+The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (SEX==1), women (SEX==2), and both (SEX==0). 
+We really only need to remove the rows with the values for (SEX==0), but we can use this opportunity to perform a data check as well, while practicing the `spread()` and `gather()` functions:
+
+First let's try out our technique on a small subset of the data - this is good practice in general, especially if you are dealing with large datasets. We'll select only the observations for Aruba, and have a look at them:
+```{r}
+# try out our technique on a smaller subset of the data
+test.data <- population2010[population2010$FIPS == "AA", ]
+head(test.data)
+```
+
+We want to reshape the table so that the values of `SEX` will become new column names (i.e. *keys*), and that the *values* for these new keys will be the values from the variable `POP`. This means the `spread()` functions should look like this:
+
+```{r}
+tidy.test <- spread(test.data, SEX, POP )
+head(tidy.test)
+# and for clarity, let's rename the columns:
+colnames(tidy.test)[5:7] <- c("both", "male", "female")
+
+```
+
+We can now check if the totals for men and women actually match, before we discard the column with the sum of both: 
+```{r}
+# calculate sum of males and females
+tidy.test$check <- tidy.test$male + tidy.test$female
+
+# compare it with the values already in the table:
+all.equal(tidy.test$both, tidy.test$check)
+
+# looks good, now we can remove both total columns:
+tidy.test$check <- NULL
+tidy.test$both <- NULL
+```
+
+And finally we have to use `gather()` to get back to a tidy table. Remember, with gather you need to pass the *names* of the new variables that are now the *key* and the *value*, and the column names which hold them:
+```{r}
+tidy.test <- gather(tidy.test, sex, population, 5:6)
+```
+
+If you are happy with the test run, you can now try it on the whole `population2010` table. 
+
+Most of the time you will not be lucky enough to work with as nicely formed datasets as the population one. But the same tools can be used to disentangle much more messy tables, such as theo ones we extracted from the Excel file above. 
+
+Let's have a look at one of the three files, e.g. `household.situation`, and see how it could be tidied up. What are the variables (that should be in the columns), and what are the observations (that should have one row each)? 
+```{r}
+# first let's remane the column names
+colnames(household.situation) <- c("perception", "inc.le.20", 
+                                   "inc.20.to.39", "inc.40.to.59", 
+                                   "inc.60.to.99", "inc.gt.100", "all")
+household.situation
+```
+ 
+In fact the whole table needs to be transposed, so that each population group represents one observation, and the proportion answering each question are the variables. In order to do that we need to first gather the data in long form, before spreading it out again wide.^[The `t()` function will transpose a data frame in R, try it out to see if it is a useful alternative to gather and spread. ] 
+
+```{r}
+X.household.situation <- gather(household.situation, income.group, proportion, 2:7)
+tidy.household.situation<- spread(X.household.situation, perception, proportion)
+rm(X.household.situation)
+```
+
+Don't forget, we have two more tables, one for each perception question. If we want to merge them together at the end, we need to be clear that each observation refers to one of the questions:
+
+```{r}
+tidy.household.situation$perception <- "HH"
+```
+
+Now you can repeat the tidying for the UK and world perceptions, and once all three tables are tidy, you can merge them together using `rbind()`:
+
+```{r, echo=c(18:19)}
+# first let's remane the column names
+colnames(UK.situation) <- c("perception", "inc.le.20", 
+                                   "inc.20.to.39", "inc.40.to.59", 
+                                   "inc.60.to.99", "inc.gt.100", "all")
+# transpose using gather and spread  
+X.UK.situation <- gather(UK.situation, income.group, proportion, 2:7)
+tidy.UK.situation <- spread(X.UK.situation, perception, proportion)
+
+# add variable for the question asked
+tidy.UK.situation$perception <- "UK"
+
+# first let's remane the column names
+colnames(world.situation) <- c("perception", "inc.le.20", 
+                            "inc.20.to.39", "inc.40.to.59", 
+                            "inc.60.to.99", "inc.gt.100", "all")
+# transpose using gather and spread  
+X.world.situation <- gather(world.situation, income.group, proportion, 2:7)
+tidy.world.situation <- spread(X.world.situation, perception, proportion)
+
+# add variable for the question asked
+tidy.world.situation$perception <- "W"
+# merge all the tables together
+tidy.economic.situation <- rbind(tidy.household.situation,
+                                 tidy.UK.situation,
+                                 tidy.world.situation) 
+```
+
+Finally, you can now clear your workspace using `rm()` as we did before, to remove everything except for `tidy.population2010` and `tidy.economic.situation`. 
 
 
 

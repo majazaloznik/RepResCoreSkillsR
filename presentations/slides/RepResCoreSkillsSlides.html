@@ -547,7 +547,7 @@ body {
 
 
 .reveal {
-  font-family: 'Helvetica' 'serif', sans-serif;
+  font-family: "Lato", sans-serif;
 }
   
 .reveal h1,
@@ -556,7 +556,7 @@ body {
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-  font-family: 'Helvetica' 'serif', Impact, sans-serif;
+  font-family: "News Cycle", Impact, sans-serif;
 }
 
 
@@ -784,9 +784,12 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>R: Core Skills for Reproducible Research</h1><p>Maja Založnik<br/>22.3.2016</p>
+<h1>R: Core Skills for Reproducible Research</h1><p></p>
 
 <div class="slideContent" >
+<p>Maja Zalo&#x17e;nik</p>
+
+<p>22.3.2016</p>
 
 </div>
 
@@ -805,31 +808,6 @@ hljs.initHighlightingOnLoad();
 <li class="fragment">Data manipulation with <code>dplyr</code></li>
 <li class="fragment">Piping/chaining commands</li>
 </ul>
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>Slide With Code</h3>
-<div class="slideContent" >
-<pre><code class="r">summary(cars)
-</code></pre>
-
-<pre><code>     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-</code></pre>
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>Slide With Plot</h3>
-<div class="slideContent" >
 
 </div>
 
@@ -855,27 +833,19 @@ hljs.initHighlightingOnLoad();
 <p>R project-level files:</p>
 
 <ul>
-<li><em>project</em> &ndash; .Rproj</li>
-<li><em>workspace</em> &ndash; .RData<br/></li>
-<li><em>history</em> &ndash; .Rhistory</li>
-<li><em>settings</em> &ndash; .Rprofile</li>
+<li class="fragment"><em>project</em> &ndash; .Rproj</li>
+<li class="fragment"><em>workspace</em> &ndash; .RData<br/></li>
+<li class="fragment"><em>history</em> &ndash; .Rhistory</li>
+<li class="fragment"><em>settings</em> &ndash; .Rprofile</li>
 </ul>
 
-<p>Scripts</p>
+<p class="fragment">Scripts &ndash; .R</p>
 
-<ul>
-<li><em>R code</em> &ndash; .R</li>
-</ul>
+<p class="fragment">Data &ndash; .csv, .xls, .dat &hellip; </p>
 
-<p>Data</p>
+<p class="fragment">Figures</p>
 
-<ul>
-<li>.csv, .xls, .dat &hellip; </li>
-</ul>
-
-<p>Figures</p>
-
-<p>Presentation</p>
+<p class="fragment">Presentation &ndash; .pdf, .doc, .html, (.tex)</p>
 
 </div>
 
@@ -898,10 +868,234 @@ hljs.initHighlightingOnLoad();
 <h3>Literate Programming</h3>
 <div class="slideContent" >
 <blockquote>
-<p>“Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.”</p>
+<p>&ldquo;Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.&rdquo;</p>
 
 <p style="text-align: right;">Donald Knuth (1984) </p>
 </blockquote>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Practical I. - project setup</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Janitor work</h3>
+<div class="slideContent" >
+<blockquote class="fragment">
+<p>Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets. <p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p></p>
+</blockquote>
+
+<ul>
+<li class="fragment">Data formats, sources, and </li>
+<li class="fragment"><code>tidyr</code> package
+
+<ul>
+<li class="fragment"><code>spread()</code> and  <code>gather()</code></li>
+<li class="fragment"><code>separate()</code> and  <code>unite()</code></li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data</h3>
+<div class="slideContent" >
+<blockquote class="fragment">
+<p><em>Tidy datasets are all alike but every messy dataset is messy in its own way.</em> - Hadley Wickham</p>
+</blockquote>
+
+<ol>
+<li class="fragment">Each variable forms a column.</li>
+<li class="fragment">Each observation forms a row.</li>
+<li class="fragment">Each type of observational unit forms a table.</li>
+</ol>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - spread()</h3>
+<div class="slideContent" >
+<pre><code>    country year        key       value
+1    Norway 2010 population  4891300.00
+2    Norway 2010    density       16.07
+3    Norway 2050 population  6364008.00
+4    Norway 2050    density       20.91
+5  Slovenia 2010 population  2003136.00
+6  Slovenia 2010    density       99.41
+7  Slovenia 2050 population  1596947.00
+8  Slovenia 2050    density       79.25
+9        UK 2010 population 62348447.00
+10       UK 2010    density      257.71
+11       UK 2050 population 71153797.00
+12       UK 2050    density      294.11
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - spread()</h3>
+<div class="slideContent" >
+<pre><code class="r">tidy.02 &lt;- spread(messy.02, key, value)
+tidy.02
+</code></pre>
+
+<pre><code>   country year density population
+1   Norway 2010   16.07    4891300
+2   Norway 2050   20.91    6364008
+3 Slovenia 2010   99.41    2003136
+4 Slovenia 2050   79.25    1596947
+5       UK 2010  257.71   62348447
+6       UK 2050  294.11   71153797
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data -- key : value pairs</h3>
+<div class="slideContent" >
+<pre><code class="r">Country: Norway
+Country: Slovenia 
+...
+Year: 2010
+Year: 2050
+
+Population: 4891300
+Population: 2003136
+...
+Density: 16.07489
+Density: 20.91484
+...
+</code></pre>
+
+<p>Tidy data: </p>
+
+<ul>
+<li>each column name is a <em>key</em></li>
+<li>each cell is a <em>value</em></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - gather()</h3>
+<div class="slideContent" >
+<pre class="fragment"><code>   country    X2010    X2050
+1   Norway  4891300  6364008
+2 Slovenia  2003136  1596947
+3       UK 62348447 71153797
+</code></pre>
+
+<pre class="fragment"><code class="r">tidy.01 &lt;- gather(messy.01, year, population, 2:3)
+tidy.01
+</code></pre>
+
+<pre class="fragment"><code>   country year population
+1   Norway 2010    4891300
+2 Slovenia 2010    2003136
+3       UK 2010   62348447
+4   Norway 2050    6364008
+5 Slovenia 2050    1596947
+6       UK 2050   71153797
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - separate() </h3>
+<div class="slideContent" >
+<pre><code>    country      double.key       value
+1    Norway 2010_population  4891300.00
+2    Norway    2010_density       16.07
+3    Norway 2050_population  6364008.00
+4    Norway    2050_density       20.91
+5  Slovenia 2010_population  2003136.00
+6  Slovenia    2010_density       99.41
+7  Slovenia 2050_population  1596947.00
+8  Slovenia    2050_density       79.25
+9        UK 2010_population 62348447.00
+10       UK    2010_density      257.71
+11       UK 2050_population 71153797.00
+12       UK    2050_density      294.11
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - separate() </h3>
+<div class="slideContent" >
+<pre><code class="r">tidy.03 &lt;- separate(messy.03, double.key, c(&quot;year&quot;, &quot;key&quot;))
+tidy.03
+</code></pre>
+
+<pre><code>    country year        key       value
+1    Norway 2010 population  4891300.00
+2    Norway 2010    density       16.07
+3    Norway 2050 population  6364008.00
+4    Norway 2050    density       20.91
+5  Slovenia 2010 population  2003136.00
+6  Slovenia 2010    density       99.41
+7  Slovenia 2050 population  1596947.00
+8  Slovenia 2050    density       79.25
+9        UK 2010 population 62348447.00
+10       UK 2010    density      257.71
+11       UK 2050 population 71153797.00
+12       UK 2050    density      294.11
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Tidy Data - unite() </h3>
+<div class="slideContent" >
+<pre><code class="r">messy.again &lt;- unite(tidy.03, new.double.key, key, year,  
+                     sep = &quot; in the year &quot;)
+messy.again
+</code></pre>
+
+<pre><code>    country              new.double.key       value
+1    Norway population in the year 2010  4891300.00
+2    Norway    density in the year 2010       16.07
+3    Norway population in the year 2050  6364008.00
+4    Norway    density in the year 2050       20.91
+5  Slovenia population in the year 2010  2003136.00
+6  Slovenia    density in the year 2010       99.41
+7  Slovenia population in the year 2050  1596947.00
+8  Slovenia    density in the year 2050       79.25
+9        UK population in the year 2010 62348447.00
+10       UK    density in the year 2010      257.71
+11       UK population in the year 2050 71153797.00
+12       UK    density in the year 2050      294.11
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Practical II. - import and clean data</h3>
+<div class="slideContent" >
+<pre><code class="r">##########################################################
+## DATA IMPORT AND CLEANUP
+##########################################################
+## 1.1  Import a .csv file
+## 1.2  Download and import an Excel file
+## 1.3  Download, unzip and import an SPSS file 
+##########################################################
+## 2.1  Data tidying
+##########################################################
+</code></pre>
 
 </div>
 
@@ -960,7 +1154,7 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 960,
+      width: 1200,
       height: 700,
     
       dependencies: []

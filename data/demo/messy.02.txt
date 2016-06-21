@@ -1,0 +1,13 @@
+"country" "year" "key" "value"
+"1" "Norway" "2010" "population" 4891300
+"2" "Norway" "2010" "density" 16.0748910550082
+"3" "Norway" "2050" "population" 6364008
+"4" "Norway" "2050" "density" 20.9148355801526
+"5" "Slovenia" "2010" "population" 2003136
+"6" "Slovenia" "2010" "density" 99.406282566622
+"7" "Slovenia" "2050" "population" 1596947
+"8" "Slovenia" "2050" "density" 79.2490198997568
+"9" "UK" "2010" "population" 62348447
+"10" "UK" "2010" "density" 257.712755755797
+"11" "UK" "2050" "population" 71153797
+"12" "UK" "2050" "density" 294.109027404621
