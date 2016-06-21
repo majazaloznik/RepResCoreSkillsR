@@ -13,7 +13,6 @@ require(knitr)
 opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
-
 ```
 \newpage
 # Introduction
@@ -92,34 +91,8 @@ Human readability of data files and outputs. Future-proof.
 ### Commenting 
 
 
-## PRACTICAL: new R project
 
 
-The complete documentation for this course is available as an RStudio project in a public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
-
-In this first part of the practical you will set up a new RStudio project mirroring the structure of the github repository for this course. 
-
-Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you on-line at the above addresses. 
-
-### Create new RStudio project
-
-1. Open RStudio
-2. Select the project menu in the top right-hand corner and select `New Project`
-3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].  
-4. RStudio has now created a new project file in your folder, which you can see in the Files pane.
-5. Run the command `getwd()` in the console. RStudio automatically sets the working directory in the top level of your project folder. 
-6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
-
-### Folder Structure
-
-1. Using the New Folder button in the Files pane, create three folders called (some equivalent of)
-  * data
-  * scripts
-  * figures
-  * presentations
-2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
-3. You can also download the manual and slides to your `presentation` folder. 
-4. Open the README.md file that was created automatically when you created the project. Write a short description of the project. the `.md` extensions stands for markdown, which is a simple formatting language for posting on the web. Have a look at the R markdown cheat sheet [https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for some handy tips. 
 
 
 # Workflow
@@ -270,6 +243,43 @@ messy.again
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
 For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+## PRACTICAL: new R project
+
+
+The complete documentation for this course is available as an RStudio project in a public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
+
+In this first part of the practical you will set up a new RStudio project mirroring the structure of the github repository for this course. 
+
+Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you on-line at the above addresses. 
+
+### Create new RStudio project
+
+1. Open RStudio
+2. Select the project menu in the top right-hand corner and select `New Project`
+3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].  
+4. RStudio has now created a new project file in your folder, which you can see in the Files pane.
+5. Run the command `getwd()` in the console. RStudio automatically sets the working directory in the top level of your project folder. 
+6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
+
+### Folder and File Structure
+
+1. Using the New Folder button in the Files pane, create three folders called (some equivalent of)
+  * data
+  * scripts
+  * figures
+  * presentations
+2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
+3. You can also download the manual and slides to your `presentation` folder. 
+4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manualy every time. 
+
+For this practical you will need the following packages (type this into your .RProfile file and save)
+```{r, eval = FALSE}
+require(xlsx)
+require(forein)
+require(dplyr)
+require(tidyr)
+```
 
 
 ## PRACTICAL: Import and clean some data
@@ -454,9 +464,28 @@ tidy.test <- gather(tidy.test, sex, population, 5:6)
 # and let's check it again:
 head(tidy.test)
 ```
-
 If you are happy with the test run, you can now try it on the whole `population2010` table. 
+```{r, echo=FALSE}
 
+require(tidyr)
+# SEX is the key:
+tidy.population2010 <- spread(population2010, SEX, POP)
+
+# for clarity, let's rename the columns:
+colnames(tidy.population2010)[5:7] <- c("both", "male", "female")
+head(tidy.population2010)
+
+# Now check if the sums are right, by creating a new column:
+tidy.population2010$check <- tidy.population2010$male + tidy.population2010$female
+all.equal(tidy.population2010$both, tidy.population2010$check)
+
+# looks good, now we can remove both total columns:
+tidy.population2010$check <- NULL
+tidy.population2010$both <- NULL
+
+# now tidy it up again:
+tidy.population2010 <- gather(tidy.population2010, sex, population, 5:6)
+```
 ```{r}
 ## 2.2 tidy up the perception data
 ###############################################################################
@@ -567,7 +596,6 @@ The if/else syntax also works in a single line, where you can dispense with the 
 
 ```{r, eval=FALSE}
 if (x >= 0)  print("Poz") else print("Neg")
-}
 ```
 
 While this is more compact, it can impact readability, and can also make your code more difficult to debug and extend. Using curly braces and indenting the code properly will make it clearer to the reader, and also easier to e.g. extend via nesting:
@@ -586,14 +614,15 @@ if (x >= 0.6) {
 
 The conditions to be evaluated are: 
 ```{r, eval=FALSE}
-x == y  # x is equal to y
-x != y  # x is not equal to y
-x > y   # x is greater than y
-x < y   # x is less than y
-x <= y  # x is less than or equal to y
-x >= y  # x is greater than or equal to y
-TRUE    # 
-FALSE   #
+x == y   # x is equal to y
+x != y   # x is not equal to y
+x > y    # x is greater than y
+x < y    # x is less than y
+x <= y   # x is less than or equal to y
+x >= y   # x is greater than or equal to y
+x %in% y # x is located in y
+TRUE     # 
+FALSE    #
 ```
 
 And these can further be combined using standard logical operators:
@@ -703,7 +732,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 # and for comparison, here is how we would do this using a for loop
 out <- vector()
 for (i in 1:nrow(mat)) {
-out[i] <- sort(mat[i,], decreasing = TRUE)[2]
+  out[i] <- sort(mat[i,], decreasing = TRUE)[2]
 }
 out
 ```
@@ -743,18 +772,197 @@ By writing more elaborate functions and passing them as the argument to any of t
 
 ## Writing your own functions
 
-One of the greatest strengths of R comes from user 
+One of the greatest strengths of R comes from writing your own functions. This not only allows you to repeat the same procedure consistently, but makes your code more structured and readable reduces chance of error, and will further strenghtens your reproducibility mentality. 
 
-### objects, types, environments
+The basic construct is as follows:
+```{r, eval = FALSE}
+function.name <- function(arguments, ...) {
+  expression
+  (return value)
+}
+```
 
-### passing arguments
+we have already seen the in-line version of the function call in the apply example above, remember:
+```{r, eval = FALSE}
+function(x) sort(x, decreasing = TRUE)[2]
+```
+
+Here our function takes a single argument (`x`), evaluates the expression (`sort(x, decreasing = TRUE)[2]`), and returns the value of that expression. This only works if the function has only a single expression, in which case the evaluated expression is returned. Otherwise we have to explicilty state what we want returned. We can rewrite this function in the more elaborate mode:
 
 
+```{r}
+FunSecondLargest <-function(x) {
+  r <- sort(x, decreasing = TRUE)[2]
+  return(r)
+}
+# now let's try it out with a sample vector
+test.vector <- tidy.population2010$population
 
+FunSecondLargest(test.vector)  
+```
 
+We can also now use this function directly in the apply call we used before:
+
+```{r}
+apply(mat, 1, FunSecondLargest)
+```
+
+We can also quickly rewrite the funciton to instead find the n-th largest value in the vector, by adding an additional argument `n`. And don't forget to write sensible comentary about what you are doing - at least for the benefit of your future self!
+
+```{r}
+# Function for extracting the n-th largest value from a vector
+# Agruments:
+#   x - vector 
+#   n - optional integer value for rank
+# Output:
+# Returns single value 
+FunNthLargest <-function(x, n=1) {
+  r <- sort(x, decreasing = TRUE)[n]
+  return(r)
+}
+# by default n=1, so it will find the largest value if we don't specify
+FunNthLargest(test.vector)  
+FunNthLargest(test.vector, n=2)  
+FunNthLargest(test.vector, n=3)  
+```
+
+We could e.g. further generalise this function to look for the n-th smallest value, by adding another argument for the `TRUE/FALSE` value that gets passed to `decreasing` etc. Note unlike the argument `x`, the argument `n` has a default value (=1). This means we do not have to explicitly specify it unless we want it to be a different value. 
+
+Functions have their own local environment, which is not accessible from the global environment. This means that whatever calculations are evaluated inside the function call do not clutter your workspace, but also their results are not accessible unles you explicilty return them from the function. Thus the object `r` will not be found in the global environment, instead we will get the error:
+```{r, eval = FALSE}
+r
+Error: object 'r' not found
+```
+
+We can also have our funciton return several outputs for example:
+
+```{r}
+FunNthLargestElaborate <-function(x, n=1) {
+  r <- sort(x, decreasing = TRUE)[n]
+  desc <- paste("Rank", n, sep=":")
+  return(c(desc, r))
+}
+FunNthLargestElaborate(test.vector, 3)
+```
+
+As we have seen before with if/else statements and loops, functions can also be nested -- as well as combined with if/else statements and loops! It is good practice to try to keep your code modular: keep your functions short and call them from eachother. This again makes it easier for the reader to understand what is going on, and easier for you to find errors or update your code. 
+
+From a project management point of view it is also good practice to store all your functions in a separate file, which you `source()` at the begining of each session. You can even add `source("00-MyFunctions.R")` to your `.RProfile` file, which means all your bespoke functions will be automatically uploaded at the start of each session. 
 
 
 ### PRACTICAL 
+
+Practice conditional expressions and logical operators by seeing if you can figure out the results of the following expressions, then check them in R:
+```{r}
+## 3.1 Practice conditional expressions and logical operators 
+###############################################################################
+x <- 1:7
+y <- -3:3
+x
+y
+```
+```{r, eval=FALSE}
+# try the following: 
+(x == y)
+(x > abs(y))
+(x > 3) & (x < 5)
+(x > 3) | (x < 5)
+xor((x > 3), (x < 5))
+(-1 %in% y)
+(3 %in% y) & (3 %in% x) 
+(3 %in% y) & !(3 %in% x) 
+```
+
+
+Use a `for()` loop to go through every row of `tidy.economic.situation` (tip: `nrow()` will tell you how many iterations you need):
+* for each row add up the proportions for all three answers (columns two to four)
+* use an `if/else` construct to check if the total equals 100
+    + if it does, use `print` to print out an OK message
+    + if it doesn't, print out a different message, one created using `paste` - so you can include the information on *which* row you have found the error.
+
+```{r, eval = FALSE}
+## 3.2 Check consistency of tidy.economic.situation proportions ising IF - ELSE
+###############################################################################
+for (i in 1: nrow(tidy.economic.situation)) {
+  if(???){
+    ???} else {
+      ???}
+}
+```
+
+Now write a function for the row checking you just did inside the `for()` loop. This is simply generalising the if/else expression to take a supplied argument instead of explicitly naming the row:
+* Make sure you *document* your function correctly!
+* the input for the function should be a row
+* the output of the function should be  a variable called `message` - "OK" or "Not OK"
+* Use the framework below:
+
+```{r, eval = FALSE}
+## 3.3 Write a function to check consistency of tidy.economic.situation proportions
+###############################################################################
+FunRowCheck <- function(x) {
+  message <- if(???){
+  } else {
+  }
+  return(message)
+}
+```
+
+Now test out your function on a single row:
+```{r, echo=12:15}
+## 3.3 Write a function to check consistency of tidy.economic.situation proportions
+###############################################################################
+
+FunRowCheck <- function(x) {
+  message <- if(sum(x) == 100){
+    "OK"} else {
+      "Not OK"}
+  return(message)
+}
+
+## 3.4 Use your functions inside an apply statement
+###############################################################################
+
+# append the new test variable to the dataset
+tidy.economic.situation$test <- apply(tidy.economic.situation[,2:4], 1, FunRowCheck)
+
+FunRowCheck(tidy.economic.situation[1,2:4])
+```
+
+If it works correctly, you can now try using your new function inside an `apply` construct. 
+
+Remember, `apply` will evaluate the expression along the *whole* row, and you want to apply it only to columns 2:4, so make sure you don't pass the whole table to `apply`. When you are happy with the result, append it to the table as an additional column:
+
+```{r, eval = FALSE}
+tidy.economic.situation$test <- apply(???)
+```
+
+Your table should now look like this:
+```{r}
+tidy.economic.situation
+```
+
+If it doesn't have a look at the `02-FunctionsAndLoops.R` file in the scripts folder for the solution.
+If it does and you have plenty of time, you can try additionally:
+* writing another function that will simply sum the three columns
+* applying it to the table and appending the new variable (`total`)
+* creating three new variables that are correctly scaled to sum up to 100 (e.g. `bad.scaled`, `good.sscaled`, `neutral.scaled`). 
+
+To finish off this practical session we will write a function for plotting our table, using the `barplot()` function. This function only accepts vectors or matrices, but because our data is in a data.frame, we need to use `as.matrix()` for it to work, in addition to `t()` for transposing it. Here is the code for the most stripped down stacked barplot of the people's perceptions of their household financial situation. Note that the order of the columns had to be changed to make the more logical order of bad - neutral - good. 
+```{r}
+barplot(t(as.matrix(tidy.economic.situation[1:6,c(2,4,3)])))
+
+```
+
+Now expand the barplot function - use the help documentation in the help tab:
+
+- add names to the x-axis
+- add legend text
+- add a main title
+- feel free to explore additional arguments to the plot!
+
+Once you are happy with your plot, enclose it in a function, so that you can pass it each of the three subsets of the table individually, and the function will additionally also change the plot's title to the correct one. 
+
+
 
 
 ## Data manipulation with `dplyr`

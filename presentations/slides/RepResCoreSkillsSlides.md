@@ -283,8 +283,8 @@ Efficient Coding Practices
 incremental:true
 
 * Standard control structures
-  + Looping
   + Conditional execution
+  + Looping
 * Vectorisation and `apply` family of funcitons
 * Writing your own functions
 * Data manipulation with `dplyr`
@@ -297,17 +297,340 @@ Conditional execution
 ========================================================
 incremental:true
 
-Looping
+```r
+if (condition) {
+  # do something
+} else {
+  # do something else
+}
+```
+
+
+```r
+x <- runif(1) # randum number from uniform distribution [0,1]
+if (x >= 0.6) {
+  print("Good")
+} else {
+  if (x <= 0.4) {
+    print("Bad")
+  } else {
+    print("Not Sure")}
+}
+```
+
+```
+[1] "Not Sure"
+```
+
+Conditional execution - conditions and operators
 ========================================================
 incremental:true
 
-Vectorisation
+```r
+x == y   # x is equal to y
+x != y   # x is not equal to y
+x > y    # x is greater than y
+x < y    # x is less than y
+x <= y   # x is less than or equal to y
+x >= y   # x is greater than or equal to y
+x %in% y  # x is located in y
+TRUE     # 
+FALSE    #
+```
+
+
+```r
+!x        # NOT
+x & y     # AND
+x | y     # OR
+xor(x, y)  # exclusive OR
+```
+
+Conditional execution - vectorised
 ========================================================
 incremental:true
+
+```r
+ifelse(condition, yes, no)
+```
+
+
+```r
+x <- runif(20) # 20 randum numbers from uniform distribution [0,1]
+ifelse(x >= 0.6, "G", 
+       ifelse(x<=0.4, "B", "N"))
+```
+
+```
+ [1] "B" "G" "B" "G" "G" "B" "G" "G" "G" "B" "G" "B" "G" "G" "B" "B" "G"
+[18] "G" "B" "G"
+```
+
+
+
+Looping - for() loop
+========================================================
+incremental:true
+
+```r
+for (i in seq) expr
+```
+
+
+```r
+mat <- matrix(NA, nrow=3, ncol=3)
+for (i in 1:3){
+  for (j in 1:3){
+    mat[i,j] <- paste(i, j, sep="-")
+  }
+} 
+mat
+```
+
+```
+     [,1]  [,2]  [,3] 
+[1,] "1-1" "1-2" "1-3"
+[2,] "2-1" "2-2" "2-3"
+[3,] "3-1" "3-2" "3-3"
+```
+
+
+
+Vectorisation - apply()
+========================================================
+incremental:true
+
+```r
+apply(X, MARGIN, FUN, ...)
+```
+
+
+```r
+mat <- matrix(1:9, 3,3)
+# row totals
+apply(mat, 1, sum)
+```
+
+```
+[1] 12 15 18
+```
+
+```r
+# column totals
+apply(mat, 2, sum)
+```
+
+```
+[1]  6 15 24
+```
+
+Vectorisation - apply() vs for()
+========================================================
+incremental:true
+
+```r
+mat <- matrix(sample(1:100, 25), 5,5)
+mat
+```
+
+```
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   17   36   80   11   68
+[2,]   73   20   35   33   67
+[3,]   65   96   59   53    2
+[4,]   24    5   42   15   37
+[5,]   31   40   62   45    3
+```
+
+```r
+# find the second largest value in each row
+out <- vector()
+for (i in 1:nrow(mat)) {
+  out[i] <- sort(mat[i,], decreasing = TRUE)[2]
+}
+```
+Vectorisation - apply() vs for()
+========================================================
+incremental:true
+
+```r
+for (i in 1:nrow(mat)) {
+  out[i] <- sort(mat[i,], decreasing = TRUE)[2]
+}
+out
+```
+
+```
+[1] 68 67 65 37 45
+```
+
+```r
+# using apply()
+apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
+```
+
+```
+[1] 68 67 65 37 45
+```
+Vectorisation - lapply() and sapply()
+========================================================
+incremental:true
+
+```r
+# a list of elements with different lengths:
+test <- list(a = 1:5, b = 20:100, c = 17234) 
+lapply(test, min)
+```
+
+```
+$a
+[1] 1
+
+$b
+[1] 20
+
+$c
+[1] 17234
+```
+
+```r
+sapply(test, min)
+```
+
+```
+    a     b     c 
+    1    20 17234 
+```
+Vectorisation - lapply() and sapply()
+========================================================
+incremental:true
+
+```r
+# a data frame (list of three vectors of equal length):
+test <- data.frame(a = 1:5, b = 6:10, c = 11:15) 
+lapply(test, mean)
+```
+
+```
+$a
+[1] 3
+
+$b
+[1] 8
+
+$c
+[1] 13
+```
+
+```r
+sapply(test, mean)
+```
+
+```
+ a  b  c 
+ 3  8 13 
+```
+Writing your own functions
+========================================================
+incremental:true
+
+
+```r
+function.name <- function(arguments, ...) {
+  expression
+  (return value)
+}
+```
+
+
+```r
+function(x) sort(x, decreasing = TRUE)[2]
+```
 
 Writing your own functions
 ========================================================
 incremental:true
+
+
+```r
+FunSecondLargest <-function(x) {
+  r <- sort(x, decreasing = TRUE)[2]
+  return(r)
+}
+```
+
+```r
+# now let's try it out with a sample vector
+test.vector <- tidy.population2010$population
+
+FunSecondLargest(test.vector)  
+```
+
+```
+[1] 14642884
+```
+
+```r
+apply(mat, 1, FunSecondLargest)
+```
+
+```
+[1] 68 67 65 37 45
+```
+
+Writing your own functions
+========================================================
+incremental:true
+
+
+```r
+# Function for extracting the n-th largest value from a vector
+# Agruments: x - vector,  n - optional integer value for rank
+# Output:returns single value 
+FunNthLargest <-function(x, n=1) {
+  r <- sort(x, decreasing = TRUE)[n]
+  return(r)
+}
+```
+
+```r
+FunNthLargest(test.vector)  
+```
+
+```
+[1] 15120232
+```
+
+```r
+FunNthLargest(test.vector, n=2)  
+```
+
+```
+[1] 14642884
+```
+
+```r
+FunNthLargest(test.vector, n=3)  
+```
+
+```
+[1] 13601669
+```
+
+Practical II
+========================================================
+
+```r
+###########################################################
+## CONDITIONAL EXPR, LOOPS, APPLY AND FUNCTIONS
+###########################################################
+## 3.1 Conditional expressions and logical operators 
+## 3.2 For() loops
+## 3.3 Funciton writing
+## 3.4 Use your function inside an apply statement
+## 3.5 Bar-Plotting function
+###########################################################
+```
 
 Data manipulation with `dplyr`
 ========================================================
