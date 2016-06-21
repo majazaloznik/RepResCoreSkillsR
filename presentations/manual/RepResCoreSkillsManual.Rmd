@@ -10,7 +10,7 @@ output:
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
-opts_knit$set(root.dir = "~/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 
@@ -29,7 +29,7 @@ This short course covers the core skills required for a budding R user to develo
 * Good coding practices in R
 * standard control structures
 * Vectorisation and `apply` functions
-* Writing your own funcitons
+* Writing your own functions
 * Data manipulation with `dplyr`
 * Piping/chaining commands
 
@@ -52,13 +52,13 @@ This short course covers the core skills required for a budding R user to develo
 
 # Reproducible Research 
 
-Reproducible reseach means making the data and the code of our analysis available in a way that is sufficient and easy for an independent researcher to recreate our findings. 
+Reproducible research means making the data and the code of our analysis available in a way that is sufficient and easy for an independent researcher to recreate our findings. 
 
-This is the golden standard of scientific inquiry, and is increasinlgy and rightly becoming a requirement in academic publishing, and by funding bodies. 
+This is the golden standard of scientific inquiry, and is increasingly and rightly becoming a requirement in academic publishing, and by funding bodies. 
 
 It is also a way of establishing better working habits, reduce the potential for error, develop a more streamlined research process, and make for easier collaboration. 
 
-Reproducible reseach does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to 
+Reproducible research does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to 
 
 ## Why?
 
@@ -71,9 +71,9 @@ Document everything! This means never running any code from the command prompt, 
 ## RStudio
 ## Project management
 
-A crucial requirement for conducting reproducible research, and one that has to be carefully considered before you embark on your analysis, is your plan on how the data, code and outputs will be organised. The project management structure proposed here is just a suggestion, and you should adapt it to your specific needs, but it is highly recommended that you stick to one such system consistently, instead of comming up with 'ad hoc ' solutions for every new project. 
+A crucial requirement for conducting reproducible research, and one that has to be carefully considered before you embark on your analysis, is your plan on how the data, code and outputs will be organised. The project management structure proposed here is just a suggestion, and you should adapt it to your specific needs, but it is highly recommended that you stick to one such system consistently, instead of coming up with 'ad hoc ' solutions for every new project. 
 
-RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and acces your work. 
+RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. 
 
 
 
@@ -99,16 +99,16 @@ The complete documentation for this course is available as an RStudio project in
 
 In this first part of the practical you will set up a new RStudio project mirroring the structure of the github repository for this course. 
 
-Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you online at the above adresses. 
+Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you on-line at the above addresses. 
 
 ### Create new RStudio project
 
 1. Open RStudio
-2. Select the project menu in the top righthand corner and select `New Project`
+2. Select the project menu in the top right-hand corner and select `New Project`
 3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].  
 4. RStudio has now created a new project file in your folder, which you can see in the Files pane.
-5. Run the command `getwd()` in the console. RStudion automatically sets the working directory in the top level of your project folder. 
-6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at startup" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
+5. Run the command `getwd()` in the console. RStudio automatically sets the working directory in the top level of your project folder. 
+6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
 
 ### Folder Structure
 
@@ -128,7 +128,7 @@ Unless you have brought your own laptop, you will be completing this project on 
 
 ## Importing data
 
-Regardless of whether your data is stored locally or downloaded from the web, you should never manipulate the original data directly. This is cruical for the integrety of your reproducible research process. 
+Regardless of whether your data is stored locally or downloaded from the web, you should never manipulate the original data directly. This is crucial for the integrity of your reproducible research process. 
 
 R has utilities for importing data from a wide variety of sources including proprietary formats. Ideally you want to be working with .csv files, as they are the cleanest and least problematic to import, but often you have no choice in the matter. In the practical we will import .csv, .xls and .sav files, including downloading and unzipping them. Here is a list of some common formats and the packages used for importing them, refer to the help pages for more details: 
 
@@ -143,7 +143,7 @@ R has utilities for importing data from a wide variety of sources including prop
 
 The basic import functions of the `read.table()` family all have a `nrows` argument, which is particularly useful if you do not know the structure of the data and are dealing with a large fine. In which case it is recommended you try a test import with e.g. `nrows=10`, and check the result before attempting to import the full file. 
 
-For a more comprehensive list of possible imput formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial)
+For a more comprehensive list of possible input formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial)
 
 
 
@@ -156,7 +156,7 @@ While you might find it easier to simply download a file into your folder, this 
 
 > *Tidy datasets are all alike but every messy dataset is messy in its own way.* – Hadley Wickham
 
-A great deal of data tidying can be done manually with the base R funcitons. Additionally there are several packages available with more specific functions. In this course we will use the `tidyr` package by Hadley Wickham, which is particularly well integrated with the `dplyr` package we will be using in the second part of this course. 
+A great deal of data tidying can be done manually with the base R functions. Additionally there are several packages available with more specific functions. In this course we will use the `tidyr` package by Hadley Wickham, which is particularly well integrated with the `dplyr` package we will be using in the second part of this course. 
 
 The underlying principle of the `tidyr` package is *tidy data*, which must satisfy the following three principles:
 
@@ -166,7 +166,7 @@ The underlying principle of the `tidyr` package is *tidy data*, which must satis
 
 Source: H. Wickham (2014) *Tidy Data* (available:  [http://vita.had.co.nz/papers/tidy-data.pdf](http://vita.had.co.nz/papers/tidy-data.pdf))
 
-This may seem trivial, but it is in fact common to encounter data that does not conform to these principles. The four workhorse funcitons of `tidyr` that should solve all your data tidying needs are:
+This may seem trivial, but it is in fact common to encounter data that does not conform to these principles. The four workhorse functions of `tidyr` that should solve all your data tidying needs are:
 
 * `spread()`
 * `gather()`
@@ -192,7 +192,7 @@ tidy.02 <- spread(messy.02, key, value)
 tidy.02
 ```
 
-The sytnax for `spread()` takes the following form:
+The syntax for `spread()` takes the following form:
 
 `spread(data, key, value)`
 
@@ -229,7 +229,7 @@ messy.01
 
 Now we have three variables: the country, which is in the first column, the year, which is across the header row (representing the *keys*), and the population (representing the *values*), which is in the second and third columns. Using `gather()` we can tidy up the table, so that now each of the three variables has its own column, and each row is an observation:
 
-The sytnax for `gather()` takes the following form:
+The syntax for `gather()` takes the following form:
 
 `gather(data, key, value, ...)`
 
@@ -247,7 +247,7 @@ tidy.01
 
 ### separate() and unite() 
 
-Separeate and unite are straightforward helper funcitons for the reshaping done by gather and spread. The following table for example requires spreading, but the `double.key` variable contains both *values* (years) and  *keys* (population and density):
+Separate and unite are straightforward helper functions for the reshaping done by gather and spread. The following table for example requires spreading, but the `double.key` variable contains both *values* (years) and  *keys* (population and density):
 
 ```{r, echo=FALSE}
 messy.03 <- read.table("data/demo/messy.03.txt")
@@ -266,6 +266,10 @@ The function `unite` is the inverse of `separate`, and merges the values of sele
 messy.again <- unite(tidy.03, new.double.key, key, year,  sep = " in the year ")
 messy.again
 ```
+
+For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
+
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 
 ## PRACTICAL: Import and clean some data
@@ -287,7 +291,7 @@ It is good practice to establish a header system for all your script files, such
 
 ```
 
-Make sure your working directory is at the top of your project folder using `getwd()`. We are going to use the `read.csv()` funciton to import the data from the `pop2010.csv` file in the `data` folder. But just to be safe, we will first do a test run, importing only 10 rows, so we can inspect the result before importing the whole table:
+Make sure your working directory is at the top of your project folder using `getwd()`. We are going to use the `read.csv()` function to import the data from the `pop2010.csv` file in the `data` folder. But just to be safe, we will first do a test run, importing only 10 rows, so we can inspect the result before importing the whole table:
 ```{r }
 ## 1.1  Import a .csv file
 ###############################################################################
@@ -301,7 +305,7 @@ population2010 <- read.csv("data/pop2010.csv", nrows=10)
 population2010
 ```
 
-That looks good, the only thing is, I can tell you that all the data in this file is fron 2010, so we do not really need the last column. In order to skip it during import, we can use the `colClasses` argument, and setting the seventh argunemt to `NULL`
+That looks good, the only thing is, I can tell you that all the data in this file is from 2010, so we do not really need the last column. In order to skip it during import, we can use the `colClasses` argument, and setting the seventh argument to `NULL`
 
 ```{r}
 # import full table except for 7th column (year)
@@ -335,7 +339,7 @@ data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
 # download - Excel files are binary, so set the mode to "wb"!!
 download.file(data.url, data.location, mode="wb")
 ```
-You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on peopple's perceptions of the current economic situation. Close the Excel file before proceding! Several solutions are available for importing Excel files into R, a nice overview can be found [http://www.r-bloggers.com/read-excel-files-from-r/](here). In this practical we will use the `xlsx` package:
+You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on people's perceptions of the current economic situation. Close the Excel file before proceeding! Several solutions are available for importing Excel files into R, a nice overview can be found [http://www.r-bloggers.com/read-excel-files-from-r/](here). In this practical we will use the `xlsx` package:
 
 ```{r}
 ## Importing the data from an .xls file
@@ -361,7 +365,7 @@ household.situation <- read.xlsx(data.location, sheetIndex = 3,
 ```
 
 
-Finally, sometimes we need to extract the data from a zipped file, this can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another format we will import an SPSS file as well.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and wellbeing. ] 
+Finally, sometimes we need to extract the data from a zipped file, this can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another format we will import an SPSS file as well.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
 ```{r}
 ## 1.3  Download, unzip and import a .dat file 
 ###############################################################################
@@ -392,7 +396,7 @@ ed.psy.survey <- read.spss(data.location,  to.data.frame=TRUE)
 ed.psy.survey[1:5,1:5]
 ```
 
-Now we have the data, before we continue we'll just do a bit of housekeeping and clear our workspace of the objects we don't need anymore (including the survey dataset, which we will not use in this practical)
+Now we have the data, before we continue we'll just do a bit of housekeeping and clear our workspace of the objects we don't need any more (including the survey dataset, which we will not use in this practical)
 
 ```{r}
 # CLEAN UP!
@@ -401,8 +405,15 @@ rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, tem
 
 ### Data Tidying
 
-The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (SEX==1), women (SEX==2), and both (SEX==0). 
-We really only need to remove the rows with the values for (SEX==0), but we can use this opportunity to perform a data check as well, while practicing the `spread()` and `gather()` functions:
+In the second part of this practical we will use the functions from the `tidyr` package to tidy up the two datasets.
+
+```{r, warning=FALSE, message=FALSE}
+## 2.1 tidy up the population data
+###############################################################################
+require(tidyr)
+```
+
+The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for (SEX==0), but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
 
 First let's try out our technique on a small subset of the data - this is good practice in general, especially if you are dealing with large datasets. We'll select only the observations for Aruba, and have a look at them:
 ```{r}
@@ -432,21 +443,30 @@ all.equal(tidy.test$both, tidy.test$check)
 # looks good, now we can remove both total columns:
 tidy.test$check <- NULL
 tidy.test$both <- NULL
+
+# so now we have:
+head(tidy.test)
 ```
 
 And finally we have to use `gather()` to get back to a tidy table. Remember, with gather you need to pass the *names* of the new variables that are now the *key* and the *value*, and the column names which hold them:
 ```{r}
 tidy.test <- gather(tidy.test, sex, population, 5:6)
+# and let's check it again:
+head(tidy.test)
 ```
 
 If you are happy with the test run, you can now try it on the whole `population2010` table. 
 
-Most of the time you will not be lucky enough to work with as nicely formed datasets as the population one. But the same tools can be used to disentangle much more messy tables, such as theo ones we extracted from the Excel file above. 
+```{r}
+## 2.2 tidy up the perception data
+###############################################################################
+```
+Most of the time you will not be lucky enough to work with as nicely formed datasets as the population one. But the same tools can be used to disentangle much more messy tables, such as the ones we extracted from the Excel file above. 
 
 Let's have a look at one of the three files, e.g. `household.situation`, and see how it could be tidied up. What are the variables (that should be in the columns), and what are the observations (that should have one row each)? 
 ```{r}
 # first let's remane the column names
-colnames(household.situation) <- c("perception", "inc.le.20", 
+colnames(household.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
                                    "inc.60.to.99", "inc.gt.100", "all")
 household.situation
@@ -455,8 +475,13 @@ household.situation
 In fact the whole table needs to be transposed, so that each population group represents one observation, and the proportion answering each question are the variables. In order to do that we need to first gather the data in long form, before spreading it out again wide.^[The `t()` function will transpose a data frame in R, try it out to see if it is a useful alternative to gather and spread. ] 
 
 ```{r}
+# transpose using gather and spread  
 X.household.situation <- gather(household.situation, income.group, proportion, 2:7)
-tidy.household.situation<- spread(X.household.situation, perception, proportion)
+tidy.household.situation <- spread(X.household.situation, perception, proportion)
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.household.situation) <- c("income.group", "bad", "good", "neutral")
+# check the result and remove the temporary table
+tidy.household.situation
 rm(X.household.situation)
 ```
 
@@ -469,6 +494,8 @@ tidy.household.situation$perception <- "HH"
 Now you can repeat the tidying for the UK and world perceptions, and once all three tables are tidy, you can merge them together using `rbind()`:
 
 ```{r, echo=c(18:19)}
+## 2.2.2. UK SITUATION
+
 # first let's remane the column names
 colnames(UK.situation) <- c("perception", "inc.le.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
@@ -476,10 +503,13 @@ colnames(UK.situation) <- c("perception", "inc.le.20",
 # transpose using gather and spread  
 X.UK.situation <- gather(UK.situation, income.group, proportion, 2:7)
 tidy.UK.situation <- spread(X.UK.situation, perception, proportion)
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.UK.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.UK.situation$perception <- "UK"
 
+## 2.2.3. WORLD SITUATION
 # first let's remane the column names
 colnames(world.situation) <- c("perception", "inc.le.20", 
                             "inc.20.to.39", "inc.40.to.59", 
@@ -487,9 +517,12 @@ colnames(world.situation) <- c("perception", "inc.le.20",
 # transpose using gather and spread  
 X.world.situation <- gather(world.situation, income.group, proportion, 2:7)
 tidy.world.situation <- spread(X.world.situation, perception, proportion)
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.world.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.world.situation$perception <- "W"
+
 # merge all the tables together
 tidy.economic.situation <- rbind(tidy.household.situation,
                                  tidy.UK.situation,
@@ -499,31 +532,227 @@ tidy.economic.situation <- rbind(tidy.household.situation,
 Finally, you can now clear your workspace using `rm()` as we did before, to remove everything except for `tidy.population2010` and `tidy.economic.situation`. 
 
 
-
+\newpage
 # Efficient Coding
+This section covers some of the most important skills to improve the efficiency, readability, and reproducibility of your R code. The standard control of the flow of your code that can be achieved with `ifelse` statements and looping is covered briefly, however you are encouraged in particular to explore the advantages of *vectorised* R code. Writing your own functions will greatly streamline your work, as well as forcing you to think in more abstract terms about your analysis - making it easily transferable and reproducible as opposed to limited to the specific situation you find yourself analysing at the moment.
+
+Finally, the relatively new `dplyr` family of functions is one of the most powerful recent developments in the R coding world. While all of the data processing capabilities of `dplyr` existed in R before, `dplyr` brings them together in a comprehensive and systematic way, that allows for cleaner code that is easier to read, and faster to run. It also integrates logically with the `tidyr` family of functions described earlier, but it's most exciting and revolutionary aspect is it's assimilation of the *piping* or *chaining* of successive data processing functions - originally developed in the `magrittr` package, and now rightly becoming mainstream R practice. 
+
 
 ## Standard control structures
 
+An indispensable gain in efficiency of your programming can be achieved by using *control strucures* to control the execution of your code. These can be divided into *conditional execution* structures (`if` and `else` type functions) and *looping* structures. However, as we shall see in the next section, there are some very good reasons to avoid looping in R!
+
 ### Conditional execution
+
+The standard syntax for conditional execution is as follows:
+
+```{r, eval=FALSE}
+if (condition) {
+  # do something
+} else {
+  # do something else
+}
+```
+
+In fact, you may also use only the `if()` construct on it's own:
+
+```{r, eval=FALSE}
+if (condition) {
+  # do something
+}
+```
+
+The if/else syntax also works in a single line, where you can dispense with the curly braces:
+
+```{r, eval=FALSE}
+if (x >= 0)  print("Poz") else print("Neg")
+}
+```
+
+While this is more compact, it can impact readability, and can also make your code more difficult to debug and extend. Using curly braces and indenting the code properly will make it clearer to the reader, and also easier to e.g. extend via nesting:
+
+```{r, eval=FALSE}
+x <- runif(1) # randum number from uniform distribution [0,1]
+if (x >= 0.6) {
+  print("Good")
+} else {
+  if (x <= 0.4) {
+    print("Bad")
+  } else {
+    print("Not Sure")}
+}
+```
+
+The conditions to be evaluated are: 
+```{r, eval=FALSE}
+x == y  # x is equal to y
+x != y  # x is not equal to y
+x > y   # x is greater than y
+x < y   # x is less than y
+x <= y  # x is less than or equal to y
+x >= y  # x is greater than or equal to y
+TRUE    # 
+FALSE   #
+```
+
+And these can further be combined using standard logical operators:
+
+```{r, eval=FALSE}
+! x       # NOT
+x & y     # AND
+x | y     # OR
+xor(x, y) # exclusive OR
+```
+
+What if you want to run a conditional statement over an entire vector? You might be tempted to jump to the next section on looping, and construct a loop going over each element of the vector and evaluating the condition. This would of course work, but it would be a very inefficient way of coding, and would not be taking advantage of the efficiencies of vectorisation in R (covered in the next subsection). In such cases, you should use the *vectorised* form of the if/else construct:
+
+```{r, eval=FALSE}
+ifelse(condition, yes, no)
+```
+
+Where `yes` is the value to be returned if the condition is satisfied, and `no` if not. Similarly as above, `ifelse()` statements can also be nested. 
+```{r}
+x <- runif(20) # 20 randum numbers from uniform distribution [0,1]
+ifelse(x >= 0.6, "G", 
+       ifelse(x<=0.4, "B", "N"))
+```
 
 ### Looping
 
-### PRACTICAL
+R distinguishes two types of loops:
+- ones that execute a function a predetermined number of times, as determined by an *index* [`i`]
+- ones that execute a function until a condition is met
+
+The `for()` loop construct takes the following form:
+
+```{r, eval=FALSE}
+for (i in seq) expr
+```
+
+Again, using curly braces is usually preferred, for loops can be nested and the indices need not be integers: 
+
+```{r}
+mat <- matrix(NA, nrow=3, ncol=3)
+for (i in 1:3){
+  for (j in 1:3){
+    mat[i,j] <- paste(i, j, sep="-")
+  }
+} 
+mat
+```
+
+
+While loops take the following form:
+```{r, eval=FALSE}
+while(cond) expr
+```
+
+```{r}
+cumsum <- 0
+while(cumsum <= 3) {
+  cumsum <- cumsum + runif(1)
+  print(cumsum)
+}
+```
+A repeat loop is similar, but we must explicitly add a `break` to specify when to exit the loop:
+```{r}
+cumsum <- 0
+repeat {
+  cumsum <- cumsum + runif(1)
+  print(cumsum)
+  if (cumsum >= 3) break
+}
+```
+
+Both of these constructs should be used with great care, as careless specification of the exiting condition can leave you stuck in an infinite loop. Try running the last example without the line specifying the break! Luckily RStudio allows you to interrupt such an endless loop using the little red stop button in the top right corner of the console window. 
 
 ## Vecotrisation  and `apply` family of funcitons
 
+Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The genera rule is this: If you need to apply an expression over a series of elements and the order in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read. 
+
+The underlying logic of the `apply` family is starting out with some data structure (a vector, matrix, data.frame etc.), we want to split it into constituent parts, apply a function on each of them, and combine them back^[This idea comes from Hadley Wickham's paper on the split-apply-combine strategy of data analysis:  [http://vita.had.co.nz/papers/plyr.html](http://vita.had.co.nz/papers/plyr.html)]. We might for example want to apply a function on every row of a data.frame, every element of a vector, or every column in a matrix. 
+
+### `apply()` 
+
+The `apply()` function will apply a function to either the rows or the columns of a matrix. It's basic structure is: 
+
+```{r, eval=FALSE}
+apply(X, MARGIN, FUN, ...)
+```
+Where X is a matrix (if it is a data.frame, R will coerce it to a matrix), `MARGIN == 1` indicates rows, and `MARGIN == 2` indicates columns. A simple example of its use is to calculate row and column totals:
+
+```{r}
+mat <- matrix(1:9, 3,3)
+# row totals
+apply(mat, 1, sum)
+# column totals
+apply(mat, 2, sum)
+```
+
+In passing the function `FUN` in the example here we used built in function `sum`, but the real power of `apply` comes from integrating it with user defined functions. These are covered in the next section, but here is a quick example of how an in-line function can be used to find the second largest value in each row of a matrix. 
 
 
-### PRACTICAL 
 
-benchmarking apply vs for loops
+```{r}
+mat <- matrix(sample(1:100, 25), 5,5)
+mat
+# find the second largest value in each row
+apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
+
+# and for comparison, here is how we would do this using a for loop
+out <- vector()
+for (i in 1:nrow(mat)) {
+out[i] <- sort(mat[i,], decreasing = TRUE)[2]
+}
+out
+```
+
+
+### `lapply()` and `sapply()`
+
+The functions `lapply()` and `sapply()` both apply a function to a vector, and the first returns a list back, while the second will try to simplify and return a vector. 
+
+
+It is important to note that in R there are two types of vectors: i) atomic vectors and ii) lists. 
+
+Furthermore, data frames in R are also represented as lists, with each column is an element of the list, represented by a vector. 
+
+So this means both these functions can be applied to atomic vectors, to data frames, or to other types of lists:
+
+```{r}
+# a list of elements with different lengths:
+test <- list(a = 1:5, b = 20:100, c = 17234) 
+lapply(test, min)
+sapply(test, min)
+
+# a data frame (list of three vectors of equal length):
+test <- data.frame(a = 1:5, b = 6:10, c = 11:15) 
+lapply(test, mean)
+sapply(test, mean)
+
+# an atomic vector (this is rather silly, since sqrt(X) would work the same)
+# but is added for completeness
+test <- 1:3
+lapply(test, sqrt)
+sapply(test, sqrt)
+```
+
+By writing more elaborate functions and passing them as the argument to any of the `apply` family of functions, this seemingly simple construct can become incredibly powerful - as well as making the code eminently readable.
 
 
 ## Writing your own functions
 
+One of the greatest strengths of R comes from user 
+
 ### objects, types, environments
 
 ### passing arguments
+
+
+
+
+
 
 ### PRACTICAL 
 
@@ -551,6 +780,7 @@ benchmarking apply vs for loops
 * `mutate`
 
 ### Piping/chaining daisies 
+![Photo by Joe Cross - https://www.flickr.com/photos/jaycross/2869212451](../../figures/pipe.jpg)
 
 ### PRACTICAL 
 
@@ -571,7 +801,7 @@ APIs (Application Programming Interface) allow standardised data access to a var
 
 > When used in the context of web development, an API is typically defined as a set of Hypertext Transfer Protocol (HTTP) request messages, along with a definition of the structure of response messages, which is usually in an Extensible Markup Language (XML) or JavaScript Object Notation (JSON) format. 
 
-[Source: WIkipedia]
+[Source: Wikipedia]
 
 With R we can easily handle both processes:
 

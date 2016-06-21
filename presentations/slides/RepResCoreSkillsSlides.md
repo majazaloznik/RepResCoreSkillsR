@@ -256,6 +256,11 @@ messy.again
 12       UK    density in the year 2050      294.11
 ```
 
+Tidy Data - Resources
+========================================================
+For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
+
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
 
 Practical II. - import and clean data
@@ -272,3 +277,46 @@ Practical II. - import and clean data
 ## 2.1  Data tidying
 ##########################################################
 ```
+
+Efficient Coding Practices
+========================================================
+incremental:true
+
+* Standard control structures
+  + Looping
+  + Conditional execution
+* Vectorisation and `apply` family of funcitons
+* Writing your own functions
+* Data manipulation with `dplyr`
+  + Subsetting
+  + Grouping
+  + Making new variables
+  + Piping/chaining daisies 
+
+Conditional execution
+========================================================
+incremental:true
+
+Looping
+========================================================
+incremental:true
+
+Vectorisation
+========================================================
+incremental:true
+
+Writing your own functions
+========================================================
+incremental:true
+
+Data manipulation with `dplyr`
+========================================================
+incremental:true
+
+Piping
+========================================================
+
+<div align="center">
+<img src="../../figures/pipe.jpg" height=500>
+</div>> <p style="text-align: right;"><small>[Photo by Joe Cross](https://www.flickr.com/photos/jaycross/2869212451)</small> </p>
+

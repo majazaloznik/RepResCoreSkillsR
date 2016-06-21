@@ -117,17 +117,23 @@ tidy.population2010 <- gather(tidy.population2010, sex, population, 5:6)
 
 ## 2.2 tidy up the perception data
 ###############################################################################
+## 2.2.1. HOUSEHOLD SITUATION
 
 # first let's remane the column names
-colnames(household.situation) <- c("perception", "inc.le.20", 
+colnames(household.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
                                    "inc.60.to.99", "inc.gt.100", "all")
 # transpose using gather and spread  
 X.household.situation <- gather(household.situation, income.group, proportion, 2:7)
 tidy.household.situation <- spread(X.household.situation, perception, proportion)
 
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.household.situation) <- c("income.group", "bad", "good", "neutral")
+
 # add variable for the question asked
 tidy.household.situation$perception <- "HH"
+
+## 2.2.2. UK SITUATION
 
 # first let's remane the column names
 colnames(UK.situation) <- c("perception", "inc.le.20", 
@@ -136,10 +142,13 @@ colnames(UK.situation) <- c("perception", "inc.le.20",
 # transpose using gather and spread  
 X.UK.situation <- gather(UK.situation, income.group, proportion, 2:7)
 tidy.UK.situation <- spread(X.UK.situation, perception, proportion)
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.UK.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.UK.situation$perception <- "UK"
 
+## 2.2.3. WORLD SITUATION
 # first let's remane the column names
 colnames(world.situation) <- c("perception", "inc.le.20", 
                             "inc.20.to.39", "inc.40.to.59", 
@@ -147,6 +156,8 @@ colnames(world.situation) <- c("perception", "inc.le.20",
 # transpose using gather and spread  
 X.world.situation <- gather(world.situation, income.group, proportion, 2:7)
 tidy.world.situation <- spread(X.world.situation, perception, proportion)
+# let's also rename the column names in keeping with the convention of avoiding spaces
+colnames(tidy.world.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.world.situation$perception <- "W"
