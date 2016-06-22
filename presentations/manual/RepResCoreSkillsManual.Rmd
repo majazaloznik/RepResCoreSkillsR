@@ -5,11 +5,15 @@ author: "Maja Zalo&#x17e;nik"
 output: 
   pdf_document:
     toc: true
+    toc_depth: 3
     number_sections: true
 
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
+require(dplyr)
+require(tidyr)
+require(plotrix)
 opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
@@ -279,6 +283,7 @@ require(xlsx)
 require(forein)
 require(dplyr)
 require(tidyr)
+require(plotrix)
 ```
 
 
@@ -526,7 +531,7 @@ Now you can repeat the tidying for the UK and world perceptions, and once all th
 ## 2.2.2. UK SITUATION
 
 # first let's remane the column names
-colnames(UK.situation) <- c("perception", "inc.le.20", 
+colnames(UK.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
                                    "inc.60.to.99", "inc.gt.100", "all")
 # transpose using gather and spread  
@@ -540,7 +545,7 @@ tidy.UK.situation$perception <- "UK"
 
 ## 2.2.3. WORLD SITUATION
 # first let's remane the column names
-colnames(world.situation) <- c("perception", "inc.le.20", 
+colnames(world.situation) <- c("perception", "inc.lt.20", 
                             "inc.20.to.39", "inc.40.to.59", 
                             "inc.60.to.99", "inc.gt.100", "all")
 # transpose using gather and spread  
@@ -565,7 +570,7 @@ Finally, you can now clear your workspace using `rm()` as we did before, to remo
 # Efficient Coding
 This section covers some of the most important skills to improve the efficiency, readability, and reproducibility of your R code. The standard control of the flow of your code that can be achieved with `ifelse` statements and looping is covered briefly, however you are encouraged in particular to explore the advantages of *vectorised* R code. Writing your own functions will greatly streamline your work, as well as forcing you to think in more abstract terms about your analysis - making it easily transferable and reproducible as opposed to limited to the specific situation you find yourself analysing at the moment.
 
-Finally, the relatively new `dplyr` family of functions is one of the most powerful recent developments in the R coding world. While all of the data processing capabilities of `dplyr` existed in R before, `dplyr` brings them together in a comprehensive and systematic way, that allows for cleaner code that is easier to read, and faster to run. It also integrates logically with the `tidyr` family of functions described earlier, but it's most exciting and revolutionary aspect is it's assimilation of the *piping* or *chaining* of successive data processing functions - originally developed in the `magrittr` package, and now rightly becoming mainstream R practice. 
+
 
 
 ## Standard control structures
@@ -849,13 +854,14 @@ As we have seen before with if/else statements and loops, functions can also be 
 
 From a project management point of view it is also good practice to store all your functions in a separate file, which you `source()` at the begining of each session. You can even add `source("00-MyFunctions.R")` to your `.RProfile` file, which means all your bespoke functions will be automatically uploaded at the start of each session. 
 
-
-### PRACTICAL 
-
-Practice conditional expressions and logical operators by seeing if you can figure out the results of the following expressions, then check them in R:
+\newpage
+## PRACTICAL: If/else, loops, apply and functions
 ```{r}
 ## 3.1 Practice conditional expressions and logical operators 
 ###############################################################################
+```
+Practice conditional expressions and logical operators by seeing if you can figure out the results of the following expressions, then check them in R:
+```{r}
 x <- 1:7
 y <- -3:3
 x
@@ -873,16 +879,18 @@ xor((x > 3), (x < 5))
 (3 %in% y) & !(3 %in% x) 
 ```
 
-
+```{r, eval = FALSE}
+## 3.2 Check consistency of tidy.economic.situation proportions ising IF - ELSE
+###############################################################################
+```
 Use a `for()` loop to go through every row of `tidy.economic.situation` (tip: `nrow()` will tell you how many iterations you need):
+
 * for each row add up the proportions for all three answers (columns two to four)
 * use an `if/else` construct to check if the total equals 100
     + if it does, use `print` to print out an OK message
     + if it doesn't, print out a different message, one created using `paste` - so you can include the information on *which* row you have found the error.
 
 ```{r, eval = FALSE}
-## 3.2 Check consistency of tidy.economic.situation proportions ising IF - ELSE
-###############################################################################
 for (i in 1: nrow(tidy.economic.situation)) {
   if(???){
     ???} else {
@@ -890,15 +898,18 @@ for (i in 1: nrow(tidy.economic.situation)) {
 }
 ```
 
+```{r, eval = FALSE}
+## 3.3 Write a function to check consistency of tidy.economic.situation proportions
+###############################################################################
+```
 Now write a function for the row checking you just did inside the `for()` loop. This is simply generalising the if/else expression to take a supplied argument instead of explicitly naming the row:
+
 * Make sure you *document* your function correctly!
 * the input for the function should be a row
 * the output of the function should be  a variable called `message` - "OK" or "Not OK"
 * Use the framework below:
 
 ```{r, eval = FALSE}
-## 3.3 Write a function to check consistency of tidy.economic.situation proportions
-###############################################################################
 FunRowCheck <- function(x) {
   message <- if(???){
   } else {
@@ -908,10 +919,7 @@ FunRowCheck <- function(x) {
 ```
 
 Now test out your function on a single row:
-```{r, echo=12:15}
-## 3.3 Write a function to check consistency of tidy.economic.situation proportions
-###############################################################################
-
+```{r, echo=11}
 FunRowCheck <- function(x) {
   message <- if(sum(x) == 100){
     "OK"} else {
@@ -943,10 +951,15 @@ tidy.economic.situation
 
 If it doesn't have a look at the `02-FunctionsAndLoops.R` file in the scripts folder for the solution.
 If it does and you have plenty of time, you can try additionally:
+
 * writing another function that will simply sum the three columns
 * applying it to the table and appending the new variable (`total`)
 * creating three new variables that are correctly scaled to sum up to 100 (e.g. `bad.scaled`, `good.sscaled`, `neutral.scaled`). 
 
+```{r}
+## 3.5 Bar-Plotting function
+###############################################################################
+```
 To finish off this practical session we will write a function for plotting our table, using the `barplot()` function. This function only accepts vectors or matrices, but because our data is in a data.frame, we need to use `as.matrix()` for it to work, in addition to `t()` for transposing it. Here is the code for the most stripped down stacked barplot of the people's perceptions of their household financial situation. Note that the order of the columns had to be changed to make the more logical order of bad - neutral - good. 
 ```{r}
 barplot(t(as.matrix(tidy.economic.situation[1:6,c(2,4,3)])))
@@ -964,56 +977,248 @@ Once you are happy with your plot, enclose it in a function, so that you can pas
 
 
 
+\newpage
+# Data manipulation with `dplyr`
 
-## Data manipulation with `dplyr`
+Finally, the relatively new `dplyr` family of functions is one of the most powerful recent developments in the R coding world. While all of the data processing capabilities of `dplyr` existed in one shape or another in R before (usually several), `dplyr` brings them together in a comprehensive and systematic way, that allows for cleaner code that is easier to read, and faster to run. It also integrates logically with the `tidyr` family of functions described earlier, but it's most exciting and revolutionary aspect is it's assimilation of the *piping* or *chaining* of successive data processing functions - originally developed in the `magrittr` package, and now rightly becoming mainstream R practice. 
 
-### Subsetting
+We will cover some of the most important functionalities of `dplyr` here, but you are encouraged to explore several excellent on-line resources, for example:
 
-* `filter`
-* `sample`
-* `slice`
-* `distinct`
-* `select`
+- The same [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) that also covers `tidyr`
 
-### Grouping
+- [Introduction vignette])https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
 
-* `group_by`
-
-### Summarizing
-
-* with own function
-
-### Making new variables
-
-* `mutate`
-
-### Piping/chaining daisies 
-![Photo by Joe Cross - https://www.flickr.com/photos/jaycross/2869212451](../../figures/pipe.jpg)
-
-### PRACTICAL 
-
-## FINAL PRACTICAL
-
-something along the lines of: 
-
-* Fun1: a function to be called in summarize or mutate (e.g. z-score)
-
-* Fun2: a chain (that calls Fun1), and then filters the table in some way e.g. subset for each country
-
-* Fun3: a nice plotting function that takes the result of Fun2 and plots it, using `paste()` for titles etc..
+- [dplyr and pipes: the basics](http://seananderson.ca/2014/09/13/dplyr-intro.html)
 
 
-## Accessing Data Using APIs
+For this whole seciton we will be using the two data tables  prepared in the first practical. 
 
-APIs (Application Programming Interface) allow standardised data access to a variety of web resources. More and more websites are publishing them making it easy for developers and researchers to dynamically access or update content. 
+## Subsetting
 
-> When used in the context of web development, an API is typically defined as a set of Hypertext Transfer Protocol (HTTP) request messages, along with a definition of the structure of response messages, which is usually in an Extensible Markup Language (XML) or JavaScript Object Notation (JSON) format. 
+### `filter()`
+Extracts rows that meet the logical criteria:
+```{r, eval = FALSE}
+filter(data, criteria)
+```
 
-[Source: Wikipedia]
+You can use any of the evaluation conditions and logical operators  we covered at the beginning of the previous section:
 
-With R we can easily handle both processes:
+```{r, eval = FALSE}
+filter(tidy.population2010, AREA_KM2 < 1000 & population > 10000 & AGE == 0)
+```
 
-* Input: The HTTP request
-* Output: The .json or .xml response
+### `select()`
+Extracts only the columns that you list:
+```{r, eval = FALSE}
+select(data, list)
+```
 
-We will use the `httr` package to 
+The columns can be named directly with no need for quotation marks
+```{r, eval = FALSE}
+select(tidy.economic.situation, bad, good, neutral)
+```
+
+In addition there is a large number of helper functions to select column names:
+
+```{r}
+# all the columns between bad and neutral
+head(select(tidy.economic.situation,bad:neutral), n=3)
+# all but the perception column
+head(select(tidy.economic.situation, -perception), n=3)
+# contains a dot in the name:
+head(select(tidy.economic.situation, contains(".")), n=3)
+# starts with the letter p
+head(select(tidy.economic.situation, starts_with("p")), n=3)
+# ends with the letter d
+head(select(tidy.economic.situation, ends_with("d")), n=3)
+# contains the text "n"
+head(select(tidy.economic.situation, contains("n")), n=3)
+
+```
+
+You can also use select to reorder the columns, in our case we might want to reorder the three answer columns so:
+```{r}
+# change order of columns
+head(select(tidy.economic.situation,income.group:bad, neutral, good:perception), n=3)
+# we can also do this using the columns' respective indices instead
+head(select(tidy.economic.situation, 1,2,4,3,5), n=3)
+```
+
+## Making new variables
+
+New variables are easliy created using `mutate()`, which has the additional advantage of allowing you to reuse variables as you create them, without the need for an intermeiate step!
+```{r}
+# scale the values so they all sum up to 100
+tidy.economic.situation <- mutate(tidy.economic.situation, total = bad+neutral+good, 
+                                  bad.scaled = bad/total*100,
+                                  good.scaled = good/total*100,
+                                  neutral.scaled = neutral/total*100,
+                                  total.scaled =  bad.scaled  + good.scaled + 
+                                    neutral.scaled
+)
+head(tidy.economic.situation)
+# we can now use select to remove the old ones
+tidy.economic.situation <- select(tidy.economic.situation, -bad, - good, -neutral, 
+                                  -total, -total.scaled)
+# we could also use rename to rename the new ones
+tidy.economic.situation <- rename(tidy.economic.situation, bad = bad.scaled, 
+                                  good = good.scaled, neutral = neutral.scaled)
+```
+
+
+New variables can also be made using existing or user written functions. For example using `cut()` we can recode the bad variable into a categorical one:
+```{r}
+head(mutate(tidy.economic.situation, bad.cat = cut(bad, seq(0,100,10))))
+```
+
+
+## Summarizing
+We can quickly summarise the data column wise using the `summarise()` function
+```{r, eval = FALSE}
+summarise(data, new.var = summary.function(column))
+```
+
+For example the average population, average area and total count in the population table, we can also use our own functions, such as the one we wrote before to get the second largest populaiton value
+```{r}
+summarise(tidy.population2010, pop = mean(population), area = mean(AREA_KM2), count = n(), 
+          test = FunSecondLargest(population))
+```
+
+But the summarise funciton really comes into it's own when it operates on a *grouped* table. Using the function `group_by()` the table is (invisibly) split into subtables by the values of the grouping variable, and the summarise function then operates on each subset individually:
+```{r}
+summarise(group_by(tidy.population2010, AGE), 
+          pop = mean(population), area = mean(AREA_KM2), count = n(), 
+          test = FunSecondLargest(population))
+```
+
+An important corollary to the grouping function is `ungroup()`, which removes the grouping from the table for further analysis -- we shal use it in the last section of this chapter
+
+## Joining tables
+The `dplyr` pacgage also contains a set of functins that allow you to join tables by matching on common variables namely:
+- left_join(a, b) 
+- right_join(a, b) -- keeps all 
+- inner_join(a, b) -- only keeps rows present in both a and b
+- full_join(a, b) -- keeps all rows
+
+
+```{r}
+# prepare two small tables, one of UK men aged 0 or 1, the second of women aged 1 or 2:
+UK.men <- filter(tidy.population2010, FIPS == "UK" & sex == "male" & (AGE == 0 | AGE == 1 ))
+UK.women <- filter(tidy.population2010, FIPS == "UK", sex == "female" & (AGE == 1 | AGE == 2 ))
+
+# try out all 4 merges on the two tables
+left_join(UK.men, UK.women, by = c("AGE", "NAME", "AREA_KM2", "FIPS"))
+right_join(UK.men, UK.women, by = c("AGE", "NAME", "AREA_KM2", "FIPS"))
+inner_join(UK.men, UK.women, by = c("AGE", "NAME", "AREA_KM2", "FIPS"))
+full_join(UK.men, UK.women, by = c("AGE", "NAME", "AREA_KM2", "FIPS"))
+```
+
+All of these have a `by=` argument, which lets you choose the columns to be joined by - if you do not explicitly name them, `dplyr` uses all the ones with identical names in both tables. If the columns you want to join by have different tables in each table you can specify this so: `by = c("name.a" = "name.b")`
+
+### Other `dplyr` funcitons
+The [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) is an indespensible help with `dplyr` funcitons. We will briefly mention a few more, but there are several more that we will not cover here.
+
+`arrange()` for data sorting - ascending by default, otherwise specify `desc()`:
+```{r}
+arrange(tidy.economic.situation, perception, desc(bad))
+```
+
+
+
+## Piping/chaining daisies 
+
+*Piping* data brings a completely new level of intuitiveness you R programming. Instead of nesting and indenting successive functions, which means the code has to be read *inside out*, piping (also known as daisy chaining) allows the code to be written in the natural direction in which the data is flowing.  The piping operator `%>%` indicates the direction of this flow as well, taking the output of the preceding function and directing it into the next one. 
+
+Piping can be applied to almost any function, but shines particularly brightly when combining the dplyr functions we have just covered. For a pretty silly example:
+
+```{r}
+tidy.population2010 %>%
+  filter(AREA_KM2 < 2000 & population > 15000 & AGE == 0) %>%
+  select(-AGE) %>%
+  mutate(density = population/AREA_KM2) %>%
+  group_by(NAME) %>%
+  summarise(count = n(), mean.density = mean(density)) 
+```
+
+You will note that we skipped naming the data object in all of functions. The piping operator means it is implicit what the data being passed on is, so there is no more need to explixitly name it. 
+
+In keeping with the piping logic, we can also use a rarely used R assignment operator: `->`. We can add it at the end of the pipe/chain and point it to the new object's name. Of course you can also start the way we have been starting all along, and assing in the standard direction `<-` if you prefer. 
+
+A whole set of piped functions can easily be wrapped up in a function: 
+```{r}
+FunMyPipe <- function(x) {
+  x %>% 
+    sqrt %>%   # square root
+    mean %>%   # mean  
+    "*" (100)  # multiplication - a bit awkward, true
+}
+# Test it out on a short vector
+FunMyPipe(1:10)
+```
+
+
+## PRACTICAL 
+```{r}
+## 4.1 Write a function to extract population pyramid data
+###############################################################################
+```
+Write a function that uses piping and `dplyr` functions to do the following:
+
+* the input is the FIPS country code [https://en.wikipedia.org/wiki/List_of_FIPS_country_codes](https://en.wikipedia.org/wiki/List_of_FIPS_country_codes)
+* from  tidy.population2010 extracts the data for that country
+* remove variables for the area
+* create a new variable grouping the ages into 5 year age groups
+* find the sum of the population for each age group and gender combination (use `group_by`!)
+* don't forget to `ungroup` the data before the next step!
+* create a new variable representing the proportion of the total population in each age/sex combination (* 100)
+* return this table, which should have 40 rows and 4 columns.
+
+```{r}
+## 4.2 Write a function to draw a population pyramid plot
+###############################################################################
+```
+We will use the `plotrix` package for this, although you are free to experiment with drawing your own pyramid plot - you will have much more control than using the default `pyramid.plot()` function. Have a look at the help documentation for this function. In particular note that you need to provide it two vecotrs, `lx` and `rx` for the popoulation sizes. 
+
+Write a function that:
+
+* takes as it's input the output from your previous function (the 40x4 table)
+* creates the `lx` and `rx vectors
+* **IMPORTANT** again you will have a data.frame as the result. use `as.matrix` on `lx` and `rx` so they can be used in the plot
+* calls pyramid.plot(lx, rx) as well as any other arguments you may want to add. (in particular you may want to add `labels=`). One way of creating them is `paste(seq(0,96, 5), seq(5,100,5), sep="-")`, but you can also use the values from the age group vairable. 
+
+
+
+```{r, echo = FALSE}
+FunPopClean <- function(cntry = "UK"){
+   tidy.population2010 %>%
+    filter(FIPS == cntry) %>%
+    mutate(age.g = cut(AGE, 20)) %>%
+    group_by(age.g, sex) %>%
+    summarise(population = sum(population)) %>%
+    ungroup() %>%
+    mutate(prop = 100*population/sum(population)) ->
+    data
+  return(data)
+}
+
+FunPlot <- function(data, name = NULL){
+  data %>%  
+    filter( sex=="male") %>%
+    select(prop) %>% 
+    as.matrix -> lx
+  data %>%  
+    filter( sex=="male") %>%
+    select(prop) %>% 
+    as.matrix -> rx
+  pyramid.plot(lx, rx,
+               main=name,
+               labels = paste(seq(0,96, 5), seq(5,100,5), sep="-"))
+}
+```
+\newpage
+```{r fig.width = 6, fig.height = 5 }
+FunPlot(FunPopClean("BG"), "Bangladesh")  
+  
+```
+
+

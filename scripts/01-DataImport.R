@@ -136,7 +136,7 @@ tidy.household.situation$perception <- "HH"
 ## 2.2.2. UK SITUATION
 
 # first let's remane the column names
-colnames(UK.situation) <- c("perception", "inc.le.20", 
+colnames(UK.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
                                    "inc.60.to.99", "inc.gt.100", "all")
 # transpose using gather and spread  
@@ -150,7 +150,7 @@ tidy.UK.situation$perception <- "UK"
 
 ## 2.2.3. WORLD SITUATION
 # first let's remane the column names
-colnames(world.situation) <- c("perception", "inc.le.20", 
+colnames(world.situation) <- c("perception", "inc.lt.20", 
                             "inc.20.to.39", "inc.40.to.59", 
                             "inc.60.to.99", "inc.gt.100", "all")
 # transpose using gather and spread  
