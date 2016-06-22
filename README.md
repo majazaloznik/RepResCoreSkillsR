@@ -22,5 +22,5 @@ dplyr data manipulation tools.*
 
 The **manual** is in `presentations/manual/RepResCoreSkillsSlides.pdf`.
 
-The **slides** are in `presentations/slides/RepResCoreSkillsSlides.html`.
+The **slides** are at [http://rpubs.com/maja_z/RCoreSkillsRepRes](http://rpubs.com/maja_z/RCoreSkillsRepRes).
 
