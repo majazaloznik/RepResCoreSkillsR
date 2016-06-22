@@ -4,7 +4,7 @@ width:1200
 
 Maja Zalo&#x17e;nik
 
-22.3.2016
+22.6.2016
 
 
 
@@ -17,7 +17,7 @@ incremental: true
 - Importing and cleaning data
 - Standard control structures
 - Vectorisation and `apply` functions
-- Writing your own funcitons
+- Writing your own functions
 - Data manipulation with `dplyr`
 - Piping/chaining commands
 
@@ -251,7 +251,7 @@ Tidy Data - Resources
 ========================================================
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
-For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in the `literature` folder of this course's repository. 
 
 
 Practical I. - project setup
@@ -287,10 +287,10 @@ incremental:true
 * Standard control structures
   + Conditional execution
   + Looping
-* Vectorisation and `apply` family of funcitons
+* Vectorisation and `apply` family of functions
 * Writing your own functions
 * Data manipulation with `dplyr`
-  + Subsetting
+  + Sub-setting
   + Grouping
   + Making new variables
   + Piping/chaining daisies 
@@ -321,7 +321,7 @@ if (x >= 0.6) {
 ```
 
 ```
-[1] "Not Sure"
+[1] "Good"
 ```
 
 Conditional execution - conditions and operators
@@ -364,8 +364,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "B" "N" "B" "G" "B" "B" "N" "B" "N" "G" "N" "G" "B" "G" "N" "N" "B"
-[18] "B" "G" "B"
+ [1] "G" "B" "G" "B" "N" "B" "B" "G" "G" "G" "B" "B" "B" "B" "B" "B" "B"
+[18] "G" "B" "B"
 ```
 
 
@@ -437,11 +437,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   44    6   56   33   45
-[2,]   37   12   96   66   50
-[3,]   19   89   18   11   55
-[4,]   31   69   82   51    3
-[5,]   27    7   71   54   13
+[1,]    7   93   81   73   92
+[2,]   11   89   40   70   44
+[3,]   49   25   33   45   69
+[4,]   85   29  100   24   51
+[5,]   90   71   13   68   54
 ```
 
 ```r
@@ -463,7 +463,7 @@ out
 ```
 
 ```
-[1] 45 66 55 69 54
+[1] 92 70 49 85 71
 ```
 
 ```r
@@ -472,7 +472,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 45 66 55 69 54
+[1] 92 70 49 85 71
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -577,7 +577,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 45 66 55 69 54
+[1] 92 70 49 85 71
 ```
 
 Writing your own functions
@@ -637,7 +637,7 @@ Practical II
 Data manipulation with `dplyr`
 ========================================================
 
-* Subsetting:
+* Sub-setting:
   + `filter()`
   + `select()`
 * Calculating:
@@ -863,7 +863,7 @@ Joining tables
 ========================================================
 
 - `left_join(a, b)` -- keeps all rows in first table
-- `right_join(a, b)` -- keeps all roows in second table
+- `right_join(a, b)` -- keeps all rows in second table
 - `inner_join(a, b)` -- only keeps rows present in both a and b
 - `full_join(a, b)` -- keeps all rows
 
@@ -953,3 +953,97 @@ PRACTICAL III
 ##########################################################
 ```
 
+PRACTICAL III.i
+========================================================
+
+```r
+##########################################################
+## 4.0 Practice piping on population2010
+##########################################################
+```
+Using the `population2010.csv` file find the answers to the following:
+
+* How many 20 year-old males were there in Tanzania in 2010
+* Which country has the lowest total population?
+* In which country do women outnuber men in the most age groups?
+
+PRACTICAL III.I solutions
+========================================================
+incremental:true
+
+
+```r
+# How many 20 year-old males were there in Tanzania in 2010
+tidy.population2010 %>%
+  filter(FIPS == "TZ" & AGE == 20 & sex == "male")
+```
+
+```
+  AGE AREA_KM2     NAME FIPS  sex population
+1  20   885800 Tanzania   TZ male     424839
+```
+
+PRACTICAL III.I solutions
+========================================================
+incremental:true
+
+
+```r
+# Which country has the lowest total population?
+tidy.population2010 %>%
+  group_by(NAME) %>%
+  summarise( population = sum(population)) %>%
+  arrange(population)
+```
+
+```
+Source: local data frame [228 x 2]
+
+                        NAME population
+                      (fctr)      (int)
+1                 Montserrat       5118
+2  Saint Pierre and Miquelon       5943
+3           Saint Barthelemy       7406
+4               Saint Helena       7670
+5                      Nauru       9267
+6                     Tuvalu      10472
+7               Cook Islands      11488
+8                   Anguilla      14766
+9          Wallis and Futuna      15343
+10                     Palau      20879
+..                       ...        ...
+```
+
+PRACTICAL III.I solutions
+========================================================
+incremental:true
+
+
+```r
+# In which country do women outnuber men in the most age groups?
+tidy.population2010 %>%
+  spread(sex, population) %>%
+  mutate(morewomen = ifelse(female > male, 1, 0)) %>%
+  filter(morewomen == 1) %>%
+  group_by(NAME) %>%
+  summarise(most.ages = sum(morewomen)) %>%
+  arrange(desc(most.ages))
+```
+
+```
+Source: local data frame [228 x 2]
+
+                   NAME most.ages
+                 (fctr)     (dbl)
+1          Sierra Leone        98
+2              Cambodia        92
+3               Comoros        92
+4                Malawi        91
+5           Gambia, The        90
+6            Mauritania        90
+7  Virgin Islands, U.S.        90
+8            Mozambique        88
+9                Uganda        88
+10             Djibouti        87
+..                  ...       ...
+```

@@ -754,7 +754,7 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>Maja Zalo&#x17e;nik</p>
 
-<p>22.3.2016</p>
+<p>22.6.2016</p>
 
 </div>
 
@@ -769,7 +769,7 @@ hljs.initHighlightingOnLoad();
 <li class="fragment">Importing and cleaning data</li>
 <li class="fragment">Standard control structures</li>
 <li class="fragment">Vectorisation and <code>apply</code> functions</li>
-<li class="fragment">Writing your own funcitons</li>
+<li class="fragment">Writing your own functions</li>
 <li class="fragment">Data manipulation with <code>dplyr</code></li>
 <li class="fragment">Piping/chaining commands</li>
 </ul>
@@ -1056,7 +1056,7 @@ messy.again
 <div class="slideContent" >
 <p>For an excellent write-up of the main <code>tidyr</code> functions see Garrett Grolemund&#39;s post here <a href="http://garrettgman.github.io/tidying/">http://garrettgman.github.io/tidying/</a>.</p>
 
-<p>For a quick tidyr cheat-sheet stick this to your wall: <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling Cheatsheet</a>, also available in teh <code>literature</code> folder of this course&#39;s repository. </p>
+<p>For a quick tidyr cheat-sheet stick this to your wall: <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Data Wrangling Cheatsheet</a>, also available in the <code>literature</code> folder of this course&#39;s repository. </p>
 
 </div>
 
@@ -1103,12 +1103,12 @@ or for extra convenience: <a href="http://tinyurl.com/RCSRepRes">http://tinyurl.
 <li class="fragment">Conditional execution</li>
 <li class="fragment">Looping</li>
 </ul></li>
-<li class="fragment">Vectorisation and <code>apply</code> family of funcitons</li>
+<li class="fragment">Vectorisation and <code>apply</code> family of functions</li>
 <li class="fragment">Writing your own functions</li>
 <li class="fragment">Data manipulation with <code>dplyr</code>
 
 <ul>
-<li class="fragment">Subsetting</li>
+<li class="fragment">Sub-setting</li>
 <li class="fragment">Grouping</li>
 <li class="fragment">Making new variables</li>
 <li class="fragment">Piping/chaining daisies </li>
@@ -1139,7 +1139,7 @@ if (x &gt;= 0.6) {
 }
 </code></pre>
 
-<pre class="fragment"><code>[1] &quot;Not Sure&quot;
+<pre class="fragment"><code>[1] &quot;Good&quot;
 </code></pre>
 
 </div>
@@ -1179,8 +1179,8 @@ ifelse(x &gt;= 0.6, &quot;G&quot;,
        ifelse(x&lt;=0.4, &quot;B&quot;, &quot;N&quot;))
 </code></pre>
 
-<pre class="fragment"><code> [1] &quot;B&quot; &quot;N&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;B&quot; &quot;N&quot; &quot;B&quot; &quot;N&quot; &quot;G&quot; &quot;N&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;N&quot; &quot;N&quot; &quot;B&quot;
-[18] &quot;B&quot; &quot;G&quot; &quot;B&quot;
+<pre class="fragment"><code> [1] &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;N&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot;
+[18] &quot;G&quot; &quot;B&quot; &quot;B&quot;
 </code></pre>
 
 </div>
@@ -1242,11 +1242,11 @@ mat
 </code></pre>
 
 <pre class="fragment"><code>     [,1] [,2] [,3] [,4] [,5]
-[1,]   44    6   56   33   45
-[2,]   37   12   96   66   50
-[3,]   19   89   18   11   55
-[4,]   31   69   82   51    3
-[5,]   27    7   71   54   13
+[1,]    7   93   81   73   92
+[2,]   11   89   40   70   44
+[3,]   49   25   33   45   69
+[4,]   85   29  100   24   51
+[5,]   90   71   13   68   54
 </code></pre>
 
 <pre class="fragment"><code class="r"># find the second largest value in each row
@@ -1268,14 +1268,14 @@ for (i in 1:nrow(mat)) {
 out
 </code></pre>
 
-<pre class="fragment"><code>[1] 45 66 55 69 54
+<pre class="fragment"><code>[1] 92 70 49 85 71
 </code></pre>
 
 <pre class="fragment"><code class="r"># using apply()
 apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 </code></pre>
 
-<pre class="fragment"><code>[1] 45 66 55 69 54
+<pre class="fragment"><code>[1] 92 70 49 85 71
 </code></pre>
 
 </div>
@@ -1373,7 +1373,7 @@ FunSecondLargest(test.vector)
 <pre class="fragment"><code class="r">apply(mat, 1, FunSecondLargest)
 </code></pre>
 
-<pre class="fragment"><code>[1] 45 66 55 69 54
+<pre class="fragment"><code>[1] 92 70 49 85 71
 </code></pre>
 
 </div>
@@ -1433,7 +1433,7 @@ FunNthLargest &lt;-function(x, n=1) {
 <h3>Data manipulation with `dplyr`</h3>
 <div class="slideContent" >
 <ul>
-<li>Subsetting:
+<li>Sub-setting:
 
 <ul>
 <li><code>filter()</code></li>
@@ -1659,7 +1659,7 @@ arrange(tidy.economic.situation, perception, desc(bad.s))
 <div class="slideContent" >
 <ul>
 <li><code>left_join(a, b)</code> &ndash; keeps all rows in first table</li>
-<li><code>right_join(a, b)</code> &ndash; keeps all roows in second table</li>
+<li><code>right_join(a, b)</code> &ndash; keeps all rows in second table</li>
 <li><code>inner_join(a, b)</code> &ndash; only keeps rows present in both a and b</li>
 <li><code>full_join(a, b)</code> &ndash; keeps all rows</li>
 </ul>
@@ -1743,6 +1743,103 @@ arrange(tidy.economic.situation, perception, desc(bad.s))
 ## 4.1 Write a function to extract population pyramid data
 ## 4.2 Write a function to plot the output of 4.1
 ##########################################################
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>PRACTICAL III.i</h3>
+<div class="slideContent" >
+<pre><code class="r">##########################################################
+## 4.0 Practice piping on population2010
+##########################################################
+</code></pre>
+
+<p>Using the <code>population2010.csv</code> file find the answers to the following:</p>
+
+<ul>
+<li>How many 20 year-old males were there in Tanzania in 2010</li>
+<li>Which country has the lowest total population?</li>
+<li>In which country do women outnuber men in the most age groups?</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>PRACTICAL III.I solutions</h3>
+<div class="slideContent" >
+<pre class="fragment"><code class="r"># How many 20 year-old males were there in Tanzania in 2010
+tidy.population2010 %&gt;%
+  filter(FIPS == &quot;TZ&quot; &amp; AGE == 20 &amp; sex == &quot;male&quot;)
+</code></pre>
+
+<pre class="fragment"><code>  AGE AREA_KM2     NAME FIPS  sex population
+1  20   885800 Tanzania   TZ male     424839
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>PRACTICAL III.I solutions</h3>
+<div class="slideContent" >
+<pre class="fragment"><code class="r"># Which country has the lowest total population?
+tidy.population2010 %&gt;%
+  group_by(NAME) %&gt;%
+  summarise( population = sum(population)) %&gt;%
+  arrange(population)
+</code></pre>
+
+<pre class="fragment"><code>Source: local data frame [228 x 2]
+
+                        NAME population
+                      (fctr)      (int)
+1                 Montserrat       5118
+2  Saint Pierre and Miquelon       5943
+3           Saint Barthelemy       7406
+4               Saint Helena       7670
+5                      Nauru       9267
+6                     Tuvalu      10472
+7               Cook Islands      11488
+8                   Anguilla      14766
+9          Wallis and Futuna      15343
+10                     Palau      20879
+..                       ...        ...
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>PRACTICAL III.I solutions</h3>
+<div class="slideContent" >
+<pre class="fragment"><code class="r"># In which country do women outnuber men in the most age groups?
+tidy.population2010 %&gt;%
+  spread(sex, population) %&gt;%
+  mutate(morewomen = ifelse(female &gt; male, 1, 0)) %&gt;%
+  filter(morewomen == 1) %&gt;%
+  group_by(NAME) %&gt;%
+  summarise(most.ages = sum(morewomen)) %&gt;%
+  arrange(desc(most.ages))
+</code></pre>
+
+<pre class="fragment"><code>Source: local data frame [228 x 2]
+
+                   NAME most.ages
+                 (fctr)     (dbl)
+1          Sierra Leone        98
+2              Cambodia        92
+3               Comoros        92
+4                Malawi        91
+5           Gambia, The        90
+6            Mauritania        90
+7  Virgin Islands, U.S.        90
+8            Mozambique        88
+9                Uganda        88
+10             Djibouti        87
+..                  ...       ...
 </code></pre>
 
 </div>

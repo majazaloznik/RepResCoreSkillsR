@@ -137,7 +137,7 @@ For a more comprehensive list of possible input formats see this tutorial: [http
 
 We will store all our data files in the `data` folder of our project, from where they will be imported into R. This means the original files remain *untouched* by the data analysis and should never be overwritten as the result of your analysis. 
 
-While you might find it easier to simply download a file into your folder, this poses the problem of loosing track of where the data was sourced from. It is therefore highly recommended you download the data programmatically if possible, and if not, that you use comments within the code to describe the source of the files. For example the `pop2010.csv` file we downloaded in the first practical should have been downloaded directly from within R, by doing it manually we are reducing the reproducibility of our project. We must therefore make sure we note the origin and date we accessed the data in our code!
+While you might find it easier to simply download a file into your folder, this poses the problem of loosing track of where the data was sourced from. It is therefore highly recommended you download the data programmatically if possible, and if not, that you use comments within the code to describe the source of the files. For example the `pop2010.csv` file we will download in the first practical should have been downloaded directly from within R, by doing it manually we are reducing the reproducibility of our project. We must therefore make sure we note the origin and date we accessed the data in our code!
 
 
 ## Data tidying
@@ -171,7 +171,7 @@ messy.02 <- read.table("data/demo/messy.02.txt")
 messy.02
 ```
 
-we can using `spread()` we can tidy this layout:  
+Using `spread()` we can tidy this layout:  
 
 ```{r, echo=c(3:4)}
 require(tidyr)
@@ -244,13 +244,13 @@ messy.03
 
 These are separated simply by the following code into `year` and `key`, which can then be used to reshape the table as we did above. 
 
-```{r, echo=FALSE}
+```{r}
 tidy.03 <- separate(messy.03, double.key, c("year", "key"))
 tidy.03
 ```
 
 The function `unite` is the inverse of `separate`, and merges the values of selected columns into a new single column. In both cases you can change the separator using the `sep=` argument. 
-```{r, echo=FALSE}
+```{r}
 messy.again <- unite(tidy.03, new.double.key, key, year,  sep = " in the year ")
 messy.again
 ```
@@ -298,7 +298,7 @@ require(tidyr)
 require(plotrix)
 ```
 
-
+[Use `install.packages("name of package")` if the packages are not yet installed on your system. ]
 ## PRACTICAL: Import and clean some data
 
 ### Downloading and importing data
@@ -402,7 +402,7 @@ data.zip.url <- paste("http://spss.allenandunwin.com.s3-website-ap-southeast-2."
                       "amazonaws.com/Files/survey.zip", sep="")
 temp <- tempfile()
 download.file(data.zip.url, temp)
-# check what is in the zip file using list (doens't extract anything)
+# check what is in the zip file using list (doesn't extract anything)
 unzip(temp, list=TRUE)
 
 # Only one file, that's the one we want to extract to the data folder
@@ -439,7 +439,7 @@ In the second part of this practical we will use the functions from the `tidyr` 
 require(tidyr)
 ```
 
-The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for (SEX==0), but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
+The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for `(SEX==0)`, but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
 
 First let's try out our technique on a small subset of the data - this is good practice in general, especially if you are dealing with large datasets. We'll select only the observations for Aruba, and have a look at them:
 ```{r}
@@ -481,19 +481,18 @@ tidy.test <- gather(tidy.test, sex, population, 5:6)
 head(tidy.test)
 ```
 If you are happy with the test run, you can now try it on the whole `population2010` table. 
-```{r, echo=FALSE}
 
+```{r, echo=FALSE}
 require(tidyr)
 # SEX is the key:
 tidy.population2010 <- spread(population2010, SEX, POP)
 
 # for clarity, let's rename the columns:
 colnames(tidy.population2010)[5:7] <- c("both", "male", "female")
-head(tidy.population2010)
 
 # Now check if the sums are right, by creating a new column:
 tidy.population2010$check <- tidy.population2010$male + tidy.population2010$female
-all.equal(tidy.population2010$both, tidy.population2010$check)
+# all.equal(tidy.population2010$both, tidy.population2010$check)
 
 # looks good, now we can remove both total columns:
 tidy.population2010$check <- NULL
@@ -502,6 +501,11 @@ tidy.population2010$both <- NULL
 # now tidy it up again:
 tidy.population2010 <- gather(tidy.population2010, sex, population, 5:6)
 ```
+
+```{r}
+head(tidy.population2010)
+```
+
 ```{r}
 ## 2.2 tidy up the perception data
 ###############################################################################
@@ -538,7 +542,7 @@ tidy.household.situation$perception <- "HH"
 
 Now you can repeat the tidying for the UK and world perceptions, and once all three tables are tidy, you can merge them together using `rbind()`:
 
-```{r, echo=c(18:19)}
+```{r, echo=FALSE}
 ## 2.2.2. UK SITUATION
 
 # first let's remane the column names
@@ -567,7 +571,8 @@ colnames(tidy.world.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.world.situation$perception <- "W"
-
+```
+```{r}
 # merge all the tables together
 tidy.economic.situation <- rbind(tidy.household.situation,
                                  tidy.UK.situation,
@@ -1162,6 +1167,17 @@ FunMyPipe(1:10)
 
 ## PRACTICAL - Piping Population Pyramids
 ```{r}
+## 4.0 Practice piping on population2010
+##########################################################
+```
+Using the `population2010.csv` file find the answers to the following:
+
+* How many 20 year-old males were there in Tanzania in 2010
+* Which country has the lowest total population?
+* In which country do women outnuber men in the most age groups?
+
+
+```{r}
 ## 4.1 Write a function to extract population pyramid data
 ###############################################################################
 ```
@@ -1224,5 +1240,4 @@ FunPlot <- function(data, name = NULL){
 FunPlot(FunPopClean("BG"), "Bangladesh")  
   
 ```
-
 
