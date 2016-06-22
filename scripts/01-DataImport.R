@@ -12,6 +12,12 @@
 
 ## 1.1  Import a .csv file
 ###############################################################################
+## the pop2010 data file was downloaded by MZ from the US census international 
+## database on the 20.6.2016 using the query: 
+## http://api.census.gov/data/timeseries/idb/1year?get=AGE,AREA_KM2,NAME,POP,SEX,FIPS&time=201
+## more info on the database is available here:
+## http://www.census.gov/data/developers/data-sets/international-database.html
+
 getwd()
 
 ## test run

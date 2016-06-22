@@ -1,6 +1,7 @@
 ---
 title: "R: Core Skills for Reproducible Research"
-subtitle: "Course Manual with Practical Exercises"
+subtitle: "Course Manual with Practical Exercises  -- 
+ Oxford IT Services - 22 June 2016"
 author: "Maja Zalo&#x17e;nik"
 output: 
   pdf_document:
@@ -30,7 +31,7 @@ This short course covers the core skills required for a budding R user to develo
 * R Studio and project management
 * Importing and cleaning data
 * Good coding practices in R
-* standard control structures
+* Standard control structures
 * Vectorisation and `apply` functions
 * Writing your own functions
 * Data manipulation with `dplyr`
@@ -49,7 +50,7 @@ This short course covers the core skills required for a budding R user to develo
 
 **Format**	Presentation with practical exercises
 
-**Where next?**	R:
+**Where next?**	Data visualisation: Creating interactive visualisations using R and Shiny course
 
 \newpage
 
@@ -61,44 +62,54 @@ This is the golden standard of scientific inquiry, and is increasingly and right
 
 It is also a way of establishing better working habits, reduce the potential for error, develop a more streamlined research process, and make for easier collaboration. 
 
-Reproducible research does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to 
+Reproducible research does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to apply the principles of reproducibility consistently and comprehensively. 
 
-## Why?
+This practical course will focus in particular on how to set-up an RStudio project and associate file and folder structure, and get you on the right track towards literate programming. We will then cover a complete workflow structure including downloading and importing data, *tidying* it up, using some basic programming structures to improve your code, and finally the `dplyr` package, which is already revolutionising data manipulation in R by providing a comprehensive set of tools that follow a very intuitive logic.
 
-* Reinhart Rogoff Excel spreadsheet
+There is plenty more that cannot be covered in a 3 hour course. In particular we will not discuss version control (e.g. github) and the *knitting* of text and analysis, or their publishing on-line directly from RStudio. You will be able to see the results of these practices in the way the very course materials are prepared, and they can be accessed on-line in a dedicated repository public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
 
-Document everything! This means never running any code from the command prompt, always writing it into a script file and running it from there. 
-
+For an excellent and in-depth source on all of this and more, see Christopher Gandrud's book on Reproducible Research in R and RStudio, also in a public github repository: [https://github.com/christophergandrud/Rep-Res-Book]( https://github.com/christophergandrud/Rep-Res-Book) and for your convenience an old compiled copy of his first edition can be also be found in this course's repository in the `literature` folder. 
 
 #  Set-up 
 ## RStudio
+RStudio has beyond a doubt become the most popular Integrated Development Environment for R. It is open source and cross-platform.  In addition to allowing easy project management and integrated version control, it also provides all the tools for dynamically creating *knitted* documents and directly publishing them on-line. The RStudio crew are also active developers of interactive graphical tools and new developments are constantly being added to an already excellent toolbox. If you prefer to use another environment you should however still be able to apply all of the principles of reproducible research covered here and beyond, although it might take a little bit more work. 
+
 ## Project management
 
 A crucial requirement for conducting reproducible research, and one that has to be carefully considered before you embark on your analysis, is your plan on how the data, code and outputs will be organised. The project management structure proposed here is just a suggestion, and you should adapt it to your specific needs, but it is highly recommended that you stick to one such system consistently, instead of coming up with 'ad hoc ' solutions for every new project. 
 
-RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. 
+RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. This means assigning a single folder for each project, and within that folder organizing your work into sub-folders. Depending on your type of project this may vary, but a good starting point would be something along the lines of:
 
+Project Folder
+- data - holds all the raw data files
+- scripts - holds all the R code, preferable split into smaller, more modular code files
+- figures - to store outputs of your data analysis, or external figures to be used in reports
+- outputs - presentations, reports etc. that are compiled dynamically within the project
 
+None of this will matter though, if you do not *document everything* you do! This means never running any code from the command prompt, always writing it into a script file and running it from there. This also means not messing with the original data files, even if they are horribly formatted Excel files, but only extracting the data programatically. 
 
-## Literate programming
+## Human readability
+One of the often overlooked principles underlying reproducible research is trying to ensure the human readability of as much of your files as possible. This applies to the types of data and other file formats used, as well as your coding style. Making them human readable is one way of trying to future-proof your work. 
+
+### File Formats
+Try to avoid binary file formats. This includes e.g. .xls files, but also R's native workspace file, which is saved with an  `.RData` extension. Text, delimited or comma separated values are safe formats that are easily transferable, human readable, and relatively future proof. 
 
 ### Consistent coding style e.g.:
-![Code Quality part 2. (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
+
+Another key element of human readability is trying to keep to a consistent coding style. This is not always easy, but it pays to get into some good habits while it's still early. Two excellent starting points are
 
 * [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
 * [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
 
-### File formats
-Human readability of data files and outputs. Future-proof. 
-.txt files
+You do not have to follow these to the letter (they do not agree on everything anyway) - but they should give you an idea about what are good rules to determine for yourself and then stick with. At least for the sake of the future you, who will one day have to re-read your messy, uncommented code. 
+
+![Code Quality part 2. (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
 
 ### Commenting 
 
+The importance of commenting your code can never be understated. Some programmers advocate  *self documenting code* -- that is code that is self-explanatory and does not require comments --  and this may be worthy a goal to aspire to, but in the mean time: comment, comment, and comment some more. 
 
-
-
-
-
+\newpage
 # Workflow
 > *Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets.* 
 <p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p>
@@ -120,7 +131,7 @@ R has utilities for importing data from a wide variety of sources including prop
 
 The basic import functions of the `read.table()` family all have a `nrows` argument, which is particularly useful if you do not know the structure of the data and are dealing with a large fine. In which case it is recommended you try a test import with e.g. `nrows=10`, and check the result before attempting to import the full file. 
 
-For a more comprehensive list of possible input formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial)
+For a more comprehensive list of possible input formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial).
 
 
 
@@ -246,7 +257,8 @@ messy.again
 
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
-For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
+
 
 ## PRACTICAL: new R project
 
@@ -261,9 +273,9 @@ Unless you have brought your own laptop, you will be completing this project on 
 
 1. Open RStudio
 2. Select the project menu in the top right-hand corner and select `New Project`
-3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].  
+3. Select New Directory and choose the name of your project (e.g. RRepResCourse)^[As a general rule you should avoid spaces in file and folder names, although you will probably be fine if you ignore this advice.].
 4. RStudio has now created a new project file in your folder, which you can see in the Files pane.
-5. Run the command `getwd()` in the console. RStudio automatically sets the working directory in the top level of your project folder. 
+5. Run the command `getwd()` in the console. You should note that RStudio has automatically set the working directory in the top level of your project folder. 
 6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
 
 ### Folder and File Structure
@@ -274,10 +286,10 @@ Unless you have brought your own laptop, you will be completing this project on 
   * figures
   * presentations
 2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
-3. You can also download the manual and slides to your `presentation` folder. 
-4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manualy every time. 
+3. You can also download the manual and slides to your `presentation` folder, and the two reference files from teh `literature` folder. 
+4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manually every time. 
 
-For this practical you will need the following packages (type this into your .RProfile file and save)
+For this practical you will need the following packages (type this into your .RProfile file and save).
 ```{r, eval = FALSE}
 require(xlsx)
 require(forein)
@@ -310,9 +322,12 @@ Make sure your working directory is at the top of your project folder using `get
 ```{r }
 ## 1.1  Import a .csv file
 ###############################################################################
-# don't forget to note the source of the data!
+# don't forget to note the source of the data! e.g:
 # downloaded manually from https://github.com/majazaloznik/RepResCoreSkillsR/
 # blob/master/data/pop2010.csv?raw=true" on 20.6.2016
+# MZ got it from:
+# http://www.census.gov/data/developers/data-sets/international-database.html
+
 getwd()
 
 # test run
@@ -359,8 +374,6 @@ You can now have a look in the data folder to check the file has been correctly 
 ```{r}
 ## Importing the data from an .xls file
 require(xlsx)
-# if you get an error telling you there is no package called ‘xlsx’ run:
-# install.packages("xlsx")
 
 # let's see what happens if we import the whole sheet
 economic.situation <- read.xlsx(data.location, sheetIndex = 3)
@@ -401,8 +414,6 @@ You can now check the `data` folder and you should find the `survery.sav` file t
 
 ```{r}
 require(foreign)
-# if you get an error telling you there is no package called ‘xlsx’ run:
-# install.packages("foreign")
 
 # import the data as a data frame:
 data.location <- paste("data","survey.sav", sep="/")
@@ -568,14 +579,14 @@ Finally, you can now clear your workspace using `rm()` as we did before, to remo
 
 \newpage
 # Efficient Coding
-This section covers some of the most important skills to improve the efficiency, readability, and reproducibility of your R code. The standard control of the flow of your code that can be achieved with `ifelse` statements and looping is covered briefly, however you are encouraged in particular to explore the advantages of *vectorised* R code. Writing your own functions will greatly streamline your work, as well as forcing you to think in more abstract terms about your analysis - making it easily transferable and reproducible as opposed to limited to the specific situation you find yourself analysing at the moment.
+This section covers some of the most important skills to improve the efficiency, readability, and reproducibility of your R code. The standard control of the flow of your code that can be achieved with `ifelse` statements and looping is covered briefly, however you are encouraged in particular to explore the advantages of *vectorised* R code in particular the `apply` family of functions. Writing your own functions will greatly streamline your work, as well as forcing you to think in more abstract terms about your analysis - making it easily transferable and reproducible as opposed to limited to the specific situation you find yourself analysing at the moment.
 
 
 
 
 ## Standard control structures
 
-An indispensable gain in efficiency of your programming can be achieved by using *control strucures* to control the execution of your code. These can be divided into *conditional execution* structures (`if` and `else` type functions) and *looping* structures. However, as we shall see in the next section, there are some very good reasons to avoid looping in R!
+An indispensable gain in efficiency of your programming can be achieved by using *control strucures* to control the execution of your code. These can be divided into *conditional execution* structures (`if` and `else` type functions) and *looping* structures. However, as we shall see in the next section, there are some some pretty good ways (and reasons) to avoid looping in R.
 
 ### Conditional execution
 
@@ -639,13 +650,14 @@ x | y     # OR
 xor(x, y) # exclusive OR
 ```
 
-What if you want to run a conditional statement over an entire vector? You might be tempted to jump to the next section on looping, and construct a loop going over each element of the vector and evaluating the condition. This would of course work, but it would be a very inefficient way of coding, and would not be taking advantage of the efficiencies of vectorisation in R (covered in the next subsection). In such cases, you should use the *vectorised* form of the if/else construct:
+What if you want to run a conditional statement over an entire vector? You might be tempted to jump to the next section on looping, and construct a loop going over each element of the vector and evaluating the condition. This would of course work, but it would be a very inefficient way of coding, and would not be taking advantage of the efficiencies of vectorisation in R: vectorised functions apply to whole vectors at once instead of evaluating for each element individually. We should therefore use the  *vectorised* form of the if/else construct `ifelse()`: 
 
 ```{r, eval=FALSE}
 ifelse(condition, yes, no)
 ```
 
-Where `yes` is the value to be returned if the condition is satisfied, and `no` if not. Similarly as above, `ifelse()` statements can also be nested. 
+Here `yes` is the value to be returned if the condition is satisfied, and `no` if not. Similarly as above, `ifelse()` statements can also be nested as in this example:
+
 ```{r}
 x <- runif(20) # 20 randum numbers from uniform distribution [0,1]
 ifelse(x >= 0.6, "G", 
@@ -655,6 +667,7 @@ ifelse(x >= 0.6, "G",
 ### Looping
 
 R distinguishes two types of loops:
+
 - ones that execute a function a predetermined number of times, as determined by an *index* [`i`]
 - ones that execute a function until a condition is met
 
@@ -703,7 +716,7 @@ Both of these constructs should be used with great care, as careless specificati
 
 ## Vecotrisation  and `apply` family of funcitons
 
-Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The genera rule is this: If you need to apply an expression over a series of elements and the order in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read. 
+Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The genera rule is this: If you need to apply an expression over a series of elements and the *order* in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read. 
 
 The underlying logic of the `apply` family is starting out with some data structure (a vector, matrix, data.frame etc.), we want to split it into constituent parts, apply a function on each of them, and combine them back^[This idea comes from Hadley Wickham's paper on the split-apply-combine strategy of data analysis:  [http://vita.had.co.nz/papers/plyr.html](http://vita.had.co.nz/papers/plyr.html)]. We might for example want to apply a function on every row of a data.frame, every element of a vector, or every column in a matrix. 
 
@@ -777,7 +790,7 @@ By writing more elaborate functions and passing them as the argument to any of t
 
 ## Writing your own functions
 
-One of the greatest strengths of R comes from writing your own functions. This not only allows you to repeat the same procedure consistently, but makes your code more structured and readable reduces chance of error, and will further strenghtens your reproducibility mentality. 
+One of the greatest strengths of R comes from writing your own functions. This not only allows you to repeat the same procedure consistently, but makes your code more structured and readable reduces chance of error, and will further strengthens your reproducibility mentality. 
 
 The basic construct is as follows:
 ```{r, eval = FALSE}
@@ -792,7 +805,7 @@ we have already seen the in-line version of the function call in the apply examp
 function(x) sort(x, decreasing = TRUE)[2]
 ```
 
-Here our function takes a single argument (`x`), evaluates the expression (`sort(x, decreasing = TRUE)[2]`), and returns the value of that expression. This only works if the function has only a single expression, in which case the evaluated expression is returned. Otherwise we have to explicilty state what we want returned. We can rewrite this function in the more elaborate mode:
+Here our function takes a single argument (`x`), evaluates the expression (`sort(x, decreasing = TRUE)[2]`), and returns the value of that expression. This only works if the function has only a single expression, in which case the evaluated expression is returned. Otherwise we have to explicitly state what we want returned. We can rewrite this function in the more elaborate mode:
 
 
 ```{r}
@@ -812,7 +825,7 @@ We can also now use this function directly in the apply call we used before:
 apply(mat, 1, FunSecondLargest)
 ```
 
-We can also quickly rewrite the funciton to instead find the n-th largest value in the vector, by adding an additional argument `n`. And don't forget to write sensible comentary about what you are doing - at least for the benefit of your future self!
+We can also quickly rewrite the function to instead find the n-th largest value in the vector, by adding an additional argument `n`. And don't forget to write sensible commentary about what you are doing - at least for the benefit of your future self!
 
 ```{r}
 # Function for extracting the n-th largest value from a vector
@@ -831,15 +844,15 @@ FunNthLargest(test.vector, n=2)
 FunNthLargest(test.vector, n=3)  
 ```
 
-We could e.g. further generalise this function to look for the n-th smallest value, by adding another argument for the `TRUE/FALSE` value that gets passed to `decreasing` etc. Note unlike the argument `x`, the argument `n` has a default value (=1). This means we do not have to explicitly specify it unless we want it to be a different value. 
+We could e.g. further generalise this function to look for the n-th smallest value, by adding another argument for the `TRUE/FALSE` value that gets passed to `decreasing` etc. Note that unlike the argument `x`, the argument `n` has a default value (=1). This means we do not have to explicitly specify it unless we want it to be a different value. 
 
-Functions have their own local environment, which is not accessible from the global environment. This means that whatever calculations are evaluated inside the function call do not clutter your workspace, but also their results are not accessible unles you explicilty return them from the function. Thus the object `r` will not be found in the global environment, instead we will get the error:
+Functions have their own local environment, which is not accessible from the global environment. This means that whatever calculations are evaluated inside the function call do not clutter your workspace, but also their results are not accessible unles you explicitly return them from the function. Thus the object `r` will not be found in the global environment, instead we will get the error:
 ```{r, eval = FALSE}
 r
 Error: object 'r' not found
 ```
 
-We can also have our funciton return several outputs for example:
+We can also have our function return several outputs for example:
 
 ```{r}
 FunNthLargestElaborate <-function(x, n=1) {
@@ -850,9 +863,9 @@ FunNthLargestElaborate <-function(x, n=1) {
 FunNthLargestElaborate(test.vector, 3)
 ```
 
-As we have seen before with if/else statements and loops, functions can also be nested -- as well as combined with if/else statements and loops! It is good practice to try to keep your code modular: keep your functions short and call them from eachother. This again makes it easier for the reader to understand what is going on, and easier for you to find errors or update your code. 
+As we have seen before with if/else statements and loops, functions can also be nested -- as well as combined with if/else statements and loops! It is good practice to try to keep your code modular: keep your functions short and call them from each other. This again makes it easier for the reader to understand what is going on, and easier for you to find errors or update your code. 
 
-From a project management point of view it is also good practice to store all your functions in a separate file, which you `source()` at the begining of each session. You can even add `source("00-MyFunctions.R")` to your `.RProfile` file, which means all your bespoke functions will be automatically uploaded at the start of each session. 
+From a project management point of view it is also good practice to store all your functions in a separate file, which you `source()` at the beginning of each session. You can even add `source("00-MyFunctions.R")` to your `.RProfile` file, which means all your bespoke functions will be automatically uploaded at the start of each session. 
 
 \newpage
 ## PRACTICAL: If/else, loops, apply and functions
@@ -880,7 +893,7 @@ xor((x > 3), (x < 5))
 ```
 
 ```{r, eval = FALSE}
-## 3.2 Check consistency of tidy.economic.situation proportions ising IF - ELSE
+## 3.2 Check consistency of tidy.economic.situation proportions using IF - ELSE
 ###############################################################################
 ```
 Use a `for()` loop to go through every row of `tidy.economic.situation` (tip: `nrow()` will tell you how many iterations you need):
@@ -890,6 +903,7 @@ Use a `for()` loop to go through every row of `tidy.economic.situation` (tip: `n
     + if it does, use `print` to print out an OK message
     + if it doesn't, print out a different message, one created using `paste` - so you can include the information on *which* row you have found the error.
 
+Use the following template to write your loop:
 ```{r, eval = FALSE}
 for (i in 1: nrow(tidy.economic.situation)) {
   if(???){
@@ -912,14 +926,14 @@ Now write a function for the row checking you just did inside the `for()` loop. 
 ```{r, eval = FALSE}
 FunRowCheck <- function(x) {
   message <- if(???){
-  } else {
-  }
+    ???} else {
+      ???}
   return(message)
 }
 ```
 
 Now test out your function on a single row:
-```{r, echo=11}
+```{r, echo=8:10}
 FunRowCheck <- function(x) {
   message <- if(sum(x) == 100){
     "OK"} else {
@@ -949,12 +963,7 @@ Your table should now look like this:
 tidy.economic.situation
 ```
 
-If it doesn't have a look at the `02-FunctionsAndLoops.R` file in the scripts folder for the solution.
-If it does and you have plenty of time, you can try additionally:
-
-* writing another function that will simply sum the three columns
-* applying it to the table and appending the new variable (`total`)
-* creating three new variables that are correctly scaled to sum up to 100 (e.g. `bad.scaled`, `good.sscaled`, `neutral.scaled`). 
+If it doesn't have a look at the `02-FunctionsAndLoops.R` file in the scripts folder for the solution before you proceed to the next task. 
 
 ```{r}
 ## 3.5 Bar-Plotting function
@@ -982,16 +991,10 @@ Once you are happy with your plot, enclose it in a function, so that you can pas
 
 Finally, the relatively new `dplyr` family of functions is one of the most powerful recent developments in the R coding world. While all of the data processing capabilities of `dplyr` existed in one shape or another in R before (usually several), `dplyr` brings them together in a comprehensive and systematic way, that allows for cleaner code that is easier to read, and faster to run. It also integrates logically with the `tidyr` family of functions described earlier, but it's most exciting and revolutionary aspect is it's assimilation of the *piping* or *chaining* of successive data processing functions - originally developed in the `magrittr` package, and now rightly becoming mainstream R practice. 
 
-We will cover some of the most important functionalities of `dplyr` here, but you are encouraged to explore several excellent on-line resources, for example:
-
-- The same [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) that also covers `tidyr`
-
-- [Introduction vignette])https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
-
-- [dplyr and pipes: the basics](http://seananderson.ca/2014/09/13/dplyr-intro.html)
+We will cover some of the most important functionalities of `dplyr` here, but you are encouraged to explore several excellent on-line resources, including video tutorials etc. Keep the same [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) that also covers `tidyr` to hand - for your convenience a copy is also stored in the `literature` folder for this course's repository. 
 
 
-For this whole seciton we will be using the two data tables  prepared in the first practical. 
+For this whole section we will be using the two data tables  prepared in the first practical. 
 
 ## Subsetting
 
@@ -1003,7 +1006,7 @@ filter(data, criteria)
 
 You can use any of the evaluation conditions and logical operators  we covered at the beginning of the previous section:
 
-```{r, eval = FALSE}
+```{r}
 filter(tidy.population2010, AREA_KM2 < 1000 & population > 10000 & AGE == 0)
 ```
 
@@ -1014,7 +1017,7 @@ select(data, list)
 ```
 
 The columns can be named directly with no need for quotation marks
-```{r, eval = FALSE}
+```{r}
 select(tidy.economic.situation, bad, good, neutral)
 ```
 
@@ -1022,7 +1025,7 @@ In addition there is a large number of helper functions to select column names:
 
 ```{r}
 # all the columns between bad and neutral
-head(select(tidy.economic.situation,bad:neutral), n=3)
+head(select(tidy.economic.situation, bad:neutral), n=3)
 # all but the perception column
 head(select(tidy.economic.situation, -perception), n=3)
 # contains a dot in the name:
@@ -1046,7 +1049,7 @@ head(select(tidy.economic.situation, 1,2,4,3,5), n=3)
 
 ## Making new variables
 
-New variables are easliy created using `mutate()`, which has the additional advantage of allowing you to reuse variables as you create them, without the need for an intermeiate step!
+New variables are easily created using `mutate()`, which has the additional advantage of allowing you to reuse variables as you create them, without the need for an intermediate step!
 ```{r}
 # scale the values so they all sum up to 100
 tidy.economic.situation <- mutate(tidy.economic.situation, total = bad+neutral+good, 
@@ -1078,23 +1081,24 @@ We can quickly summarise the data column wise using the `summarise()` function
 summarise(data, new.var = summary.function(column))
 ```
 
-For example the average population, average area and total count in the population table, we can also use our own functions, such as the one we wrote before to get the second largest populaiton value
+For example the average population, average area and total count in the population table, we can also use our own functions, such as the one we wrote before to get the second largest population value
 ```{r}
 summarise(tidy.population2010, pop = mean(population), area = mean(AREA_KM2), count = n(), 
           test = FunSecondLargest(population))
 ```
 
-But the summarise funciton really comes into it's own when it operates on a *grouped* table. Using the function `group_by()` the table is (invisibly) split into subtables by the values of the grouping variable, and the summarise function then operates on each subset individually:
+But the summarise function really comes into it's own when it operates on a *grouped* table. Using the function `group_by()` the table is (invisibly) split into sub-tables by the values of the grouping variable, and the summarise function then operates on each subset individually:
 ```{r}
 summarise(group_by(tidy.population2010, AGE), 
           pop = mean(population), area = mean(AREA_KM2), count = n(), 
           test = FunSecondLargest(population))
 ```
 
-An important corollary to the grouping function is `ungroup()`, which removes the grouping from the table for further analysis -- we shal use it in the last section of this chapter
+An important corollary to the grouping function is `ungroup()`, which removes the grouping from the table for further analysis -- we will use it in the last section of this chapter.
 
 ## Joining tables
-The `dplyr` pacgage also contains a set of functins that allow you to join tables by matching on common variables namely:
+The `dplyr` package also contains a set of functions that allow you to join tables by matching on common variables namely:
+
 - left_join(a, b) 
 - right_join(a, b) -- keeps all 
 - inner_join(a, b) -- only keeps rows present in both a and b
@@ -1116,7 +1120,7 @@ full_join(UK.men, UK.women, by = c("AGE", "NAME", "AREA_KM2", "FIPS"))
 All of these have a `by=` argument, which lets you choose the columns to be joined by - if you do not explicitly name them, `dplyr` uses all the ones with identical names in both tables. If the columns you want to join by have different tables in each table you can specify this so: `by = c("name.a" = "name.b")`
 
 ### Other `dplyr` funcitons
-The [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) is an indespensible help with `dplyr` funcitons. We will briefly mention a few more, but there are several more that we will not cover here.
+The [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) is an indispensable help with `dplyr` functions. We will briefly mention only one more, but there are several more that we will not cover here.
 
 `arrange()` for data sorting - ascending by default, otherwise specify `desc()`:
 ```{r}
@@ -1124,7 +1128,7 @@ arrange(tidy.economic.situation, perception, desc(bad))
 ```
 
 
-
+\newpage
 ## Piping/chaining daisies 
 
 *Piping* data brings a completely new level of intuitiveness you R programming. Instead of nesting and indenting successive functions, which means the code has to be read *inside out*, piping (also known as daisy chaining) allows the code to be written in the natural direction in which the data is flowing.  The piping operator `%>%` indicates the direction of this flow as well, taking the output of the preceding function and directing it into the next one. 
@@ -1140,9 +1144,9 @@ tidy.population2010 %>%
   summarise(count = n(), mean.density = mean(density)) 
 ```
 
-You will note that we skipped naming the data object in all of functions. The piping operator means it is implicit what the data being passed on is, so there is no more need to explixitly name it. 
+You will note that we skipped naming the data object in all of functions. The piping operator means it is implicit what the data being passed on is, so there is no more need to explicitly name it. 
 
-In keeping with the piping logic, we can also use a rarely used R assignment operator: `->`. We can add it at the end of the pipe/chain and point it to the new object's name. Of course you can also start the way we have been starting all along, and assing in the standard direction `<-` if you prefer. 
+In keeping with the piping logic, we can also use a rarely used R assignment operator: `->`. We can add it at the end of the pipe/chain and point it to the new object's name. Of course you can also start the way we have been starting all along, and assign in the standard direction `<-` if you prefer. 
 
 A whole set of piped functions can easily be wrapped up in a function: 
 ```{r}
@@ -1157,17 +1161,17 @@ FunMyPipe(1:10)
 ```
 
 
-## PRACTICAL 
+## PRACTICAL - Piping Population Pyramids
 ```{r}
 ## 4.1 Write a function to extract population pyramid data
 ###############################################################################
 ```
 Write a function that uses piping and `dplyr` functions to do the following:
 
-* the input is the FIPS country code [https://en.wikipedia.org/wiki/List_of_FIPS_country_codes](https://en.wikipedia.org/wiki/List_of_FIPS_country_codes)
-* from  tidy.population2010 extracts the data for that country
+* the input is the FIPS country code (if you're not sure which code means which countre, chek the list here: [https://en.wikipedia.org/wiki/List_of_FIPS_country_codes](https://en.wikipedia.org/wiki/List_of_FIPS_country_codes))
+* from  `tidy.population2010` extract the data for that country
 * remove variables for the area
-* create a new variable grouping the ages into 5 year age groups
+* create a new variable grouping the ages into 5 year age groups (use `cut(x, 20)`)
 * find the sum of the population for each age group and gender combination (use `group_by`!)
 * don't forget to `ungroup` the data before the next step!
 * create a new variable representing the proportion of the total population in each age/sex combination (* 100)
@@ -1177,14 +1181,15 @@ Write a function that uses piping and `dplyr` functions to do the following:
 ## 4.2 Write a function to draw a population pyramid plot
 ###############################################################################
 ```
-We will use the `plotrix` package for this, although you are free to experiment with drawing your own pyramid plot - you will have much more control than using the default `pyramid.plot()` function. Have a look at the help documentation for this function. In particular note that you need to provide it two vecotrs, `lx` and `rx` for the popoulation sizes. 
+We will use the `plotrix` package for this, although you are free to experiment with drawing your own pyramid plot - you will have much more control than using the default `pyramid.plot()` function. Have a look at the help documentation for this function. In particular note that you need to provide it two vectors, `lx` and `rx` for the population sizes. 
 
 Write a function that:
 
 * takes as it's input the output from your previous function (the 40x4 table)
-* creates the `lx` and `rx vectors
+* creates the `lx` and `rx` vectors
 * **IMPORTANT** again you will have a data.frame as the result. use `as.matrix` on `lx` and `rx` so they can be used in the plot
-* calls pyramid.plot(lx, rx) as well as any other arguments you may want to add. (in particular you may want to add `labels=`). One way of creating them is `paste(seq(0,96, 5), seq(5,100,5), sep="-")`, but you can also use the values from the age group vairable. 
+* calls pyramid.plot(lx, rx) as well as any other arguments you may want to add. (in particular you may want to add `labels=`). One way of creating them is `paste(seq(0,96, 5), seq(5,100,5), sep="-")`, but you can also use the values from the age group variable. 
+
 
 
 

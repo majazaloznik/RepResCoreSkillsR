@@ -78,15 +78,6 @@ Literate Programming
 
 
 
-Practical I. - project setup
-========================================================
-The complete documentation for this course is available as an RStudio project in a public github repository:
-[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
-or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
-
-* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
-
-* find the instructions for Practical I in the manual
 
 Janitor work
 ========================================================
@@ -189,7 +180,18 @@ Tidy Data - Resources
 ========================================================
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
-For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
+
+
+Practical I. - project setup
+========================================================
+The complete documentation for this course is available as an RStudio project in a public github repository:
+[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
+or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
+
+* find the instructions for Practicals I and II in the manual
 
 
 Practical II. - import and clean data

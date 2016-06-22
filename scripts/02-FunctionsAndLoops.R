@@ -7,6 +7,7 @@
 ## 3.4 Use your function inside an apply statement
 ## 3.5 Bar-Plotting function
 ###############################################################################
+source("scripts/01-DataImport.R")
 
 ## 3.1 Practice conditional expressions and logical operators 
 ###############################################################################

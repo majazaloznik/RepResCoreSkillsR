@@ -71,15 +71,6 @@ Literate Programming
 
 
 
-Practical I. - project setup
-========================================================
-The complete documentation for this course is available as an RStudio project in a public github repository:
-[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
-or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
-
-* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
-
-* find the instructions for Practical I in the manual
 
 Janitor work
 ========================================================
@@ -260,7 +251,18 @@ Tidy Data - Resources
 ========================================================
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
-For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
+
+
+Practical I. - project setup
+========================================================
+The complete documentation for this course is available as an RStudio project in a public github repository:
+[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
+or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
+
+* find the instructions for Practicals I and II in the manual
 
 
 Practical II. - import and clean data
@@ -319,7 +321,7 @@ if (x >= 0.6) {
 ```
 
 ```
-[1] "Not Sure"
+[1] "Good"
 ```
 
 Conditional execution - conditions and operators
@@ -362,8 +364,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "B" "G" "B" "G" "G" "B" "G" "G" "G" "B" "G" "B" "G" "G" "B" "B" "G"
-[18] "G" "B" "G"
+ [1] "B" "B" "G" "B" "G" "N" "G" "B" "G" "N" "G" "B" "N" "B" "B" "G" "B"
+[18] "B" "N" "G"
 ```
 
 
@@ -435,11 +437,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   17   36   80   11   68
-[2,]   73   20   35   33   67
-[3,]   65   96   59   53    2
-[4,]   24    5   42   15   37
-[5,]   31   40   62   45    3
+[1,]   76   14   15    7   29
+[2,]   43   69   48   40   93
+[3,]   26   64   98   34   83
+[4,]    8   38   66   72   16
+[5,]   78   46   92   74   89
 ```
 
 ```r
@@ -461,7 +463,7 @@ out
 ```
 
 ```
-[1] 68 67 65 37 45
+[1] 29 69 83 66 89
 ```
 
 ```r
@@ -470,7 +472,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 68 67 65 37 45
+[1] 29 69 83 66 89
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -575,7 +577,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 68 67 65 37 45
+[1] 29 69 83 66 89
 ```
 
 Writing your own functions
