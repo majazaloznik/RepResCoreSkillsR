@@ -321,7 +321,7 @@ if (x >= 0.6) {
 ```
 
 ```
-[1] "Good"
+[1] "Not Sure"
 ```
 
 Conditional execution - conditions and operators
@@ -364,8 +364,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "B" "B" "G" "B" "G" "N" "G" "B" "G" "N" "G" "B" "N" "B" "B" "G" "B"
-[18] "B" "N" "G"
+ [1] "B" "N" "B" "G" "B" "B" "N" "B" "N" "G" "N" "G" "B" "G" "N" "N" "B"
+[18] "B" "G" "B"
 ```
 
 
@@ -437,11 +437,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   76   14   15    7   29
-[2,]   43   69   48   40   93
-[3,]   26   64   98   34   83
-[4,]    8   38   66   72   16
-[5,]   78   46   92   74   89
+[1,]   44    6   56   33   45
+[2,]   37   12   96   66   50
+[3,]   19   89   18   11   55
+[4,]   31   69   82   51    3
+[5,]   27    7   71   54   13
 ```
 
 ```r
@@ -463,7 +463,7 @@ out
 ```
 
 ```
-[1] 29 69 83 66 89
+[1] 45 66 55 69 54
 ```
 
 ```r
@@ -472,7 +472,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 29 69 83 66 89
+[1] 45 66 55 69 54
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -577,7 +577,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 29 69 83 66 89
+[1] 45 66 55 69 54
 ```
 
 Writing your own functions
@@ -636,12 +636,320 @@ Practical II
 
 Data manipulation with `dplyr`
 ========================================================
+
+* Subsetting:
+  + `filter()`
+  + `select()`
+* Calculating:
+  + `mutate()`
+  + `summarise()`
+* Helpers:
+  + `group_by()` and `ungroup()`
+  + `arrange()`
+
+Filtering - rows
+========================================================
 incremental:true
+
+
+```r
+filter(data, criteria)
+```
+
+
+
+```r
+filter(tidy.population2010, 
+       AREA_KM2 < 1000 & population > 10000 & AGE == 0)
+```
+
+```
+  AGE AREA_KM2       NAME FIPS    sex population
+1   0      360 Gaza Strip   GZ   male      29209
+2   0      687  Singapore   SN   male      18632
+3   0      360 Gaza Strip   GZ female      27616
+4   0      687  Singapore   SN female      17438
+```
+
+Selecting - columns
+========================================================
+incremental:true
+
+
+```r
+select(data, list)
+```
+
+
+
+```r
+select(tidy.economic.situation, bad, good, neutral)
+```
+
+```
+   bad good neutral
+1   25   28      47
+2   14   44      42
+3   11   54      35
+4    1   64      36
+5    3   63      34
+6   18   40      43
+7   76    8      17
+8   80    5      15
+9   83    4      13
+10  92    4       4
+11  89    0      11
+12  80    6      15
+13  77    6      17
+14  79    3      18
+15  85    2      12
+16  91    1       8
+17  92    0       8
+18  80    4      16
+```
+
+Selecting - columns
+========================================================
+incremental:true
+
+```r
+# all the columns between bad and neutral
+select(tidy.economic.situation, bad:neutral)
+# all but the perception column
+select(tidy.economic.situation, -perception)
+# contains a dot in the name:
+select(tidy.economic.situation, contains("."))
+# starts with the letter p
+select(tidy.economic.situation, starts_with("p"))
+# ends with the letter d
+select(tidy.economic.situation, ends_with("d"))
+# contains the text "n"
+select(tidy.economic.situation, contains("n"))
+```
+
+
+```r
+# change order of columns by name
+select(tidy.economic.situation,income.group:bad, neutral, good:perception), n=3
+# we can also do this using the columns' respective indices instead
+select(tidy.economic.situation, 1,2,4,3,5), n=3
+```
+
+Calculating - new variables (columns)
+========================================================
+incremental:true
+
+```r
+# scale the values so they all sum up to 100
+mutate(tidy.economic.situation, 
+       total = bad+neutral+good, 
+       bad.s = bad/total*100,
+       good.s = good/total*100,
+       neutral.s = neutral/total*100,
+       total.s =  bad.s  + good.s + 
+         neutral.s
+)
+```
+
+
+```
+   income.group perception   bad.s good.s neutral.s
+1     inc.lt.20         HH 25.0000 28.000     47.00
+2  inc.20.to.39         HH 14.0000 44.000     42.00
+3  inc.40.to.59         HH 11.0000 54.000     35.00
+4  inc.60.to.99         HH  0.9901 63.366     35.64
+5    inc.gt.100         HH  3.0000 63.000     34.00
+6           all         HH 17.8218 39.604     42.57
+7     inc.lt.20         UK 75.2475  7.921     16.83
+8  inc.20.to.39         UK 80.0000  5.000     15.00
+9  inc.40.to.59         UK 83.0000  4.000     13.00
+10 inc.60.to.99         UK 92.0000  4.000      4.00
+11   inc.gt.100         UK 89.0000  0.000     11.00
+12          all         UK 79.2079  5.941     14.85
+13    inc.lt.20          W 77.0000  6.000     17.00
+14 inc.20.to.39          W 79.0000  3.000     18.00
+15 inc.40.to.59          W 85.8586  2.020     12.12
+16 inc.60.to.99          W 91.0000  1.000      8.00
+17   inc.gt.100          W 92.0000  0.000      8.00
+18          all          W 80.0000  4.000     16.00
+```
+
+Calculating - new observations (rows)
+========================================================
+incremental:true
+
+
+```r
+summarise(data, new.var = summary.function(column))
+```
+
+
+```r
+summarise(tidy.population2010, 
+          av.pop = mean(population), 
+          av.area = mean(AREA_KM2), 
+          count = n(), 
+          second = FunSecondLargest(population))
+```
+
+```
+  av.pop av.area count   second
+1 149087  578149 46056 14642884
+```
+
+Calculating - new observations (rows) - grouped
+========================================================
+incremental:true
+
+```r
+gr <- group_by(tidy.population2010, AGE)
+summarise(gr, pop = mean(population), 
+          area = mean(AREA_KM2), 
+          count = n(), 
+          second = FunSecondLargest(population))
+```
+
+```
+Source: local data frame [101 x 5]
+
+     AGE    pop   area count   second
+   (int)  (dbl)  (dbl) (int)    (int)
+1      0 282738 578149   456 11355900
+2      1 278558 578149   456 11177984
+3      2 275981 578149   456 11082923
+4      3 272960 578149   456 11021599
+5      4 270025 578149   456 11002862
+6      5 267803 578149   456 11022271
+7      6 266032 578149   456 11037275
+8      7 264164 578149   456 11040174
+9      8 262954 578149   456 11030910
+10     9 262510 578149   456 11016559
+..   ...    ...    ...   ...      ...
+```
+
+Sorting data
+========================================================
+incremental:true
+
+
+```r
+# `arrange()` for data sorting on columns
+arrange(tidy.economic.situation, perception, desc(bad.s))
+```
+
+```
+   income.group perception   bad.s good.s neutral.s
+1     inc.lt.20         HH 25.0000 28.000     47.00
+2           all         HH 17.8218 39.604     42.57
+3  inc.20.to.39         HH 14.0000 44.000     42.00
+4  inc.40.to.59         HH 11.0000 54.000     35.00
+5    inc.gt.100         HH  3.0000 63.000     34.00
+6  inc.60.to.99         HH  0.9901 63.366     35.64
+7  inc.60.to.99         UK 92.0000  4.000      4.00
+8    inc.gt.100         UK 89.0000  0.000     11.00
+9  inc.40.to.59         UK 83.0000  4.000     13.00
+10 inc.20.to.39         UK 80.0000  5.000     15.00
+11          all         UK 79.2079  5.941     14.85
+12    inc.lt.20         UK 75.2475  7.921     16.83
+13   inc.gt.100          W 92.0000  0.000      8.00
+14 inc.60.to.99          W 91.0000  1.000      8.00
+15 inc.40.to.59          W 85.8586  2.020     12.12
+16          all          W 80.0000  4.000     16.00
+17 inc.20.to.39          W 79.0000  3.000     18.00
+18    inc.lt.20          W 77.0000  6.000     17.00
+```
+
+Joining tables
+========================================================
+
+- `left_join(a, b)` -- keeps all rows in first table
+- `right_join(a, b)` -- keeps all roows in second table
+- `inner_join(a, b)` -- only keeps rows present in both a and b
+- `full_join(a, b)` -- keeps all rows
+
+
 
 Piping
 ========================================================
 
 <div align="center">
 <img src="../../figures/pipe.jpg" height=500>
-</div>> <p style="text-align: right;"><small>[Photo by Joe Cross](https://www.flickr.com/photos/jaycross/2869212451)</small> </p>
+</div> <p style="text-align: right;"><small>[Photo by Joe Cross](https://www.flickr.com/photos/jaycross/2869212451)</small> </p>
+
+Without Piping
+========================================================
+incremental:true
+
+
+```r
+data.subset <-  filter(tidy.population2010, AREA_KM2 < 2000 & population > 15000 & AGE == 0)
+```
+
+```r
+data.subset2 <- select(data.subset, -AGE) 
+```
+
+```r
+data.subset3 <-  mutate(data.subset2, density = population/AREA_KM2) 
+```
+
+```r
+data.grouped <-   group_by(data.subset3, NAME)
+```
+
+```r
+summarise(data.grouped, count = n(), mean.density = mean(density)) 
+```
+
+```
+Source: local data frame [3 x 3]
+
+        NAME count mean.density
+      (fctr) (int)        (dbl)
+1 Gaza Strip     2        78.92
+2  Hong Kong     2        28.07
+3  Singapore     2        26.25
+```
+
+With Piping
+========================================================
+incremental:true
+
+```r
+tidy.population2010 %>%
+  filter(AREA_KM2 < 2000 & population > 15000 & AGE == 0) %>%
+  select(-AGE) %>%
+  mutate(density = population/AREA_KM2) %>%
+  group_by(NAME) %>%
+  summarise(count = n(), mean.density = mean(density)) -> final.table
+```
+
+```r
+final.table
+```
+
+```
+Source: local data frame [3 x 3]
+
+        NAME count mean.density
+      (fctr) (int)        (dbl)
+1 Gaza Strip     2        78.92
+2  Hong Kong     2        28.07
+3  Singapore     2        26.25
+```
+
+
+PRACTICAL III
+========================================================
+
+
+```r
+##########################################################
+## PIPING and POPULATION PYRAMIDS
+##########################################################
+## 4.0 Practice piping on population2010
+## 4.1 Write a function to extract population pyramid data
+## 4.2 Write a function to plot the output of 4.1
+##########################################################
+```
 

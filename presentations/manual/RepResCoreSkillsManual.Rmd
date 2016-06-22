@@ -1016,7 +1016,6 @@ Extracts only the columns that you list:
 select(data, list)
 ```
 
-The columns can be named directly with no need for quotation marks
 ```{r}
 select(tidy.economic.situation, bad, good, neutral)
 ```
@@ -1090,7 +1089,7 @@ summarise(tidy.population2010, pop = mean(population), area = mean(AREA_KM2), co
 But the summarise function really comes into it's own when it operates on a *grouped* table. Using the function `group_by()` the table is (invisibly) split into sub-tables by the values of the grouping variable, and the summarise function then operates on each subset individually:
 ```{r}
 summarise(group_by(tidy.population2010, AGE), 
-          pop = mean(population), area = mean(AREA_KM2), count = n(), 
+          av.pop = mean(population), av.area = mean(AREA_KM2), count = n(), 
           test = FunSecondLargest(population))
 ```
 

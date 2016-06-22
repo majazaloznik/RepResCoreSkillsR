@@ -432,12 +432,199 @@ Practical II
 
 Data manipulation with `dplyr`
 ========================================================
+
+* Subsetting:
+  + `filter()`
+  + `select()`
+* Calculating:
+  + `mutate()`
+  + `summarise()`
+* Helpers:
+  + `group_by()` and `ungroup()`
+  + `arrange()`
+
+Filtering - rows
+========================================================
 incremental:true
+
+```{r, eval = FALSE}
+filter(data, criteria)
+```
+
+
+```{r}
+filter(tidy.population2010, 
+       AREA_KM2 < 1000 & population > 10000 & AGE == 0)
+```
+
+Selecting - columns
+========================================================
+incremental:true
+
+```{r, eval = FALSE}
+select(data, list)
+```
+```{r, echo = FALSE}
+tidy.economic.situation <- read.table("data/demo/econ.csv")
+```
+
+```{r}
+select(tidy.economic.situation, bad, good, neutral)
+```
+
+Selecting - columns
+========================================================
+incremental:true
+```{r, eval = FALSE}
+# all the columns between bad and neutral
+select(tidy.economic.situation, bad:neutral)
+# all but the perception column
+select(tidy.economic.situation, -perception)
+# contains a dot in the name:
+select(tidy.economic.situation, contains("."))
+# starts with the letter p
+select(tidy.economic.situation, starts_with("p"))
+# ends with the letter d
+select(tidy.economic.situation, ends_with("d"))
+# contains the text "n"
+select(tidy.economic.situation, contains("n"))
+```
+
+```{r, eval = FALSE}
+# change order of columns by name
+select(tidy.economic.situation,income.group:bad, neutral, good:perception), n=3
+# we can also do this using the columns' respective indices instead
+select(tidy.economic.situation, 1,2,4,3,5), n=3
+```
+
+Calculating - new variables (columns)
+========================================================
+incremental:true
+```{r, eval = FALSE}
+# scale the values so they all sum up to 100
+mutate(tidy.economic.situation, 
+       total = bad+neutral+good, 
+       bad.s = bad/total*100,
+       good.s = good/total*100,
+       neutral.s = neutral/total*100,
+       total.s =  bad.s  + good.s + 
+         neutral.s
+)
+```
+
+```{r, echo = FALSE}
+tidy.economic.situation <- mutate(tidy.economic.situation, total = bad+neutral+good, 
+                                  bad.s = bad/total*100,
+                                  good.s = good/total*100,
+                                  neutral.s = neutral/total*100,
+                                  total.s =  bad.s  + good.s + 
+                                  neutral.s
+)
+# we can now use select to remove the old ones
+tidy.economic.situation <- select(tidy.economic.situation, -bad, - good, -neutral, 
+                                  -total, -total.s)
+tidy.economic.situation
+```
+
+Calculating - new observations (rows)
+========================================================
+incremental:true
+
+```{r, eval = FALSE}
+summarise(data, new.var = summary.function(column))
+```
+
+```{r}
+summarise(tidy.population2010, 
+          av.pop = mean(population), 
+          av.area = mean(AREA_KM2), 
+          count = n(), 
+          second = FunSecondLargest(population))
+```
+
+Calculating - new observations (rows) - grouped
+========================================================
+incremental:true
+```{r}
+gr <- group_by(tidy.population2010, AGE)
+summarise(gr, pop = mean(population), 
+          area = mean(AREA_KM2), 
+          count = n(), 
+          second = FunSecondLargest(population))
+```
+
+Sorting data
+========================================================
+incremental:true
+
+```{r}
+# `arrange()` for data sorting on columns
+arrange(tidy.economic.situation, perception, desc(bad.s))
+```
+
+Joining tables
+========================================================
+
+- `left_join(a, b)` -- keeps all rows in first table
+- `right_join(a, b)` -- keeps all roows in second table
+- `inner_join(a, b)` -- only keeps rows present in both a and b
+- `full_join(a, b)` -- keeps all rows
+
+
 
 Piping
 ========================================================
 
 <div align="center">
 <img src="../../figures/pipe.jpg" height=500>
-</div>> <p style="text-align: right;"><small>[Photo by Joe Cross](https://www.flickr.com/photos/jaycross/2869212451)</small> </p>
+</div> <p style="text-align: right;"><small>[Photo by Joe Cross](https://www.flickr.com/photos/jaycross/2869212451)</small> </p>
+
+Without Piping
+========================================================
+incremental:true
+
+```{r}
+data.subset <-  filter(tidy.population2010, AREA_KM2 < 2000 & population > 15000 & AGE == 0)
+```
+```{r}
+data.subset2 <- select(data.subset, -AGE) 
+```
+```{r}
+data.subset3 <-  mutate(data.subset2, density = population/AREA_KM2) 
+```
+```{r}
+data.grouped <-   group_by(data.subset3, NAME)
+```
+```{r}
+summarise(data.grouped, count = n(), mean.density = mean(density)) 
+```
+
+With Piping
+========================================================
+incremental:true
+```{r}
+tidy.population2010 %>%
+  filter(AREA_KM2 < 2000 & population > 15000 & AGE == 0) %>%
+  select(-AGE) %>%
+  mutate(density = population/AREA_KM2) %>%
+  group_by(NAME) %>%
+  summarise(count = n(), mean.density = mean(density)) -> final.table
+```
+```{r}
+final.table
+```
+
+
+PRACTICAL III
+========================================================
+
+```{r}
+##########################################################
+## PIPING and POPULATION PYRAMIDS
+##########################################################
+## 4.0 Practice piping on population2010
+## 4.1 Write a function to extract population pyramid data
+## 4.2 Write a function to plot the output of 4.1
+##########################################################
+```
 
