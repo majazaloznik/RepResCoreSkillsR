@@ -3,7 +3,8 @@ title: "R: Core Skills for Reproducible Research"
 subtitle: "Course Manual with Practical Exercises  -- 
  Oxford IT Services - 22 June 2016"
 author: "Maja Zalo&#x17e;nik"
-output: 
+#output: html_notebook
+output:
   pdf_document:
     toc: true
     toc_depth: 3
@@ -286,19 +287,22 @@ Unless you have brought your own laptop, you will be completing this project on 
   * figures
   * presentations
 2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
-3. You can also download the manual and slides to your `presentation` folder, and the two reference files from teh `literature` folder. 
+* Downloading single files from github can be cumbersome - you need to navigate to the file [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv) and right-click on the `Download` button on the top rigth and select `Save link as`. 
+3. You can also download the manual and slides to your `presentation` folder, and the two reference files from the `literature` folder. 
 4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manually every time. 
 
 For this practical you will need the following packages (type this into your .RProfile file and save).
 ```{r, eval = FALSE}
 require(xlsx)
-require(forein)
+require(foreign)
 require(dplyr)
 require(tidyr)
 require(plotrix)
 ```
 
-[Use `install.packages("name of package")` if the packages are not yet installed on your system. ]
+[Use `install.packages("name of package")` if the packages are not yet installed on your system. On some systems the xlsx package might cause problems, so pay attention to the output in the console, in case the packages were not successfully installed. You will still be able to complete this practical, or you can have a look in the next section for some other alternative packages for loading Excel files. ]
+
+
 ## PRACTICAL: Import and clean some data
 
 ### Downloading and importing data
