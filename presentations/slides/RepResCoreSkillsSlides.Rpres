@@ -4,7 +4,7 @@ width:1200
 
 Maja Zalo&#x17e;nik
 
-22.6.2016
+31.10.2016
 
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
@@ -84,7 +84,7 @@ Janitor work
 incremental: true
 > Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets. <p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p>
 
-* Data formats, sources, and 
+* Data formats and sources 
 * `tidyr` package
   + `spread()` and  `gather()`
   + `separate()` and  `unite()`

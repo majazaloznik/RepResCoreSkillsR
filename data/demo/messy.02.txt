@@ -1,4 +1,4 @@
-"country" "year" "key" "value"
+"country" "year" "var.name" "var.value"
 "1" "Norway" "2010" "population" 4891300
 "2" "Norway" "2010" "density" 16.0748910550082
 "3" "Norway" "2050" "population" 6364008

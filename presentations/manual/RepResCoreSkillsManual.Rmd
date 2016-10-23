@@ -1,7 +1,7 @@
 ---
-title: "R: Core Skills for Reproducible Research"
+title: "Data analysis: Core skills for reproducible data analysis in R"
 subtitle: "Course Manual with Practical Exercises  -- 
- Oxford IT Services - 22 June 2016"
+ Oxford University: IT Learning Centre - 31 October 2016"
 author: "Maja Zalo&#x17e;nik"
 #output: html_notebook
 output:
@@ -12,10 +12,10 @@ output:
 
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
-require(knitr)
-require(dplyr)
-require(tidyr)
-require(plotrix)
+library(knitr)
+library(dplyr)
+library(tidyr)
+library(plotrix)
 opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
@@ -24,7 +24,7 @@ options(scipen=999, digits=4)
 # Introduction
 ## Blurb
 
-This short course covers the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
+This short course covers some of the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
 
 ## Key Topics
 
@@ -61,48 +61,86 @@ Reproducible research means making the data and the code of our analysis availab
 
 This is the golden standard of scientific inquiry, and is increasingly and rightly becoming a requirement in academic publishing, and by funding bodies. 
 
-It is also a way of establishing better working habits, reduce the potential for error, develop a more streamlined research process, and make for easier collaboration. 
+It is also a way of establishing better working habits, reducing the potential for error, developing a more streamlined research process, and making for easier collaboration. 
 
 Reproducible research does take a bit of upfront investment in learning the tools and setting up your workflow. Luckily RStudio has integrated many of the tools required in one platform, making it easier than ever to apply the principles of reproducibility consistently and comprehensively. 
 
-This practical course will focus in particular on how to set-up an RStudio project and associate file and folder structure, and get you on the right track towards literate programming. We will then cover a complete workflow structure including downloading and importing data, *tidying* it up, using some basic programming structures to improve your code, and finally the `dplyr` package, which is already revolutionising data manipulation in R by providing a comprehensive set of tools that follow a very intuitive logic.
+This practical course will focus in particular on how to set-up an RStudio project and associate file and folder structure, and get you on the right track towards *literate programming*. We will then cover a complete workflow structure including downloading and importing data, *tidying* it up, using some basic programming structures to improve your code, and finally the `dplyr` package, which is already revolutionising data manipulation in R by providing a comprehensive set of tools that follow a very intuitive logic.
 
-There is plenty more that cannot be covered in a 3 hour course. In particular we will not discuss version control (e.g. github) and the *knitting* of text and analysis, or their publishing on-line directly from RStudio. You will be able to see the results of these practices in the way the very course materials are prepared, and they can be accessed on-line in a dedicated repository public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
+There is plenty more that cannot be covered in a 3 hour course. In particular we will not discuss version control (e.g. github) and the *knitting* of text and analysis, or their publishing on-line directly from RStudio. You will be able to see the results of these practices in the way the very course materials are prepared, and they can be accessed on-line in a dedicated repository public github repository: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
 
 For an excellent and in-depth source on all of this and more, see Christopher Gandrud's book on Reproducible Research in R and RStudio, also in a public github repository: [https://github.com/christophergandrud/Rep-Res-Book]( https://github.com/christophergandrud/Rep-Res-Book) and for your convenience an old compiled copy of his first edition can be also be found in this course's repository in the `literature` folder. 
 
 #  Set-up 
+
+R can be run from the *console*, by typing in commands at the command prompt. The level of *reproducibility* of this approach is approximately zero. Writig code into an R script, a text file with the extension `.R` and executing it from there is the recommended minimum level of reproducibility for any analysis with R. Going one step further is to use `R projects`, a way of integrating your R scripts with added functionality that is integrated in the RStudio work environment, and it is this set-up that we will be adopting here. 
+
+
 ## RStudio
 RStudio has beyond a doubt become the most popular Integrated Development Environment for R. It is open source and cross-platform.  In addition to allowing easy project management and integrated version control, it also provides all the tools for dynamically creating *knitted* documents and directly publishing them on-line. The RStudio crew are also active developers of interactive graphical tools and new developments are constantly being added to an already excellent toolbox. If you prefer to use another environment you should however still be able to apply all of the principles of reproducible research covered here and beyond, although it might take a little bit more work. 
+
+Instructions for installing R and RStudio on your laptop:
+
+First install R
+
+1. For Windows [instructions here: https://cran.r-project.org/bin/windows/base/](https://cran.r-project.org/bin/windows/base/)
+2. For Mac [instructins here: https://cran.r-project.org/bin/macosx/](https://cran.r-project.org/bin/macosx/)
+3. For Linux [instructions here : (https://cran.r-project.org/bin/linux/ubuntu/README](https://cran.r-project.org/bin/linux/ubuntu/README)
+
+Then install RStudio - Desktop edition - by selecting the appropriate installer for your operating system from [this link: https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/). 
+
 
 ## Project management
 
 A crucial requirement for conducting reproducible research, and one that has to be carefully considered before you embark on your analysis, is your plan on how the data, code and outputs will be organised. The project management structure proposed here is just a suggestion, and you should adapt it to your specific needs, but it is highly recommended that you stick to one such system consistently, instead of coming up with 'ad hoc ' solutions for every new project. 
 
-RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. This means assigning a single folder for each project, and within that folder organizing your work into sub-folders. Depending on your type of project this may vary, but a good starting point would be something along the lines of:
 
-Project Folder
-- data - holds all the raw data files
-- scripts - holds all the R code, preferable split into smaller, more modular code files
-- figures - to store outputs of your data analysis, or external figures to be used in reports
-- outputs - presentations, reports etc. that are compiled dynamically within the project
+### Project folder structure
 
-None of this will matter though, if you do not *document everything* you do! This means never running any code from the command prompt, always writing it into a script file and running it from there. This also means not messing with the original data files, even if they are horribly formatted Excel files, but only extracting the data programatically. 
+RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. This means assigning a single folder for each project, and within that folder organizing your work into sub-folders. Depending on your type of project this may vary, but a good starting point would be something along the lines of the following project subfolders:
+
+- *data* - holds all the raw data files
+- *scripts* - holds all the R code, preferable split into smaller, more modular code files
+- *figures* - to store outputs of your data analysis, or external figures to be used in reports
+- *outputs* - presentations, reports etc. that are compiled dynamically within the project
+
+
+### Project files
+
+The forlder structure maps onto the following classification of different types of files that will most often be involved in your project:
+
+1. R project level files, are files created by R or RStudio for each project:
+
+- `.Rproj` - *the project file*
+- `.RData` - *the workspace file*: contains all the objects in your workspace. It is advisable as a general rule that you do not use `.RData` files at all in your work! 
+- `.Rhistory` - *the history file* logs your command history
+- `.Rprofile` - *the settings file* where you can add commands to automatically rune every time you open a specific project. 
+
+2. R script files: These are the executable files with R code. The `.R` extension are pure coding files, `.Rmd` files are ones that combine code and text. 
+
+3. Data files: can come in a variety of formats, `.csv`, `.xls`, `.dat` etc.. Best practice is to programatically (download and) import the files into R and never manipulate the raw data directly!
+
+4. Figures can be priduced by R in various formats from `.jpeg` and `.png` to vector graphics for example `.eps`, although some details will vary according to your platform. 
+
+5. Outputs and presentations: many types of reports can be automatically poduced directly in R, including `.pdf`, `.doc` amd `.html` files, which can also be published on-line directly. 
+
 
 ## Human readability
 One of the often overlooked principles underlying reproducible research is trying to ensure the human readability of as much of your files as possible. This applies to the types of data and other file formats used, as well as your coding style. Making them human readable is one way of trying to future-proof your work. 
 
 ### File Formats
-Try to avoid binary file formats. This includes e.g. .xls files, but also R's native workspace file, which is saved with an  `.RData` extension. Text, delimited or comma separated values are safe formats that are easily transferable, human readable, and relatively future proof. 
+Try to avoid binary file formats. This includes e.g. `.xls` files, but also R's native workspace file, which is saved with an  `.RData` extension. Text, delimited or comma separated values (`,csv`) are safe formats that are easily transferable, human readable, and relatively future proof. 
 
 ### Consistent coding style e.g.:
 
+None of this will matter though, if you do not *document everything* you do! This means not running any code from the command prompt, but isntead always writing it into a script file (`.R` or `.Rmd`) and running it from there. 
+
 Another key element of human readability is trying to keep to a consistent coding style. This is not always easy, but it pays to get into some good habits while it's still early. Two excellent starting points are
 
-* [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
-* [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
+* [Google's R Style Guide: https://google.github.io/styleguide/Rguide.xml](https://google.github.io/styleguide/Rguide.xml)
+* [Hadley Wickham's Style Guide: http://adv-r.had.co.nz/Style.html](http://adv-r.had.co.nz/Style.html)
 
-You do not have to follow these to the letter (they do not agree on everything anyway) - but they should give you an idea about what are good rules to determine for yourself and then stick with. At least for the sake of the future you, who will one day have to re-read your messy, uncommented code. 
+You do not have to follow these to the letter (the two are not consistent anyway) - but they should give you an idea about what are some things you might want to establish a rule for yourself. At least for the sake of the future you, who will one day have to re-read your messy, uncommented code. 
 
 ![Code Quality part 2. (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
 
@@ -113,13 +151,16 @@ The importance of commenting your code can never be understated. Some programmer
 \newpage
 # Workflow
 > *Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets.* 
-<p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p>
+
+Source: NY Times^[[http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html](http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html)]
 
 ## Importing data
 
 Regardless of whether your data is stored locally or downloaded from the web, you should never manipulate the original data directly. This is crucial for the integrity of your reproducible research process. 
 
-R has utilities for importing data from a wide variety of sources including proprietary formats. Ideally you want to be working with .csv files, as they are the cleanest and least problematic to import, but often you have no choice in the matter. In the practical we will import .csv, .xls and .sav files, including downloading and unzipping them. Here is a list of some common formats and the packages used for importing them, refer to the help pages for more details: 
+R has utilities for importing data from a wide variety of sources including proprietary formats. Ideally you want to be working with .csv files, as they are the cleanest and easiest to import, but often you have no choice in the matter. 
+
+In the practical we will therefore import `.csv`, `.xls` and `.sav` files, including downloading and unzipping them. Here is a list of some common formats^[For a more comprehensive list of possible input formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial).] and the packages used for importing them, refer to the help pages for more details:
 
 * comma separated values -- `read.csv()` 
 * tab-delimited text file -- `read.table()`
@@ -127,18 +168,17 @@ R has utilities for importing data from a wide variety of sources including prop
 * Minitab -- `read.mtb()` from  `library(foreign)`
 * SPSS -- `read.spss()` from `library(foreign)`
 * Stata -- `read.dta()` from  `library(foreign)`
-* Excel -- `read.xls()` from `require(gdata)`
+* Excel -- `read.xls()` from `library(gdata)`
 * Excel -- `loadWorkbook()` from `library(XLConnect)`
 
 The basic import functions of the `read.table()` family all have a `nrows` argument, which is particularly useful if you do not know the structure of the data and are dealing with a large fine. In which case it is recommended you try a test import with e.g. `nrows=10`, and check the result before attempting to import the full file. 
 
-For a more comprehensive list of possible input formats see this tutorial: [https://www.datacamp.com/community/tutorials/r-data-import-tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial).
 
 
 
 We will store all our data files in the `data` folder of our project, from where they will be imported into R. This means the original files remain *untouched* by the data analysis and should never be overwritten as the result of your analysis. 
 
-While you might find it easier to simply download a file into your folder, this poses the problem of loosing track of where the data was sourced from. It is therefore highly recommended you download the data programmatically if possible, and if not, that you use comments within the code to describe the source of the files. For example the `pop2010.csv` file we will download in the first practical should have been downloaded directly from within R, by doing it manually we are reducing the reproducibility of our project. We must therefore make sure we note the origin and date we accessed the data in our code!
+While you might find it easier to simply download a file into your folder, this poses the problem of loosing track of where the data was sourced from. It is therefore highly recommended you download the data programmatically (i.e. in the script) if possible, and if not, that you use comments within the code to describe the source of the files: their origin and the date accessed. We will see an example in the practical. 
 
 
 ## Data tidying
@@ -165,20 +205,11 @@ This may seem trivial, but it is in fact common to encounter data that does not 
 
 ### spread()
 
-Below we can see an example of a messy table, since each observation is in fact represented in two rows. Third column in fact contains variable names (`density` and `population`), while the fourth column contains their values. 
+Below we can see an example of a *messy* table: it is messy because each observation is in fact represented in two rows. The third column is not really a variable, but contains variable names (`density` and `population`), while the fourth column contains their values. 
 
 ```{r, echo=FALSE}
 messy.02 <- read.table("data/demo/messy.02.txt")
 messy.02
-```
-
-Using `spread()` we can tidy this layout:  
-
-```{r, echo=c(3:4)}
-require(tidyr)
-require(dplyr)
-tidy.02 <- spread(messy.02, key, value)
-tidy.02
 ```
 
 The syntax for `spread()` takes the following form:
@@ -206,7 +237,21 @@ Density: 20.91484
 
 ```
 
-In a tidy data table each cell contains a *value* and the *keys* are the column names. 
+In a tidy data table each cell contains a *value* and the *keys* are the column names. So in order to tidy up this table we need the `var.name` values to become the column names, so that is our *key* and we need the var.value values to become the values in the new columns, so we designate that as teh *value* argument:
+
+
+```{r, echo=c(3:4)}
+library(tidyr)
+library(dplyr)
+tidy.02 <- spread(messy.02, key= var.name, value = var.value)
+```
+
+Resulting in the tidy table:
+```{r}
+tidy.02
+```
+
+
 
 ### gather()
 
@@ -226,8 +271,8 @@ where the `...` represents the columns we want to gather, in our case columns 2 
 
 
 ```{r, echo=c(3,5)}
-require(tidyr)
-require(dplyr)
+library(tidyr)
+library(dplyr)
 tidy.01 <- gather(messy.01, year, population, 2:3)
 tidy.01 <-  mutate(tidy.01, year=ifelse(year=="X2010", 2010, 2050))
 tidy.01
@@ -261,7 +306,7 @@ For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's 
 For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
 
 
-## PRACTICAL: new R project
+# PRACTICAL I: new R project {-}
 
 
 The complete documentation for this course is available as an RStudio project in a public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
@@ -270,7 +315,7 @@ In this first part of the practical you will set up a new RStudio project mirror
 
 Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you on-line at the above addresses. 
 
-### Create new RStudio project
+## Create new RStudio project {-}
 
 1. Open RStudio
 2. Select the project menu in the top right-hand corner and select `New Project`
@@ -279,7 +324,7 @@ Unless you have brought your own laptop, you will be completing this project on 
 5. Run the command `getwd()` in the console. You should note that RStudio has automatically set the working directory in the top level of your project folder. 
 6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
 
-### Folder and File Structure
+## Folder and File Structure {-}
 
 1. Using the New Folder button in the Files pane, create three folders called (some equivalent of)
   * data
@@ -288,24 +333,23 @@ Unless you have brought your own laptop, you will be completing this project on 
   * presentations
 2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
 * Downloading single files from github can be cumbersome - you need to navigate to the file [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv) and right-click on the `Download` button on the top rigth and select `Save link as`. 
-3. You can also download the manual and slides to your `presentation` folder, and the two reference files from the `literature` folder. 
+3. You can also download this manual in pdf format to your `presentation` folder if you wish. 
 4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manually every time. 
 
-For this practical you will need the following packages (type this into your .RProfile file and save).
+For this practical you will need the following packages (type this into your `.RProfile` file and save).
 ```{r, eval = FALSE}
-require(xlsx)
-require(foreign)
-require(dplyr)
-require(tidyr)
-require(plotrix)
+library(xlsx)
+library(foreign)
+library(dplyr)
+library(tidyr)
+library(plotrix)
 ```
 
-[Use `install.packages("name of package")` if the packages are not yet installed on your system. On some systems the xlsx package might cause problems, so pay attention to the output in the console, in case the packages were not successfully installed. You will still be able to complete this practical, or you can have a look in the next section for some other alternative packages for loading Excel files. ]
+If any of the packages are not installed on your computer you must first run `install.packages("<name of package>")`. Now save and close the `.RProfile` file. In fact, close RStudio completely, and try opeining the project again. You should see the messages indicating that the packages from the `.RProfile` file have have been loaded automatically.  
 
+# PRACTICAL II: Import and clean some data {-}
 
-## PRACTICAL: Import and clean some data
-
-### Downloading and importing data
+## Downloading and importing data {-}
 
 First create a new `.R` script file in your `scripts` folder or equivalent via the drop-down menu or using `Ctrl+Shift+N`. Naming  it something like `01-DataImport.R` will make your project management easier in the long run, but feel free to set up your own file naming system -- but try to stick with it!
 
@@ -322,16 +366,10 @@ It is good practice to establish a header system for all your script files, such
 
 ```
 
-Make sure your working directory is at the top of your project folder using `getwd()`. We are going to use the `read.csv()` function to import the data from the `pop2010.csv` file in the `data` folder. But just to be safe, we will first do a test run, importing only 10 rows, so we can inspect the result before importing the whole table:
+Let's see where our working directory is using `getwd()`. It should be in the main project folder. Now we are going to use the `read.csv()` function to import the data from the `pop2010.csv` file that we have in the `data` folder. But just to be safe we will first do a test run importing only 10 rows from the table, so we can inspect the result before importing the whole table:
 ```{r }
 ## 1.1  Import a .csv file
 ###############################################################################
-# don't forget to note the source of the data! e.g:
-# downloaded manually from https://github.com/majazaloznik/RepResCoreSkillsR/
-# blob/master/data/pop2010.csv?raw=true" on 20.6.2016
-# MZ got it from:
-# http://www.census.gov/data/developers/data-sets/international-database.html
-
 getwd()
 
 # test run
@@ -339,33 +377,37 @@ population2010 <- read.csv("data/pop2010.csv", nrows=10)
 population2010
 ```
 
-That looks good, the only thing is, I can tell you that all the data in this file is from 2010, so we do not really need the last column. In order to skip it during import, we can use the `colClasses` argument, and setting the seventh argument to `NULL`
+That looks good, the only thing is I can already tell you that all the data in this file is from 2010, so we do not really need the last column. We could delete it later, but we can also *not import it* in the first place: in order to skip it during import, we use the `colClasses` argument, and setting the seventh argument to `NULL`. 
 
 ```{r}
+# don't forget to note the source of the data! e.g:
+# downloaded manually from https://github.com/majazaloznik/RepResCoreSkillsR/
+# blob/master/data/pop2010.csv?raw=true" on 20.6.2016
+# MZ got it from:
+# http://www.census.gov/data/developers/data-sets/international-database.html
+
 # import full table except for 7th column (year)
 population2010 <- read.csv("data/pop2010.csv", 
-                           colClasses = c("integer",   # age
-                                          "integer",   # area 
-                                          "character", # name 
-                                          "integer",   # population
-                                          "integer",   # sex
-                                          "character", # country id (FIPS)
-                                          "NULL"))     # year - skip
+                           colClasses = c(rep(NA, 6), "NULL")) # skip "year"
 # check how it looks
 head(population2010)
 tail(population2010)
 ```
 
 
-Comma separated values (`.csv`) is one of the preferred formats to import data from, but R allows you to import from a variety of other formats, although this can sometimes get a bit more messy. This time we will also first download the file, before importing a table from one of the spreadsheets. This is from [https://data.gov.uk/dataset/social_trends](https://data.gov.uk/dataset/social_trends), part of the government's open data access initiative and a great resource!
+Comma separated values (`.csv`) is one of the preferred formats to import data from, but R allows you to import from a variety of other formats, although this can sometimes get a bit more messy. 
 
 
+This time we will also first download the file, before importing a table from one of the spreadsheets. This is from [https://data.gov.uk/dataset/social_trends](https://data.gov.uk/dataset/social_trends), part of the government's open data access initiative and a great resource!
+
+The first step is to use R to dowload the file from a url:
 ```{r}
 ## 1.2  Download and import an Excel file
 ###############################################################################
-# url of the .xls file we want (using paste only to keep code under 80 chars:)
-data.url <- paste("http://www.ons.gov.uk/ons/rel/social-trends-rd/social-",
-            "trends/social-trends-41/income-and-wealth-data.xls", sep="")
+# url of the .xls file we want I've given it a tinyurl, but the real one is:
+# http://www.ons.gov.uk/ons/rel/social-trends-rd/social-trends/
+# social-trends-41/income-and-wealth-data.xls
+data.url <- "http://tinyurl.com/Excel2106"
 
 # download location 
 data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
@@ -373,11 +415,12 @@ data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
 # download - Excel files are binary, so set the mode to "wb"!!
 download.file(data.url, data.location, mode="wb")
 ```
+
 You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on people's perceptions of the current economic situation. Close the Excel file before proceeding! Several solutions are available for importing Excel files into R, a nice overview can be found [http://www.r-bloggers.com/read-excel-files-from-r/](here). In this practical we will use the `xlsx` package:
 
 ```{r}
 ## Importing the data from an .xls file
-require(xlsx)
+library(xlsx)
 
 # let's see what happens if we import the whole sheet
 economic.situation <- read.xlsx(data.location, sheetIndex = 3)
@@ -396,6 +439,11 @@ household.situation <- read.xlsx(data.location, sheetIndex = 3,
                           rowIndex=c(4, 16:18), colIndex = c(1:7))
 ```
 
+```{r, echo = FALSE}
+save(world.situation, UK.situation, household.situation, file = "data/economic.situation.RData")
+```
+
+If you are having issues with the `.xlsx` package on your current computer, you can catch up with the rest of the practical by downloading these three tables from the repository instead.  
 
 Finally, sometimes we need to extract the data from a zipped file, this can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another format we will import an SPSS file as well.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
 ```{r}
@@ -417,7 +465,7 @@ unlink(temp)
 You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R and the `foreign` package:
 
 ```{r}
-require(foreign)
+library(foreign)
 
 # import the data as a data frame:
 data.location <- paste("data","survey.sav", sep="/")
@@ -433,14 +481,14 @@ Now we have the data, before we continue we'll just do a bit of housekeeping and
 rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, temp)
 ```
 
-### Data Tidying
+## Data Tidying {-}
 
 In the second part of this practical we will use the functions from the `tidyr` package to tidy up the two datasets.
 
 ```{r, warning=FALSE, message=FALSE}
 ## 2.1 tidy up the population data
 ###############################################################################
-require(tidyr)
+library(tidyr)
 ```
 
 The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for `(SEX==0)`, but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
@@ -487,7 +535,7 @@ head(tidy.test)
 If you are happy with the test run, you can now try it on the whole `population2010` table. 
 
 ```{r, echo=FALSE}
-require(tidyr)
+library(tidyr)
 # SEX is the key:
 tidy.population2010 <- spread(population2010, SEX, POP)
 

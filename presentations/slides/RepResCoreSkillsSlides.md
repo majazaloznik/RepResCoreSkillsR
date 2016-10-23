@@ -4,7 +4,7 @@ width:1200
 
 Maja Zalo&#x17e;nik
 
-22.6.2016
+31.10.2016
 
 
 
@@ -77,7 +77,7 @@ Janitor work
 incremental: true
 > Data scientists, according to interviews and expert estimates, spend from 50 percent to 80 percent of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets. <p style="text-align: right;"><a href="http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html?_r=0">source: NY Times</a></p>
 
-* Data formats, sources, and 
+* Data formats and sources 
 * `tidyr` package
   + `spread()` and  `gather()`
   + `separate()` and  `unite()`
@@ -364,8 +364,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "N" "G" "B" "B" "B" "G" "N" "B" "G" "B" "G" "G" "G" "G" "G" "B" "G"
-[18] "B" "G" "G"
+ [1] "G" "N" "G" "N" "G" "B" "G" "B" "G" "N" "G" "G" "N" "G" "B" "B" "B"
+[18] "B" "B" "B"
 ```
 
 
@@ -437,11 +437,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   19   55   33   79   67
-[2,]   53   16   47   65   93
-[3,]   63   17   74   68   84
-[4,]   96   85   12   52    5
-[5,]   92   71   75   46   30
+[1,]   14   85   68    2    1
+[2,]   43   20   15   73   36
+[3,]   42   23   75   40   32
+[4,]   10   61   95   62   19
+[5,]   50   34   31   29   12
 ```
 
 ```r
@@ -463,7 +463,7 @@ out
 ```
 
 ```
-[1] 67 65 74 85 75
+[1] 68 43 42 62 34
 ```
 
 ```r
@@ -472,7 +472,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 67 65 74 85 75
+[1] 68 43 42 62 34
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -577,7 +577,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 67 65 74 85 75
+[1] 68 43 42 62 34
 ```
 
 Writing your own functions
