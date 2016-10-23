@@ -13,10 +13,13 @@ output:
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 library(knitr)
+library(xlsx)
+library(foreign)
 library(dplyr)
 library(tidyr)
 library(plotrix)
-opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_knit$set(root.dir = "~/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+# opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 ```
@@ -416,7 +419,7 @@ data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
 download.file(data.url, data.location, mode="wb")
 ```
 
-You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on people's perceptions of the current economic situation. Close the Excel file before proceeding! Several solutions are available for importing Excel files into R, a nice overview can be found [http://www.r-bloggers.com/read-excel-files-from-r/](here). In this practical we will use the `xlsx` package:
+You can now have a look in the data folder to check the file has been correctly downloaded and inspect it in Excel. We will import the table from the third worksheet, named "Table 1", on people's perceptions of the current economic situation. Close the Excel file before proceeding! Several solutions are available for importing Excel files into R, a nice overview can be found  [on this page: http://www.r-bloggers.com/read-excel-files-from-r/](http://www.r-bloggers.com/read-excel-files-from-r/). In this practical we will use the `xlsx` package:
 
 ```{r}
 ## Importing the data from an .xls file
@@ -443,17 +446,24 @@ household.situation <- read.xlsx(data.location, sheetIndex = 3,
 save(world.situation, UK.situation, household.situation, file = "data/economic.situation.RData")
 ```
 
-If you are having issues with the `.xlsx` package on your current computer, you can catch up with the rest of the practical by downloading these three tables from the repository instead.  
+If you are having issues with the `.xlsx` package on your current computer, you can catch up with the rest of the practical by downloading these three tables from the repository instead. This means going back to the  [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/) repository and downloading the `economic.situation.RData` file and placing it into your `data` folder. Then type:
 
-Finally, sometimes we need to extract the data from a zipped file, this can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another format we will import an SPSS file as well.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
+```{r, eval = FALSE}
+load("data/economic.situation.RData")
+```
+
+As the final example of data import, another common occurence is that we need to extract the data from a zipped file. This can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another data format we will import an SPSS file this time.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
 ```{r}
 ## 1.3  Download, unzip and import a .dat file 
 ###############################################################################
-# url of the .zip file we want
-data.zip.url <- paste("http://spss.allenandunwin.com.s3-website-ap-southeast-2.",
-                      "amazonaws.com/Files/survey.zip", sep="")
+# url of the .zip file we want - again I've made a tinyurl, the actual url was:
+# http://spss.allenandunwin.com.s3-website-ap-southeast-2.amazonaws.com/Files/survey.zip
+
+data.zip.url <- "http://tinyurl.com/ZipSPSS2016"
+
 temp <- tempfile()
 download.file(data.zip.url, temp)
+
 # check what is in the zip file using list (doesn't extract anything)
 unzip(temp, list=TRUE)
 
@@ -462,11 +472,9 @@ unzip(temp, "survey.sav", exdir = "data")
 unlink(temp)
 ```
 
-You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R and the `foreign` package:
+You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R (curtesy of the `foreign` package):
 
 ```{r}
-library(foreign)
-
 # import the data as a data frame:
 data.location <- paste("data","survey.sav", sep="/")
 ed.psy.survey <- read.spss(data.location,  to.data.frame=TRUE)
@@ -532,7 +540,7 @@ tidy.test <- gather(tidy.test, sex, population, 5:6)
 # and let's check it again:
 head(tidy.test)
 ```
-If you are happy with the test run, you can now try it on the whole `population2010` table. 
+If you are happy with the test run, you can now try it on the whole `population2010` table. The resulting table should look like this: 
 
 ```{r, echo=FALSE}
 library(tidyr)
@@ -558,14 +566,13 @@ tidy.population2010 <- gather(tidy.population2010, sex, population, 5:6)
 head(tidy.population2010)
 ```
 
+Most of the time you will not be lucky enough to work with as nicely formed datasets as the this population one. But the same tools can be used to disentangle much more messy tables, such as the ones we extracted from the Excel file before. 
+
+Let's have a look at one of the three tables, e.g. `household.situation`, and see how it could be tidied up. What are the variables (that should be in the columns), and what are the observations (that should have one row each)? 
 ```{r}
 ## 2.2 tidy up the perception data
 ###############################################################################
-```
-Most of the time you will not be lucky enough to work with as nicely formed datasets as the population one. But the same tools can be used to disentangle much more messy tables, such as the ones we extracted from the Excel file above. 
-
-Let's have a look at one of the three files, e.g. `household.situation`, and see how it could be tidied up. What are the variables (that should be in the columns), and what are the observations (that should have one row each)? 
-```{r}
+household.situation
 # first let's remane the column names
 colnames(household.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
@@ -586,17 +593,16 @@ tidy.household.situation
 rm(X.household.situation)
 ```
 
-Don't forget, we have two more tables, one for each perception question. If we want to merge them together at the end, we need to be clear that each observation refers to one of the questions:
+Don't forget, we have two more tables, one for each perception question. Think about how (if?) you could merge all three tables into one tidy table! One option is to add a new variable that tells us what the perception is refering to:
 
 ```{r}
 tidy.household.situation$perception <- "HH"
 ```
+Then we can repeat the same process on the other two tables, before merging all three together using `rbind()`
 
-Now you can repeat the tidying for the UK and world perceptions, and once all three tables are tidy, you can merge them together using `rbind()`:
 
 ```{r, echo=FALSE}
 ## 2.2.2. UK SITUATION
-
 # first let's remane the column names
 colnames(UK.situation) <- c("perception", "inc.lt.20", 
                                    "inc.20.to.39", "inc.40.to.59", 
@@ -623,6 +629,9 @@ colnames(tidy.world.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.world.situation$perception <- "W"
+tidy.household.situation
+tidy.UK.situation
+tidy.world.situation
 ```
 ```{r}
 # merge all the tables together
@@ -632,7 +641,6 @@ tidy.economic.situation <- rbind(tidy.household.situation,
 ```
 
 Finally, you can now clear your workspace using `rm()` as we did before, to remove everything except for `tidy.population2010` and `tidy.economic.situation`. 
-
 
 \newpage
 # Efficient Coding
@@ -693,7 +701,7 @@ x > y    # x is greater than y
 x < y    # x is less than y
 x <= y   # x is less than or equal to y
 x >= y   # x is greater than or equal to y
-x %in% y # x is located in y
+x %in% y # x can be found in y
 TRUE     # 
 FALSE    #
 ```
@@ -773,9 +781,11 @@ Both of these constructs should be used with great care, as careless specificati
 
 ## Vecotrisation  and `apply` family of funcitons
 
-Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The genera rule is this: If you need to apply an expression over a series of elements and the *order* in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read. 
+Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The general rule is this: 
 
-The underlying logic of the `apply` family is starting out with some data structure (a vector, matrix, data.frame etc.), we want to split it into constituent parts, apply a function on each of them, and combine them back^[This idea comes from Hadley Wickham's paper on the split-apply-combine strategy of data analysis:  [http://vita.had.co.nz/papers/plyr.html](http://vita.had.co.nz/papers/plyr.html)]. We might for example want to apply a function on every row of a data.frame, every element of a vector, or every column in a matrix. 
+> *If you need to apply an expression over a series of elements and the* order * in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read.*
+
+The underlying logic of the `apply` family is this: starting out with some data structure (a vector, matrix, data.frame etc.), we want to split it into constituent parts, apply a function on each of them, and combine them back^[This idea comes from Hadley Wickham's paper on the split-apply-combine strategy of data analysis:  [http://vita.had.co.nz/papers/plyr.html](http://vita.had.co.nz/papers/plyr.html)]. We might for example want to apply a function on every row of a data.frame, every element of a vector, or every column in a matrix. 
 
 ### `apply()` 
 
@@ -1041,7 +1051,7 @@ Now expand the barplot function - use the help documentation in the help tab:
 
 Once you are happy with your plot, enclose it in a function, so that you can pass it each of the three subsets of the table individually, and the function will additionally also change the plot's title to the correct one. 
 
-
+FunBarplot(perception = "HH")
 
 \newpage
 # Data manipulation with `dplyr`
