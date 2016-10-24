@@ -1,7 +1,11 @@
 ---
-title: "Data analysis: Core skills for reproducible data analysis in R"
-subtitle: "Course Manual with Practical Exercises  -- 
- Oxford University: IT Learning Centre - 31 October 2016"
+title: |
+ | Data analysis:
+ | *Core skills for reproducible data analysis in R*
+subtitle: |
+ | Course Manual with Practical Exercises 
+ | *Oxford University: IT Learning Centre*
+ | 31 October 2016
 author: "Maja Zalo&#x17e;nik"
 #output: html_notebook
 output:
@@ -18,8 +22,8 @@ library(foreign)
 library(dplyr)
 library(tidyr)
 library(plotrix)
-opts_knit$set(root.dir = "~/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
-# opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+# opts_knit$set(root.dir = "~/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 ```
@@ -76,7 +80,7 @@ For an excellent and in-depth source on all of this and more, see Christopher Ga
 
 #  Set-up 
 
-R can be run from the *console*, by typing in commands at the command prompt. The level of *reproducibility* of this approach is approximately zero. Writig code into an R script, a text file with the extension `.R` and executing it from there is the recommended minimum level of reproducibility for any analysis with R. Going one step further is to use `R projects`, a way of integrating your R scripts with added functionality that is integrated in the RStudio work environment, and it is this set-up that we will be adopting here. 
+R can be run from the *console*, by typing in commands at the command prompt. The level of *reproducibility* of this approach is approximately zero. Writing code into an R script, a text file with the extension `.R` and executing it from there is the recommended minimum level of reproducibility for any analysis with R. Going one step further is to use `R projects`, a way of integrating your R scripts with added functionality that is integrated in the RStudio work environment, and it is this set-up that we will be adopting here. 
 
 
 ## RStudio
@@ -100,7 +104,7 @@ A crucial requirement for conducting reproducible research, and one that has to 
 
 ### Project folder structure
 
-RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. This means assigning a single folder for each project, and within that folder organizing your work into sub-folders. Depending on your type of project this may vary, but a good starting point would be something along the lines of the following project subfolders:
+RStudio makes it extremely easy to divide your work into separate projects, allowing you to neatly organize and access your work. This means assigning a single folder for each project, and within that folder organizing your work into sub-folders. Depending on your type of project this may vary, but a good starting point would be something along the lines of the following project sub folders:
 
 - *data* - holds all the raw data files
 - *scripts* - holds all the R code, preferable split into smaller, more modular code files
@@ -110,7 +114,7 @@ RStudio makes it extremely easy to divide your work into separate projects, allo
 
 ### Project files
 
-The forlder structure maps onto the following classification of different types of files that will most often be involved in your project:
+The folder structure maps onto the following classification of different types of files that will most often be involved in your project:
 
 1. R project level files, are files created by R or RStudio for each project:
 
@@ -123,9 +127,9 @@ The forlder structure maps onto the following classification of different types 
 
 3. Data files: can come in a variety of formats, `.csv`, `.xls`, `.dat` etc.. Best practice is to programatically (download and) import the files into R and never manipulate the raw data directly!
 
-4. Figures can be priduced by R in various formats from `.jpeg` and `.png` to vector graphics for example `.eps`, although some details will vary according to your platform. 
+4. Figures can be produced by R in various formats from `.jpeg` and `.png` to vector graphics for example `.eps`, although some details will vary according to your platform. 
 
-5. Outputs and presentations: many types of reports can be automatically poduced directly in R, including `.pdf`, `.doc` amd `.html` files, which can also be published on-line directly. 
+5. Outputs and presentations: many types of reports can be automatically produced directly in R, including `.pdf`, `.doc` and `.html` files, which can also be published on-line directly. 
 
 
 ## Human readability
@@ -136,7 +140,7 @@ Try to avoid binary file formats. This includes e.g. `.xls` files, but also R's 
 
 ### Consistent coding style e.g.:
 
-None of this will matter though, if you do not *document everything* you do! This means not running any code from the command prompt, but isntead always writing it into a script file (`.R` or `.Rmd`) and running it from there. 
+None of this will matter though, if you do not *document everything* you do! This means not running any code from the command prompt, but instead always writing it into a script file (`.R` or `.Rmd`) and running it from there. 
 
 Another key element of human readability is trying to keep to a consistent coding style. This is not always easy, but it pays to get into some good habits while it's still early. Two excellent starting points are
 
@@ -240,7 +244,7 @@ Density: 20.91484
 
 ```
 
-In a tidy data table each cell contains a *value* and the *keys* are the column names. So in order to tidy up this table we need the `var.name` values to become the column names, so that is our *key* and we need the var.value values to become the values in the new columns, so we designate that as teh *value* argument:
+In a tidy data table each cell contains a *value* and the *keys* are the column names. So in order to tidy up this table we need the `var.name` values to become the column names, so that is our *key* and we need the var.value values to become the values in the new columns, so we designate that as the *value* argument:
 
 
 ```{r, echo=c(3:4)}
@@ -306,19 +310,33 @@ messy.again
 
 For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's post here [http://garrettgman.github.io/tidying/](http://garrettgman.github.io/tidying/).
 
-For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in teh `literature` folder of this course's repository. 
+For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in the `literature` folder of this course's repository. 
 
 
-# PRACTICAL I: new R project {-}
+# PRACTICAL 1: Priject management and Data Tidying {-}
 
+In this first practical we will: 
+
+(i) Start a new project and organize the folder structure
+(ii) Download and import our data.
+(iii) Tidy up the data. 
+
+In particular if you are working on a University computer and not on your own laptop, the first and second part might be slightly problematic due to permissions. This manual gives you instructions on how to set everything up on you own laptop, but during the course it will be quicker if you download a working setup from the course repository. 
+
+
+## P1.i Start a new project and organize the folder structure {-}
+
+### Download the course repository {-}
 
 The complete documentation for this course is available as an RStudio project in a public github repository: [https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
 
-In this first part of the practical you will set up a new RStudio project mirroring the structure of the github repository for this course. 
 
-Unless you have brought your own laptop, you will be completing this project on the local drive of the computers here. This unfortunately means you will have to transfer your work via USB, email or other means in order to keep it for your record. The complete materials will however remain available to you on-line at the above addresses. 
 
-## Create new RStudio project {-}
+![Click the green button and sellect `Download zip`](../../figures/clone_repo.png)
+Follow the link to the repository and then click on the green `Clone or download` button and select `Download ZIP`, save the file to the computer and un-zip the folder. Now open the rpoject file:  `RepResCoreSkillsR.Rproj` in RStudio. You can now skip to part (ii) of this practical on importing and cleaning the data. 
+
+
+### Create new RStudio project {-}
 
 1. Open RStudio
 2. Select the project menu in the top right-hand corner and select `New Project`
@@ -327,7 +345,7 @@ Unless you have brought your own laptop, you will be completing this project on 
 5. Run the command `getwd()` in the console. You should note that RStudio has automatically set the working directory in the top level of your project folder. 
 6. Click on the project menu again and select Project Options. On the options "Restore .RData to the workspace at start-up" and "Save workspace to .RData on exit" select No. In fact, you should set that as a global option (Tools/Global Options) -- for truly reproducible research you should never have to load a previous workspace!
 
-## Folder and File Structure {-}
+### Folder and File Structure {-}
 
 1. Using the New Folder button in the Files pane, create three folders called (some equivalent of)
   * data
@@ -335,7 +353,7 @@ Unless you have brought your own laptop, you will be completing this project on 
   * figures
   * presentations
 2. For the rest of this practical, all you need is to download the file `pop2010.csv` from the github repo into your `data` folder. 
-* Downloading single files from github can be cumbersome - you need to navigate to the file [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv) and right-click on the `Download` button on the top rigth and select `Save link as`. 
+* Downloading single files from github can be cumbersome - you need to navigate to the file [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/pop2010.csv) and right-click on the `Download` button on the top right and select `Save link as`. 
 3. You can also download this manual in pdf format to your `presentation` folder if you wish. 
 4. Create an .RProfile file using the command `file.edit(".Rprofile")`. This will open a new script tab for you to edit. The content of the .RProfile gets automatically run every time you open your project. It is therefore a good idea to e.g. load any packages you will need from your .RProfile, instead of doing it manually every time. 
 
@@ -343,16 +361,15 @@ For this practical you will need the following packages (type this into your `.R
 ```{r, eval = FALSE}
 library(xlsx)
 library(foreign)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(plotrix)
 ```
 
-If any of the packages are not installed on your computer you must first run `install.packages("<name of package>")`. Now save and close the `.RProfile` file. In fact, close RStudio completely, and try opeining the project again. You should see the messages indicating that the packages from the `.RProfile` file have have been loaded automatically.  
+If any of the packages are not installed on your computer you must first run `install.packages("<name of package>")`. Now save and close the `.RProfile` file. In fact, close RStudio completely, and try opening the project again. You should see the messages indicating that the packages from the `.RProfile` file have have been loaded automatically.  
 
-# PRACTICAL II: Import and clean some data {-}
+## P1.ii Import and clean some data {-}
 
-## Downloading and importing data {-}
+### Comma separated values {-}
 
 First create a new `.R` script file in your `scripts` folder or equivalent via the drop-down menu or using `Ctrl+Shift+N`. Naming  it something like `01-DataImport.R` will make your project management easier in the long run, but feel free to set up your own file naming system -- but try to stick with it!
 
@@ -397,13 +414,19 @@ head(population2010)
 tail(population2010)
 ```
 
-
 Comma separated values (`.csv`) is one of the preferred formats to import data from, but R allows you to import from a variety of other formats, although this can sometimes get a bit more messy. 
 
+### Excel files {-}
+
+If you are working on your own laptop and have no problems running `library(xlsx)`, then you can continue with the instructions here. Otherwise simply run the following line and continue to part (iii) on tidying the data. 
+
+```{r, eval = FALSE}
+load("data/economic.situation.RData")
+```
 
 This time we will also first download the file, before importing a table from one of the spreadsheets. This is from [https://data.gov.uk/dataset/social_trends](https://data.gov.uk/dataset/social_trends), part of the government's open data access initiative and a great resource!
 
-The first step is to use R to dowload the file from a url:
+The first step is to use R to download the file from a url:
 ```{r}
 ## 1.2  Download and import an Excel file
 ###############################################################################
@@ -446,20 +469,17 @@ household.situation <- read.xlsx(data.location, sheetIndex = 3,
 save(world.situation, UK.situation, household.situation, file = "data/economic.situation.RData")
 ```
 
-If you are having issues with the `.xlsx` package on your current computer, you can catch up with the rest of the practical by downloading these three tables from the repository instead. This means going back to the  [https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/](https://github.com/majazaloznik/RepResCoreSkillsR/blob/master/data/) repository and downloading the `economic.situation.RData` file and placing it into your `data` folder. Then type:
 
-```{r, eval = FALSE}
-load("data/economic.situation.RData")
-```
+### Unzipping an SPSS file  {-}
 
-As the final example of data import, another common occurence is that we need to extract the data from a zipped file. This can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another data format we will import an SPSS file this time.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
+As the final example of data import, another common occurrence is that we need to extract the data from a zipped file. This can also be done directly form R ^[This should work even if no winzip utility is installed on the machine?]. And to try out another data format we will import an SPSS file this time.^[The data file is supplementary material to the SPSS Survival Manual from a survey designed to explore the factors that impact on respondents' psychological adjustment and well-being. ] 
+
+
 ```{r}
 ## 1.3  Download, unzip and import a .dat file 
 ###############################################################################
-# url of the .zip file we want - again I've made a tinyurl, the actual url was:
-# http://spss.allenandunwin.com.s3-website-ap-southeast-2.amazonaws.com/Files/survey.zip
 
-data.zip.url <- "http://tinyurl.com/ZipSPSS2016"
+data.zip.url <- "http://spss.allenandunwin.com.s3-website-ap-southeast-2.amazonaws.com/Files/survey.zip"
 
 temp <- tempfile()
 download.file(data.zip.url, temp)
@@ -472,7 +492,7 @@ unzip(temp, "survey.sav", exdir = "data")
 unlink(temp)
 ```
 
-You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R (curtesy of the `foreign` package):
+You can now check the `data` folder and you should find the `survery.sav` file there. Even if you don't have SPSS installed on your computer, you can now open it using R (courtesy of the `foreign` package):
 
 ```{r}
 # import the data as a data frame:
@@ -482,16 +502,21 @@ ed.psy.survey <- read.spss(data.location,  to.data.frame=TRUE)
 ed.psy.survey[1:5,1:5]
 ```
 
-Now we have the data, before we continue we'll just do a bit of housekeeping and clear our workspace of the objects we don't need any more (including the survey dataset, which we will not use in this practical)
+Now we have the data but before we continue we'll just do a bit of housekeeping and clear our workspace of the objects we don't need any more (including the survey dataset, which we will not use in this practical)
 
 ```{r}
 # CLEAN UP!
 rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, temp)
 ```
 
-## Data Tidying {-}
+## P1.iii  Data Tidying {-}
 
-In the second part of this practical we will use the functions from the `tidyr` package to tidy up the two datasets.
+In the third part of this practical we will use the functions from the `tidyr` package to tidy up the two datasets. At this point your environment should have four tables: 
+
+- `population2010`
+- `household.situation`
+- `UK.situation`
+- `world.situation`
 
 ```{r, warning=FALSE, message=FALSE}
 ## 2.1 tidy up the population data
@@ -593,7 +618,7 @@ tidy.household.situation
 rm(X.household.situation)
 ```
 
-Don't forget, we have two more tables, one for each perception question. Think about how (if?) you could merge all three tables into one tidy table! One option is to add a new variable that tells us what the perception is refering to:
+Don't forget, we have two more tables, one for each perception question. Think about how (if?) you could merge all three tables into one tidy table! One option is to add a new variable that tells us what the perception is referring to:
 
 ```{r}
 tidy.household.situation$perception <- "HH"
@@ -645,7 +670,6 @@ Finally, you can now clear your workspace using `rm()` as we did before, to remo
 \newpage
 # Efficient Coding
 This section covers some of the most important skills to improve the efficiency, readability, and reproducibility of your R code. The standard control of the flow of your code that can be achieved with `ifelse` statements and looping is covered briefly, however you are encouraged in particular to explore the advantages of *vectorised* R code in particular the `apply` family of functions. Writing your own functions will greatly streamline your work, as well as forcing you to think in more abstract terms about your analysis - making it easily transferable and reproducible as opposed to limited to the specific situation you find yourself analysing at the moment.
-
 
 
 
@@ -783,7 +807,7 @@ Both of these constructs should be used with great care, as careless specificati
 
 Looping functions - the `for()` loop in particular - are very intuitive and mastering them can represent a quick capability boost for a new R programmer. It is however highly recommended that you spend some time mastering the related `apply` family of functions, which should cover most of your looping needs. The general rule is this: 
 
-> *If you need to apply an expression over a series of elements and the* order * in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read.*
+> *If you need to apply an expression over a series of elements and the* order *in which you do this is important, then use a loop. If the order is not important, take advantage of `apply`. In many circumstances this can improve the speed of your code, but in all cases it will make your code simpler and easier to read.*
 
 The underlying logic of the `apply` family is this: starting out with some data structure (a vector, matrix, data.frame etc.), we want to split it into constituent parts, apply a function on each of them, and combine them back^[This idea comes from Hadley Wickham's paper on the split-apply-combine strategy of data analysis:  [http://vita.had.co.nz/papers/plyr.html](http://vita.had.co.nz/papers/plyr.html)]. We might for example want to apply a function on every row of a data.frame, every element of a vector, or every column in a matrix. 
 
@@ -913,7 +937,7 @@ FunNthLargest(test.vector, n=3)
 
 We could e.g. further generalise this function to look for the n-th smallest value, by adding another argument for the `TRUE/FALSE` value that gets passed to `decreasing` etc. Note that unlike the argument `x`, the argument `n` has a default value (=1). This means we do not have to explicitly specify it unless we want it to be a different value. 
 
-Functions have their own local environment, which is not accessible from the global environment. This means that whatever calculations are evaluated inside the function call do not clutter your workspace, but also their results are not accessible unles you explicitly return them from the function. Thus the object `r` will not be found in the global environment, instead we will get the error:
+Functions have their own local environment, which is not accessible from the global environment. This means that whatever calculations are evaluated inside the function call do not clutter your workspace, but also their results are not accessible unless you explicitly return them from the function. Thus the object `r` will not be found in the global environment, instead we will get the error:
 ```{r, eval = FALSE}
 r
 Error: object 'r' not found
@@ -935,12 +959,21 @@ As we have seen before with if/else statements and loops, functions can also be 
 From a project management point of view it is also good practice to store all your functions in a separate file, which you `source()` at the beginning of each session. You can even add `source("00-MyFunctions.R")` to your `.RProfile` file, which means all your bespoke functions will be automatically uploaded at the start of each session. 
 
 \newpage
-## PRACTICAL: If/else, loops, apply and functions
+# PRACTICAL 2: If/else, loops, apply and functions {-}
+
+In this second practical we will: 
+
+(i) Practice conditional expressions and logical operators 
+(ii) Write a loop with an if-else expression
+(iii) Write a function to vectorise the same idea 
+(iv) Write a function to draw a plot
+
+## P2.i: If/else, loops, apply and functions {-}
 ```{r}
 ## 3.1 Practice conditional expressions and logical operators 
 ###############################################################################
 ```
-Practice conditional expressions and logical operators by seeing if you can figure out the results of the following expressions, then check them in R:
+Practice conditional expressions and logical operators by seeing if you can figure out the results of the following expressions in your head, then check them in R:
 ```{r}
 x <- 1:7
 y <- -3:3
@@ -958,6 +991,10 @@ xor((x > 3), (x < 5))
 (3 %in% y) & (3 %in% x) 
 (3 %in% y) & !(3 %in% x) 
 ```
+
+
+## P2.ii: Write a loop with an if-else expression {-}
+
 
 ```{r, eval = FALSE}
 ## 3.2 Check consistency of tidy.economic.situation proportions using IF - ELSE
@@ -978,6 +1015,9 @@ for (i in 1: nrow(tidy.economic.situation)) {
       ???}
 }
 ```
+
+
+## P2.iii Write a function to vectorise the same idea {-}
 
 ```{r, eval = FALSE}
 ## 3.3 Write a function to check consistency of tidy.economic.situation proportions
@@ -1030,8 +1070,10 @@ Your table should now look like this:
 tidy.economic.situation
 ```
 
-If it doesn't have a look at the `02-FunctionsAndLoops.R` file in the scripts folder for the solution before you proceed to the next task. 
+If it doesn't have a look at the `scripts/02-FunctionsAndLoops.R` file in the scripts folder for the solution before you proceed to the next task. 
 
+
+## P2.iv Write a fucntion to draw a plot {-}
 ```{r}
 ## 3.5 Bar-Plotting function
 ###############################################################################
@@ -1051,17 +1093,20 @@ Now expand the barplot function - use the help documentation in the help tab:
 
 Once you are happy with your plot, enclose it in a function, so that you can pass it each of the three subsets of the table individually, and the function will additionally also change the plot's title to the correct one. 
 
-FunBarplot(perception = "HH")
-
+You should now be able to run the following lines to produce all three charts. If you are having issues, check the code in `scripts/02-FunctionsAndLoops.R` for the solutions. 
+```{r, eval = FALSE}
+FunBarplot()
+FunBarPlot(perception = "UK")
+FunBarPlot("W")
+```
 \newpage
 # Data manipulation with `dplyr`
 
 Finally, the relatively new `dplyr` family of functions is one of the most powerful recent developments in the R coding world. While all of the data processing capabilities of `dplyr` existed in one shape or another in R before (usually several), `dplyr` brings them together in a comprehensive and systematic way, that allows for cleaner code that is easier to read, and faster to run. It also integrates logically with the `tidyr` family of functions described earlier, but it's most exciting and revolutionary aspect is it's assimilation of the *piping* or *chaining* of successive data processing functions - originally developed in the `magrittr` package, and now rightly becoming mainstream R practice. 
 
-We will cover some of the most important functionalities of `dplyr` here, but you are encouraged to explore several excellent on-line resources, including video tutorials etc. Keep the same [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) that also covers `tidyr` to hand - for your convenience a copy is also stored in the `literature` folder for this course's repository. 
+We will cover some of the most important functionalities of `dplyr` here, but you are encouraged to explore several excellent on-line resources, including video tutorials etc. The [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) is only a click away under `Help/Cheatsheets`!
 
-
-For this whole section we will be using the two data tables  prepared in the first practical. 
+For this whole section we will be using the two data tables  prepared in the first practical, so make sure you have both `tidy.population2010` and `tidy.economic.situation` in your environment. 
 
 ## Subsetting
 
@@ -1226,18 +1271,29 @@ FunMyPipe <- function(x) {
 FunMyPipe(1:10)
 ```
 
+\newpage
 
-## PRACTICAL - Piping Population Pyramids
+# PRACTICAL 3 - Piping Population Pyramids {-}
+
+In this final practical we will: 
+
+(i) Practice piping with `dplyr` functions
+(ii) Combine piping with function writing 
+(iii) Use that to create a bespoke population pyramid plot function
+
+## P3.i: Practice piping with `dplyr` functions {-}
+
 ```{r}
 ## 4.0 Practice piping on population2010
 ##########################################################
 ```
-Using the `population2010.csv` file find the answers to the following:
+Using the `tidy.population2010` table find the answers to the following:
 
 * How many 20 year-old males were there in Tanzania in 2010
 * Which country has the lowest total population?
-* In which country do women outnuber men in the most age groups?
+* In which country do women outnumber men in the most age groups?
 
+## P3.ii: Combine piping with function writing  {-}
 
 ```{r}
 ## 4.1 Write a function to extract population pyramid data
@@ -1245,14 +1301,17 @@ Using the `population2010.csv` file find the answers to the following:
 ```
 Write a function that uses piping and `dplyr` functions to do the following:
 
-* the input is the FIPS country code (if you're not sure which code means which countre, chek the list here: [https://en.wikipedia.org/wiki/List_of_FIPS_country_codes](https://en.wikipedia.org/wiki/List_of_FIPS_country_codes))
-* from  `tidy.population2010` extract the data for that country
-* remove variables for the area
-* create a new variable grouping the ages into 5 year age groups (use `cut(x, 20)`)
-* find the sum of the population for each age group and gender combination (use `group_by`!)
-* don't forget to `ungroup` the data before the next step!
-* create a new variable representing the proportion of the total population in each age/sex combination (* 100)
+* the input is the FIPS country code (if you're not sure which code means which country, check the list here: [https://en.wikipedia.org/wiki/List_of_FIPS_country_codes](https://en.wikipedia.org/wiki/List_of_FIPS_country_codes))
+* from  `tidy.population2010` extract the data for that country, and
+* remove variables for the area, and
+* create a new variable grouping the ages into 5 year age groups (use `cut(x, 20)`), and
+* find the sum of the population for each age group and gender combination (use `group_by`!), and
+* don't forget to `ungroup` the data before the next step!, and
+* create a new variable representing the proportion of the total population in each age/sex combination (* 100), and
 * return this table, which should have 40 rows and 4 columns.
+
+
+## P3.iii: Combine piping with function writing with plotting {-}
 
 ```{r}
 ## 4.2 Write a function to draw a population pyramid plot
@@ -1303,3 +1362,5 @@ FunPlot(FunPopClean("BG"), "Bangladesh")
   
 ```
 
+
+The solutions for this final set of exercises can be found in `scripts/03-PipintAndPyramids.R`. 

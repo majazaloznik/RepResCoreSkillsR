@@ -7,7 +7,10 @@
 ## 3.4 Use your function inside an apply statement
 ## 3.5 Bar-Plotting function
 ###############################################################################
-source("scripts/01-DataImport.R")
+# in case you skipped on the first practical, uncomment the following line and 
+# run it to get all the data you need:
+# load("data/tidy.data.RData")
+
 
 ## 3.1 Practice conditional expressions and logical operators 
 ###############################################################################
@@ -65,5 +68,6 @@ FunBarPlot <- function(question = "HH") {
 }
 
 FunBarPlot()
+FunBarPlot("HH")
 FunBarPlot("UK")
 FunBarPlot("W")

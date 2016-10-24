@@ -24,50 +24,50 @@ getwd()
 population2010 <- read.csv("data/pop2010.csv", nrows=10)
 
 
-## full import
+# import full table except for 7th column (year)
 population2010 <- read.csv("data/pop2010.csv", 
-                           colClasses = c("integer",   # age
-                                          "integer",   # area 
-                                          "character", # name 
-                                          "integer",   # population
-                                          "integer",   # sex
-                                          "character", # country id (FIPS)
-                                          "NULL"))     # year - skip
+                           colClasses = c(rep(NA, 6), "NULL")) # skip "year"
+
+# check what it looks like:
 head(population2010)
 tail(population2010)
 
 
 ## 1.2  Download and import an Excel file
 ###############################################################################
+library(xlsx)
+# if you get an error, then run then uncomment and run the following line
+# and skip to 1.3
 
-## url of the .xls file we want (using paste only to keep code under 80 chars:)
-data.url <- paste("http://www.ons.gov.uk/ons/rel/social-trends-rd/social-",
-            "trends/social-trends-41/income-and-wealth-data.xls", sep="")
+# load("data/economic.situation.RData")
 
-## download location 
+
+# url of the .xls file we want I've given it a tinyurl, but the real one is:
+# http://www.ons.gov.uk/ons/rel/social-trends-rd/social-trends/
+# social-trends-41/income-and-wealth-data.xls
+data.url <- "http://tinyurl.com/Excel2106"
+
+# download location 
 data.location <-  paste( "data", "income-and-wealth-data.xls", sep = "/")
 
-## download - Excel files are binary, so set the mode to "wb"!!
+# download - Excel files are binary, so set the mode to "wb"!!
 download.file(data.url, data.location, mode="wb")
 
 
-## Importing the data from an .xls file
-require(xlsx)
-## if you get an error telling you there is no package called ‘xlsx’ run:
-# install.packages("xlsx")
-
-## let's see what happens if we import the whole sheet
+# let's see what happens if we import the whole sheet
 economic.situation <- read.xlsx(data.location, sheetIndex = 3)
 
 ## using rowIndex and colIndex select each subtable individually:
 world.situation <- read.xlsx(data.location, sheetIndex = 3,
-                         rowIndex=c(4, 6:8), colIndex = c(1:7))
+                             rowIndex=c(4, 6:8), colIndex = c(1:7))
 
 UK.situation <- read.xlsx(data.location, sheetIndex = 3,
-                             rowIndex=c(4, 11:13), colIndex = c(1:7))
+                          rowIndex=c(4, 11:13), colIndex = c(1:7))
 
 household.situation <- read.xlsx(data.location, sheetIndex = 3,
-                          rowIndex=c(4, 16:18), colIndex = c(1:7))
+                                 rowIndex=c(4, 16:18), colIndex = c(1:7))
+
+save(world.situation, UK.situation, household.situation, file = "data/economic.situation.RData")
 
 
 ## 1.3  Download, unzip and import a .dat file 
@@ -95,10 +95,13 @@ ed.psy.survey <- read.spss(data.location,  to.data.frame=TRUE)
 # check what it looks like
 ed.psy.survey[1:5,1:5]
 
-
 # CLEAN UP!
 rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, temp)
 
+
+###############################################################################
+## 2. DATA  CLEANUP
+###############################################################################
 ## 2.1 tidy up the population data
 ###############################################################################
 require(tidyr)
@@ -184,4 +187,6 @@ rm(household.situation,
    X.world.situation, 
    X.UK.situation,
    population2010)
+
+# save(tidy.economic.situation, tidy.population2010, file = "data/tidy.data.RData")
 
