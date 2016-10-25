@@ -3,10 +3,14 @@ title: |
  | Data analysis:
  | *Core skills for reproducible data analysis in R*
 subtitle: |
- | Course Manual with Practical Exercises 
  | *Oxford University: IT Learning Centre*
  | 31 October 2016
-author: "Maja Zalo&#x17e;nik"
+ |
+ | http://tinyurl.com/RCSRepRes
+author: |
+ | Maja Zalo&#x17e;nik
+ | maja.zaloznik@ageing.ox.ac.uk
+ 
 #output: html_notebook
 output:
   pdf_document:
@@ -74,17 +78,20 @@ Reproducible research does take a bit of upfront investment in learning the tool
 
 This practical course will focus in particular on how to set-up an RStudio project and associate file and folder structure, and get you on the right track towards *literate programming*. We will then cover a complete workflow structure including downloading and importing data, *tidying* it up, using some basic programming structures to improve your code, and finally the `dplyr` package, which is already revolutionising data manipulation in R by providing a comprehensive set of tools that follow a very intuitive logic.
 
-There is plenty more that cannot be covered in a 3 hour course. In particular we will not discuss version control (e.g. github) and the *knitting* of text and analysis, or their publishing on-line directly from RStudio. You will be able to see the results of these practices in the way the very course materials are prepared, and they can be accessed on-line in a dedicated repository public github repository: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
+There is plenty more that cannot be covered in a 3 hour course. In particular we will not discuss version control (e.g. github) and the *knitting* of text and analysis, or their publishing on-line directly from RStudio on to RPubs. You will be able to see the results of these practices in the way the very course materials are prepared, and they can be accessed on-line in a dedicated repository public github repository: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes). 
 
 For an excellent and in-depth source on all of this and more, see Christopher Gandrud's book on Reproducible Research in R and RStudio, also in a public github repository: [https://github.com/christophergandrud/Rep-Res-Book]( https://github.com/christophergandrud/Rep-Res-Book) and for your convenience an old compiled copy of his first edition can be also be found in this course's repository in the `literature` folder. 
 
+
+
+\newpage
 #  Set-up 
 
-R can be run from the *console*, by typing in commands at the command prompt. The level of *reproducibility* of this approach is approximately zero. Writing code into an R script, a text file with the extension `.R` and executing it from there is the recommended minimum level of reproducibility for any analysis with R. Going one step further is to use `R projects`, a way of integrating your R scripts with added functionality that is integrated in the RStudio work environment, and it is this set-up that we will be adopting here. 
+R can be run from the *console*, by typing in commands at the command prompt. The level of *reproducibility* of this approach is approximately zero. Writing code into an R script---a text file with the extension `.R`---and executing it from a file is the recommended minimum level of reproducibility for any analysis using the R programming language. Going one step further is to use `R projects`, a way of integrating your R scripts with added functionality that is integrated in the RStudio work environment, and it is this set-up that we will be adopting here. 
 
 
 ## RStudio
-RStudio has beyond a doubt become the most popular Integrated Development Environment for R. It is open source and cross-platform.  In addition to allowing easy project management and integrated version control, it also provides all the tools for dynamically creating *knitted* documents and directly publishing them on-line. The RStudio crew are also active developers of interactive graphical tools and new developments are constantly being added to an already excellent toolbox. If you prefer to use another environment you should however still be able to apply all of the principles of reproducible research covered here and beyond, although it might take a little bit more work. 
+In the last few years RStudio has beyond a doubt become the most popular integrated development environment (IDE) for R, and rightly so. It is open source and cross-platform.  In addition to allowing easy project management and integrated version control, it also provides all the tools for dynamically creating *knitted* documents and directly publishing them on-line. The RStudio crew are also active developers of interactive graphical tools and new developments are constantly being added to an already excellent toolbox. If you prefer to use another environment you should however still be able to apply all of the principles of reproducible research covered here and beyond, although it might take a little bit more work. 
 
 Instructions for installing R and RStudio on your laptop:
 
@@ -136,7 +143,7 @@ The folder structure maps onto the following classification of different types o
 One of the often overlooked principles underlying reproducible research is trying to ensure the human readability of as much of your files as possible. This applies to the types of data and other file formats used, as well as your coding style. Making them human readable is one way of trying to future-proof your work. 
 
 ### File Formats
-Try to avoid binary file formats. This includes e.g. `.xls` files, but also R's native workspace file, which is saved with an  `.RData` extension. Text, delimited or comma separated values (`,csv`) are safe formats that are easily transferable, human readable, and relatively future proof. 
+Try to avoid binary file formats. This includes e.g. `.xls` files, but also R's native workspace file, which is saved with an  `.RData` extension. Text, delimited or comma separated values (`.csv`) are safe formats that are easily transferable, human readable, and relatively future proof. 
 
 ### Consistent coding style e.g.:
 
@@ -149,11 +156,13 @@ Another key element of human readability is trying to keep to a consistent codin
 
 You do not have to follow these to the letter (the two are not consistent anyway) - but they should give you an idea about what are some things you might want to establish a rule for yourself. At least for the sake of the future you, who will one day have to re-read your messy, uncommented code. 
 
-![Code Quality part 2. (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
-
 ### Commenting 
 
 The importance of commenting your code can never be understated. Some programmers advocate  *self documenting code* -- that is code that is self-explanatory and does not require comments --  and this may be worthy a goal to aspire to, but in the mean time: comment, comment, and comment some more. 
+
+![Code Quality (https://xkcd.com/1695/)](../../figures/code_quality_2.png)
+
+
 
 \newpage
 # Workflow
@@ -212,7 +221,7 @@ This may seem trivial, but it is in fact common to encounter data that does not 
 
 ### spread()
 
-Below we can see an example of a *messy* table: it is messy because each observation is in fact represented in two rows. The third column is not really a variable, but contains variable names (`density` and `population`), while the fourth column contains their values. 
+Below we can see an example of a *messy* table: it is messy because each observation is in fact represented in two rows. The third column is not really a variable, but contains variable names or *keys* (`density` and `population`), while the fourth column contains their values. 
 
 ```{r, echo=FALSE}
 messy.02 <- read.table("data/demo/messy.02.txt")
@@ -313,7 +322,7 @@ For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's 
 For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in the `literature` folder of this course's repository. 
 
 
-# PRACTICAL 1: Priject management and Data Tidying {-}
+# PRACTICAL 1: Project management and Data Tidying {-}
 
 In this first practical we will: 
 
@@ -408,7 +417,7 @@ That looks good, the only thing is I can already tell you that all the data in t
 
 # import full table except for 7th column (year)
 population2010 <- read.csv("data/pop2010.csv", 
-                           colClasses = c(rep(NA, 6), "NULL")) # skip "year"
+                           colClasses = c(rep(NA, 6), "NULL")) # skip "time"
 # check how it looks
 head(population2010)
 tail(population2010)
@@ -479,7 +488,8 @@ As the final example of data import, another common occurrence is that we need t
 ## 1.3  Download, unzip and import a .dat file 
 ###############################################################################
 
-data.zip.url <- "http://spss.allenandunwin.com.s3-website-ap-southeast-2.amazonaws.com/Files/survey.zip"
+data.zip.url <- paste0("http://spss.allenandunwin.com.s3-website-ap-southeast-2.",
+                       "amazonaws.com/Files/survey.zip")
 
 temp <- tempfile()
 download.file(data.zip.url, temp)
@@ -524,7 +534,7 @@ In the third part of this practical we will use the functions from the `tidyr` p
 library(tidyr)
 ```
 
-The population2010 data.frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for `(SEX==0)`, but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
+The `population2010` data frame is already pretty tidy! The only issue with it is the `SEX` variable, which is coded for men (`SEX==1`), women (`SEX==2`), and both (`SEX==0`). We really only need to remove the rows with the values for `(SEX==0)`, but we can use this opportunity to perform a data check as well, while practising the `spread()` and `gather()` functions:
 
 First let's try out our technique on a small subset of the data - this is good practice in general, especially if you are dealing with large datasets. We'll select only the observations for Aruba, and have a look at them:
 ```{r}
@@ -618,7 +628,7 @@ tidy.household.situation
 rm(X.household.situation)
 ```
 
-Don't forget, we have two more tables, one for each perception question. Think about how (if?) you could merge all three tables into one tidy table! One option is to add a new variable that tells us what the perception is referring to:
+Don't forget, we have two more tables, one for each perception question. Think about how you could merge all three tables into one tidy table? One option is to add a new variable that tells us what the perception is referring to:
 
 ```{r}
 tidy.household.situation$perception <- "HH"
@@ -654,15 +664,13 @@ colnames(tidy.world.situation) <- c("income.group", "bad", "good", "neutral")
 
 # add variable for the question asked
 tidy.world.situation$perception <- "W"
-tidy.household.situation
-tidy.UK.situation
-tidy.world.situation
 ```
 ```{r}
 # merge all the tables together
 tidy.economic.situation <- rbind(tidy.household.situation,
                                  tidy.UK.situation,
                                  tidy.world.situation) 
+tidy.economic.situation
 ```
 
 Finally, you can now clear your workspace using `rm()` as we did before, to remove everything except for `tidy.population2010` and `tidy.economic.situation`. 
@@ -904,10 +912,9 @@ FunSecondLargest <-function(x) {
   r <- sort(x, decreasing = TRUE)[2]
   return(r)
 }
-# now let's try it out with a sample vector
-test.vector <- tidy.population2010$population
+# now let's try it out on the population data:
 
-FunSecondLargest(test.vector)  
+FunSecondLargest(tidy.population2010$population)  
 ```
 
 We can also now use this function directly in the apply call we used before:
@@ -916,23 +923,25 @@ We can also now use this function directly in the apply call we used before:
 apply(mat, 1, FunSecondLargest)
 ```
 
-We can also quickly rewrite the function to instead find the n-th largest value in the vector, by adding an additional argument `n`. And don't forget to write sensible commentary about what you are doing - at least for the benefit of your future self!
+Now let us rewrite the function so that instead of the second largest, it will find the *n-th* largest value in the vector: by adding an additional argument `n`. And don't forget to write sensible commentary about what you are doing - at least for the benefit of your future self!
 
 ```{r}
 # Function for extracting the n-th largest value from a vector
 # Agruments:
 #   x - vector 
-#   n - optional integer value for rank
+#   n - optional integer value for rank, default = 1
 # Output:
-# Returns single value 
+#   Returns single value 
+
 FunNthLargest <-function(x, n=1) {
   r <- sort(x, decreasing = TRUE)[n]
   return(r)
 }
+
 # by default n=1, so it will find the largest value if we don't specify
-FunNthLargest(test.vector)  
-FunNthLargest(test.vector, n=2)  
-FunNthLargest(test.vector, n=3)  
+FunNthLargest(tidy.population2010$population)  
+FunNthLargest(tidy.population2010$population, n=2)  
+FunNthLargest(tidy.population2010$population, n=3)  
 ```
 
 We could e.g. further generalise this function to look for the n-th smallest value, by adding another argument for the `TRUE/FALSE` value that gets passed to `decreasing` etc. Note that unlike the argument `x`, the argument `n` has a default value (=1). This means we do not have to explicitly specify it unless we want it to be a different value. 
@@ -948,10 +957,10 @@ We can also have our function return several outputs for example:
 ```{r}
 FunNthLargestElaborate <-function(x, n=1) {
   r <- sort(x, decreasing = TRUE)[n]
-  desc <- paste("Rank", n, sep=":")
-  return(c(desc, r))
+  description <- paste("Rank", n, sep=":")
+  return(c(description, r))
 }
-FunNthLargestElaborate(test.vector, 3)
+FunNthLargestElaborate(tidy.population2010$population, 3)
 ```
 
 As we have seen before with if/else statements and loops, functions can also be nested -- as well as combined with if/else statements and loops! It is good practice to try to keep your code modular: keep your functions short and call them from each other. This again makes it easier for the reader to understand what is going on, and easier for you to find errors or update your code. 
@@ -1016,6 +1025,16 @@ for (i in 1: nrow(tidy.economic.situation)) {
 }
 ```
 
+You should get the following output: 
+```{r, echo = FALSE}
+for (i in 1: nrow(tidy.economic.situation)) {
+  if(sum(tidy.economic.situation[i,2:4]) == 100){
+    print("OK")} else {
+      print(paste("Something is wrong in row ", i))
+    }
+}
+
+```
 
 ## P2.iii Write a function to vectorise the same idea {-}
 
@@ -1356,11 +1375,10 @@ FunPlot <- function(data, name = NULL){
                labels = paste(seq(0,96, 5), seq(5,100,5), sep="-"))
 }
 ```
-\newpage
+
 ```{r fig.width = 6, fig.height = 5 }
 FunPlot(FunPopClean("BG"), "Bangladesh")  
   
 ```
-
 
 The solutions for this final set of exercises can be found in `scripts/03-PipintAndPyramids.R`. 
