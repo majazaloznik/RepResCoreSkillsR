@@ -85,7 +85,7 @@ unzip(temp, "survey.sav", exdir = "data")
 unlink(temp)
 
 
-require(foreign)
+library(foreign)
 ## if you get an error telling you there is no package called ‘xlsx’ run:
 # install.packages("foreign")
 
