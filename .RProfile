@@ -1,6 +1,12 @@
+library(stats)
 library(xlsx)
 library(foreign)
 library(tidyr)
 library(dplyr)
 library(plotrix)
 print("Good luck with your work and don't forget to take a break every now and then!")
+
+
+
+# see http://stackoverflow.com/questions/26935095/r-dplyr-filter-not-masking-base-filter
+# for explanation on why stats is added here.. 

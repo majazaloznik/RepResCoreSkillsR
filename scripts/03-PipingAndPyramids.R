@@ -7,12 +7,12 @@
 ##########################################################
 # in case you skipped on the first and second practical, uncomment the following line and 
 # run it to get all the data you need:
-# load("data/tidy.data.RData")
+load("data/tidy.data.RData")
 ## 4.0 Practice piping on population2010
 ##########################################################
 # How many 20 year-old males were there in Tanzania in 2010
 tidy.population2010 %>%
-  dplyr::filter(FIPS == "TZ" & AGE == 20 & sex == "male")
+  filter(FIPS == "TZ" & AGE == 20 & sex == "male")
 
 # Which country has the lowest total population?
 tidy.population2010 %>%
@@ -24,7 +24,7 @@ tidy.population2010 %>%
 tidy.population2010 %>%
   spread(sex, population) %>%
   mutate(morewomen = ifelse(female > male, 1, 0)) %>%
-  dplyr::filter(morewomen == 1) %>%
+  filter(morewomen == 1) %>%
   group_by(NAME) %>%
   summarise(most.ages = sum(morewomen)) %>%
   arrange(desc(most.ages))
@@ -34,7 +34,7 @@ tidy.population2010 %>%
 ###############################################################################
 FunPopClean <- function(cntry = "UK"){
   tidy.population2010 %>%
-    dplyr::filter(FIPS == cntry) %>%
+    filter(FIPS == cntry) %>%
     mutate(age.g = cut(AGE, 20)) %>%
     group_by(age.g, sex) %>%
     summarise(population = sum(population)) %>%
