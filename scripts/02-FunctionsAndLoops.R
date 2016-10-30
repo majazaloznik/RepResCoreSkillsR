@@ -27,6 +27,7 @@ xor((x > 3), (x < 5))
 (-1 %in% y)
 (3 %in% y) & (3 %in% x) 
 (3 %in% y) & !(3 %in% x) 
+rm(i, x, y)
 
 ## 3.2 Check consistency of tidy.economic.situation proportions with for loop
 ###############################################################################
@@ -71,3 +72,4 @@ FunBarPlot()
 FunBarPlot("HH")
 FunBarPlot("UK")
 FunBarPlot("W")
+

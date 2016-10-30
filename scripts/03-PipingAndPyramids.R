@@ -7,6 +7,8 @@
 ##########################################################
 # in case you skipped on the first and second practical, uncomment the following line and 
 # run it to get all the data you need:
+library(dplyr)
+library(plotrix)
 load("data/tidy.data.RData")
 ## 4.0 Practice piping on population2010
 ##########################################################
@@ -63,3 +65,4 @@ FunPlot <- function(data, name = NULL){
 
 
 FunPlot(FunPopClean("AA"), name = "Populaiton Pyramid of Aruba")
+
