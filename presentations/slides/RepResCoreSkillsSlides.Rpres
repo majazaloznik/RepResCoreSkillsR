@@ -8,8 +8,8 @@ Maja Zalo&#x17e;nik
 
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
-#opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
-opts_knit$set(root.dir = "/home/mz/Documents/Copy/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+opts_knit$set(root.dir = "C:/Users/sfos0247/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
+#opts_knit$set(root.dir = "/home/mz/Documents/Copy/Dropbox/XtraWork/R stuff/RepResCoreSkillsR")
 
 opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
@@ -19,7 +19,7 @@ options(scipen=999, digits=4)
 
 Outline
 ========================================================
-incremental: true
+incremental: false
 - Reproducible Research
 - RStudio and project management
 - Good coding practices in R
@@ -37,12 +37,18 @@ Rules
 Preparation
 ========================================================
 
-[http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+Go to this url:  [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+- click on the green button `Clone or download`
+- select Download zip
+- save it to your PC
+- rightclick on the file and select `Extract all`
+- then open the `RepResCoreSkillsR.Rproj` file which should lauch RStudio
 
 
 RStudio
 ========================================================
-incremental: true
+incremental: false
 - *Best* IDE for R
 - Project management
 - Version control
@@ -52,7 +58,7 @@ incremental: true
 
 Project management
 ========================================================
-incremental: true
+incremental: false
 
 R project-level files:
 - *project* -- .Rproj

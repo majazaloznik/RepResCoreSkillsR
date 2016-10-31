@@ -10,7 +10,7 @@ Maja Zalo&#x17e;nik
 
 Outline
 ========================================================
-incremental: true
+incremental: false
 - Reproducible Research
 - RStudio and project management
 - Good coding practices in R
@@ -28,12 +28,18 @@ Rules
 Preparation
 ========================================================
 
-[http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+Go to this url:  [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+- click on the green button `Clone or download`
+- select Download zip
+- save it to your PC
+- rightclick on the file and select `Extract all`
+- then open the `RepResCoreSkillsR.Rproj` file which should lauch RStudio
 
 
 RStudio
 ========================================================
-incremental: true
+incremental: false
 - *Best* IDE for R
 - Project management
 - Version control
@@ -43,7 +49,7 @@ incremental: true
 
 Project management
 ========================================================
-incremental: true
+incremental: false
 
 R project-level files:
 - *project* -- .Rproj
@@ -308,7 +314,7 @@ if (x >= 0.6) {
 ```
 
 ```
-[1] "Good"
+[1] "Bad"
 ```
 
 Conditional execution - conditions and operators
@@ -351,8 +357,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "B" "G" "N" "B" "B" "G" "B" "G" "B" "N" "G" "N" "G" "G" "N" "B" "N"
-[18] "B" "B" "B"
+ [1] "G" "G" "G" "B" "B" "G" "B" "G" "N" "B" "N" "G" "G" "G" "N" "B" "G"
+[18] "N" "G" "G"
 ```
 
 
@@ -424,11 +430,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   73   72   70   56   24
-[2,]   32   80   55   14   31
-[3,]   12   81   53   93   15
-[4,]   83   61   18   58   36
-[5,]   26   90   54   17   42
+[1,]   92   23   38    2   11
+[2,]   31   82   71   12   33
+[3,]   59   44   53    8   26
+[4,]   39   14   91    7   85
+[5,]   64   20   37   18   99
 ```
 
 ```r
@@ -450,7 +456,7 @@ out
 ```
 
 ```
-[1] 72 55 81 61 54
+[1] 38 71 53 85 64
 ```
 
 ```r
@@ -459,7 +465,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 72 55 81 61 54
+[1] 38 71 53 85 64
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -559,7 +565,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 72 55 81 61 54
+[1] 38 71 53 85 64
 ```
 
 Writing your own functions
@@ -792,18 +798,19 @@ summarise(gr, pop = mean(population),
 ```
 Source: local data frame [101 x 5]
 
-   AGE    pop   area count   second
-1    0 282738 578149   456 11355900
-2    1 278558 578149   456 11177984
-3    2 275981 578149   456 11082923
-4    3 272960 578149   456 11021599
-5    4 270025 578149   456 11002862
-6    5 267803 578149   456 11022271
-7    6 266032 578149   456 11037275
-8    7 264164 578149   456 11040174
-9    8 262954 578149   456 11030910
-10   9 262510 578149   456 11016559
-.. ...    ...    ...   ...      ...
+     AGE    pop   area count   second
+   (int)  (dbl)  (dbl) (int)    (int)
+1      0 282738 578149   456 11355900
+2      1 278558 578149   456 11177984
+3      2 275981 578149   456 11082923
+4      3 272960 578149   456 11021599
+5      4 270025 578149   456 11002862
+6      5 267803 578149   456 11022271
+7      6 266032 578149   456 11037275
+8      7 264164 578149   456 11040174
+9      8 262954 578149   456 11030910
+10     9 262510 578149   456 11016559
+..   ...    ...    ...   ...      ...
 ```
 
 Sorting data
@@ -884,6 +891,7 @@ summarise(data.grouped, count = n(), mean.density = mean(density))
 Source: local data frame [3 x 3]
 
         NAME count mean.density
+      (fctr) (int)        (dbl)
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -910,6 +918,7 @@ final.table
 Source: local data frame [3 x 3]
 
         NAME count mean.density
+      (fctr) (int)        (dbl)
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -977,6 +986,7 @@ tidy.population2010 %>%
 Source: local data frame [228 x 2]
 
                         NAME population
+                      (fctr)      (int)
 1                 Montserrat       5118
 2  Saint Pierre and Miquelon       5943
 3           Saint Barthelemy       7406
@@ -1010,6 +1020,7 @@ tidy.population2010 %>%
 Source: local data frame [228 x 2]
 
                    NAME most.ages
+                 (fctr)     (dbl)
 1          Sierra Leone        98
 2              Cambodia        92
 3               Comoros        92
