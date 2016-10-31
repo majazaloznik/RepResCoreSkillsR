@@ -98,13 +98,13 @@ ed.psy.survey[1:5,1:5]
 # CLEAN UP!
 rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, temp)
 
-
 ###############################################################################
 ## 2. DATA  CLEANUP
 ###############################################################################
 ## 2.1 tidy up the population data
 ###############################################################################
 require(tidyr)
+load(
 # SEX is the key:
 tidy.population2010 <- spread(population2010, SEX, POP)
 

@@ -25,6 +25,12 @@ Rules
 ========================================================
 - Don't forget to mention the rules! 
 
+Preparation
+========================================================
+
+[http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
+
+
 RStudio
 ========================================================
 incremental: true
@@ -56,20 +62,12 @@ Presentation -- .pdf, .doc, .html, (.tex)
 Good Coding Practice
 ========================================================
 incremental: true
-![title](../../figures/code_quality.png)
+
+![source: https://xkcd.com/1513/](../../figures/code_quality.png)
 
 - [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml)
 - [Hadley Wickham's Style Guide](http://adv-r.had.co.nz/Style.html)
 - COMMENT EVERYTHING
-
-Literate Programming
-========================================================
-
-> "Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do."
-
-> <p style="text-align: right;">Donald Knuth (1984) </p>
-
-
 
 
 Janitor work
@@ -96,7 +94,7 @@ Tidy Data - spread()
 ========================================================
 
 ```
-    country year        key       value
+    country year   var.name   var.value
 1    Norway 2010 population  4891300.00
 2    Norway 2010    density       16.07
 3    Norway 2050 population  6364008.00
@@ -115,7 +113,7 @@ Tidy Data - spread()
 ========================================================
 
 ```r
-tidy.02 <- spread(messy.02, key, value)
+tidy.02 <- spread(messy.02, key = var.name, value = var.value)
 tidy.02
 ```
 
@@ -254,35 +252,24 @@ For an excellent write-up of the main `tidyr` functions see Garrett Grolemund's 
 For a quick tidyr cheat-sheet stick this to your wall: [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf), also available in the `literature` folder of this course's repository. 
 
 
-Practical I. - project setup
-========================================================
-The complete documentation for this course is available as an RStudio project in a public github repository:
-[https://github.com/majazaloznik/RepResCoreSkillsR](https://github.com/majazaloznik/RepResCoreSkillsR) 
-or for extra convenience: [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
-
-* navigate to the repo and open the RepResCoreSkillsManual.pdf in the /presentations/manual folder. 
-
-* find the instructions for Practicals I and II in the manual
-
-
-Practical II. - import and clean data
+Practical I. - project setup and data tidying
 ========================================================
 
-```r
-##########################################################
-## DATA IMPORT AND CLEANUP
-##########################################################
-## 1.1  Import a .csv file
-## 1.2  Download and import an Excel file
-## 1.3  Download, unzip and import an SPSS file 
-##########################################################
-## 2.1  Data tidying
-##########################################################
-```
+P1.i Start a new project and organize the folder structure
+
+P1.ii Import and clean some data
+- Comma separated values (`.csv`)
+- Excel files
+- Unzipping an SPSS file
+
+P1.iii Data Tidying
+
+Today: only `.csv` files, then run `load("data/economic.situation.RData")`, then data tidying. 
+
 
 Efficient Coding Practices
 ========================================================
-incremental:true
+incremental:false
 
 * Standard control structures
   + Conditional execution
@@ -364,7 +351,7 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "G" "N" "G" "N" "G" "B" "G" "B" "G" "N" "G" "G" "N" "G" "B" "B" "B"
+ [1] "B" "G" "N" "B" "B" "G" "B" "G" "B" "N" "G" "N" "G" "G" "N" "B" "N"
 [18] "B" "B" "B"
 ```
 
@@ -437,11 +424,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   14   85   68    2    1
-[2,]   43   20   15   73   36
-[3,]   42   23   75   40   32
-[4,]   10   61   95   62   19
-[5,]   50   34   31   29   12
+[1,]   73   72   70   56   24
+[2,]   32   80   55   14   31
+[3,]   12   81   53   93   15
+[4,]   83   61   18   58   36
+[5,]   26   90   54   17   42
 ```
 
 ```r
@@ -463,7 +450,7 @@ out
 ```
 
 ```
-[1] 68 43 42 62 34
+[1] 72 55 81 61 54
 ```
 
 ```r
@@ -472,7 +459,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 68 43 42 62 34
+[1] 72 55 81 61 54
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -544,11 +531,6 @@ function.name <- function(arguments, ...) {
 }
 ```
 
-
-```r
-function(x) sort(x, decreasing = TRUE)[2]
-```
-
 Writing your own functions
 ========================================================
 incremental:true
@@ -577,7 +559,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 68 43 42 62 34
+[1] 72 55 81 61 54
 ```
 
 Writing your own functions
@@ -745,9 +727,7 @@ mutate(tidy.economic.situation,
        total = bad+neutral+good, 
        bad.s = bad/total*100,
        good.s = good/total*100,
-       neutral.s = neutral/total*100,
-       total.s =  bad.s  + good.s + 
-         neutral.s
+       neutral.s = neutral/total*100
 )
 ```
 
@@ -812,19 +792,18 @@ summarise(gr, pop = mean(population),
 ```
 Source: local data frame [101 x 5]
 
-     AGE    pop   area count   second
-   (int)  (dbl)  (dbl) (int)    (int)
-1      0 282738 578149   456 11355900
-2      1 278558 578149   456 11177984
-3      2 275981 578149   456 11082923
-4      3 272960 578149   456 11021599
-5      4 270025 578149   456 11002862
-6      5 267803 578149   456 11022271
-7      6 266032 578149   456 11037275
-8      7 264164 578149   456 11040174
-9      8 262954 578149   456 11030910
-10     9 262510 578149   456 11016559
-..   ...    ...    ...   ...      ...
+   AGE    pop   area count   second
+1    0 282738 578149   456 11355900
+2    1 278558 578149   456 11177984
+3    2 275981 578149   456 11082923
+4    3 272960 578149   456 11021599
+5    4 270025 578149   456 11002862
+6    5 267803 578149   456 11022271
+7    6 266032 578149   456 11037275
+8    7 264164 578149   456 11040174
+9    8 262954 578149   456 11030910
+10   9 262510 578149   456 11016559
+.. ...    ...    ...   ...      ...
 ```
 
 Sorting data
@@ -905,7 +884,6 @@ summarise(data.grouped, count = n(), mean.density = mean(density))
 Source: local data frame [3 x 3]
 
         NAME count mean.density
-      (fctr) (int)        (dbl)
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -932,7 +910,6 @@ final.table
 Source: local data frame [3 x 3]
 
         NAME count mean.density
-      (fctr) (int)        (dbl)
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -1000,7 +977,6 @@ tidy.population2010 %>%
 Source: local data frame [228 x 2]
 
                         NAME population
-                      (fctr)      (int)
 1                 Montserrat       5118
 2  Saint Pierre and Miquelon       5943
 3           Saint Barthelemy       7406
@@ -1034,7 +1010,6 @@ tidy.population2010 %>%
 Source: local data frame [228 x 2]
 
                    NAME most.ages
-                 (fctr)     (dbl)
 1          Sierra Leone        98
 2              Cambodia        92
 3               Comoros        92

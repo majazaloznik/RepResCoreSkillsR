@@ -9,7 +9,7 @@
 ###############################################################################
 # in case you skipped on the first practical, uncomment the following line and 
 # run it to get all the data you need:
-# load("data/tidy.data.RData")
+load("data/tidy.data.RData")
 
 
 ## 3.1 Practice conditional expressions and logical operators 
