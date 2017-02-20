@@ -1,23 +1,13 @@
 ---
-title: |
- | Data analysis:
- | *Core skills for reproducible data analysis in R*
-subtitle: |
- | *Oxford University: IT Learning Centre*
- | 31 October 2016
- |
- | http://tinyurl.com/RCSRepRes
-author: |
- | Maja Zalo&#x17e;nik
- | maja.zaloznik@ageing.ox.ac.uk
- 
-#output: html_notebook
 output:
   pdf_document:
     toc: true
     toc_depth: 3
     number_sections: true
-
+    includes:
+      in_header: latex/header.tex
+      before_body: latex/before_body.tex
+      after_body: latex/after_body.tex 
 ---
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 library(knitr)
@@ -32,39 +22,7 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 ```
 \newpage
-# Introduction
-## Blurb
 
-This short course covers some of the core skills required for a budding R user to develop a strong foundation for data analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover importing and cleaning data, efficient coding practices, writing your own functions and using the powerful `dplyr` data manipulation tools. 
-
-## Key Topics
-
-* Reproducible Research
-* R Studio and project management
-* Importing and cleaning data
-* Good coding practices in R
-* Standard control structures
-* Vectorisation and `apply` functions
-* Writing your own functions
-* Data manipulation with `dplyr`
-* Piping/chaining commands
-
-
-## Course information
-
-**Intended audience**	Anyone interested in quantitative data analysis using open source tools.
-
-**Prior knowledge** Knowledge of R (as covered in R: An introduction).
-
-**Resources**	Course handbook
-
-**Software** RStudio & 	R 3.1.2
-
-**Format**	Presentation with practical exercises
-
-**Where next?**	Data visualisation: Creating interactive visualisations using R and Shiny course
-
-\newpage
 
 # Reproducible Research 
 
@@ -219,7 +177,7 @@ This may seem trivial, but it is in fact common to encounter data that does not 
 * `unite()`
 
 
-### spread()
+### `spread()`
 
 Below we can see an example of a *messy* table: it is messy because each observation is in fact represented in two rows. The third column is not really a variable, but contains variable names or *keys* (`density` and `population`), while the fourth column contains their values. 
 
@@ -269,7 +227,7 @@ tidy.02
 
 
 
-### gather()
+### `gather()`
 
 Here is another messy table:
 ```{r, echo=2}
@@ -295,7 +253,7 @@ tidy.01
 ```
 
 
-### separate() and unite() 
+### `separate()` and `unite()` 
 
 Separate and unite are straightforward helper functions for the reshaping done by gather and spread. The following table for example requires spreading, but the `double.key` variable contains both *values* (years) and  *keys* (population and density):
 
