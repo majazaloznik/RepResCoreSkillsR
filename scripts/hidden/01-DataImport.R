@@ -104,7 +104,7 @@ rm(economic.situation, ed.psy.survey, data.location, data.url, data.zip.url, tem
 ## 2.1 tidy up the population data
 ###############################################################################
 require(tidyr)
-load(
+
 # SEX is the key:
 tidy.population2010 <- spread(population2010, SEX, POP)
 
