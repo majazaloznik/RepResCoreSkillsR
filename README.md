@@ -1,6 +1,6 @@
 # R: Core Skills for Reproducible Reseach
 
-This repository contains all the materials for the June 2016 Oxford IT course.
+This repository contains all the materials for the March 2017 Oxford IT course.
 
 *This short course covers the core skills required for a budding R user to develop a strong foundation for data
 analysis in the RStudio environment. Within the framework of a reproducible research workflow we will cover

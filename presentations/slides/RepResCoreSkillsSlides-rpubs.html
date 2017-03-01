@@ -754,7 +754,9 @@ hljs.initHighlightingOnLoad();
 <div class="slideContent" >
 <p>Maja Zalo&#x17e;nik</p>
 
-<p>31.10.2016</p>
+<ol>
+<li>&amp;  8. March 2017</li>
+</ol>
 
 </div>
 
@@ -772,6 +774,7 @@ hljs.initHighlightingOnLoad();
 <li>Writing your own functions</li>
 <li>Data manipulation with <code>dplyr</code></li>
 <li>Piping/chaining commands</li>
+<li>knitting </li>
 </ul>
 
 </div>
@@ -1171,8 +1174,8 @@ ifelse(x &gt;= 0.6, &quot;G&quot;,
        ifelse(x&lt;=0.4, &quot;B&quot;, &quot;N&quot;))
 </code></pre>
 
-<pre class="fragment"><code> [1] &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;N&quot; &quot;B&quot; &quot;N&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;N&quot; &quot;B&quot; &quot;G&quot;
-[18] &quot;N&quot; &quot;G&quot; &quot;G&quot;
+<pre class="fragment"><code> [1] &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;N&quot; &quot;N&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;N&quot; &quot;B&quot;
+[18] &quot;B&quot; &quot;N&quot; &quot;G&quot;
 </code></pre>
 
 </div>
@@ -1234,11 +1237,11 @@ mat
 </code></pre>
 
 <pre class="fragment"><code>     [,1] [,2] [,3] [,4] [,5]
-[1,]   92   23   38    2   11
-[2,]   31   82   71   12   33
-[3,]   59   44   53    8   26
-[4,]   39   14   91    7   85
-[5,]   64   20   37   18   99
+[1,]   67   88   32   82   12
+[2,]   66   27    9   97   51
+[3,]   10    4   24   83   84
+[4,]   41   62   59    1   54
+[5,]   50   44   28   14   89
 </code></pre>
 
 <pre class="fragment"><code class="r"># find the second largest value in each row
@@ -1260,14 +1263,14 @@ for (i in 1:nrow(mat)) {
 out
 </code></pre>
 
-<pre class="fragment"><code>[1] 38 71 53 85 64
+<pre class="fragment"><code>[1] 82 66 83 59 50
 </code></pre>
 
 <pre class="fragment"><code class="r"># using apply()
 apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 </code></pre>
 
-<pre class="fragment"><code>[1] 38 71 53 85 64
+<pre class="fragment"><code>[1] 82 66 83 59 50
 </code></pre>
 
 </div>
@@ -1362,7 +1365,7 @@ FunSecondLargest(test.vector)
 <pre class="fragment"><code class="r">apply(mat, 1, FunSecondLargest)
 </code></pre>
 
-<pre class="fragment"><code>[1] 38 71 53 85 64
+<pre class="fragment"><code>[1] 82 66 83 59 50
 </code></pre>
 
 </div>

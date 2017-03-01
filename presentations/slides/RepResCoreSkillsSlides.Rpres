@@ -4,7 +4,7 @@ width:1200
 
 Maja Zalo&#x17e;nik
 
-31.10.2016
+1. &  8. March 2017
 
 ```{r setup, echo=FALSE, message=FALSE, warning = FALSE}
 require(knitr)
@@ -29,6 +29,7 @@ incremental: false
 - Writing your own functions
 - Data manipulation with `dplyr`
 - Piping/chaining commands
+- knitting 
 
 Rules
 ========================================================
