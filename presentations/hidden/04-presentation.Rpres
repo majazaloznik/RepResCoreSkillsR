@@ -1,0 +1,47 @@
+Population Pyramids
+========================================================
+autosize: true
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+load("../../data/tidy.data.RData")
+library(plotrix)
+library(dplyr)
+source("MyFuncitons.R")
+```
+
+
+
+```{r, echo = FALSE}
+country <- "AA"
+```
+
+`r unique(tidy.population2010$NAME[tidy.population2010$FIPS == country])`
+========================================================
+```{r results = 'hide', echo = FALSE, fig.height = 15, fig.width = 20}
+FunPlot(FunPopClean(country))
+```
+
+
+```{r, echo = FALSE}
+country <- "GZ"
+```
+
+`r unique(tidy.population2010$NAME[tidy.population2010$FIPS == country])`
+========================================================
+```{r results = 'hide', echo = FALSE, fig.height = 15, fig.width = 20}
+FunPlot(FunPopClean(country))
+```
+
+
+
+
+```{r, echo = FALSE}
+country <- "UK"
+```
+
+`r unique(tidy.population2010$NAME[tidy.population2010$FIPS == country])`
+========================================================
+```{r results = 'hide', echo = FALSE, fig.height = 15 , fig.width = 20}
+FunPlot(FunPopClean(country))
+```

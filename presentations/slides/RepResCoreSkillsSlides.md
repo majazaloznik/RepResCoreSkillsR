@@ -1,6 +1,6 @@
 R: Core Skills for Reproducible Research
 ========================================================
-width:1200
+autosize: true
 
 Maja Zalo&#x17e;nik
 
@@ -34,8 +34,8 @@ Go to this url:  [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
 - click on the green button `Clone or download`
 - select Download zip
 - save it to your PC
-- rightclick on the file and select `Extract all`
-- then open the `RepResCoreSkillsR.Rproj` file which should lauch RStudio
+- right click on the file and select `Extract all`
+- then open the `RepResCoreSkillsR.Rproj` file which should launch RStudio
 
 
 RStudio
@@ -358,8 +358,8 @@ ifelse(x >= 0.6, "G",
 ```
 
 ```
- [1] "G" "B" "G" "B" "G" "B" "B" "G" "N" "N" "B" "B" "G" "G" "G" "N" "B"
-[18] "B" "N" "G"
+ [1] "B" "B" "N" "B" "G" "G" "G" "G" "G" "G" "N" "N" "B" "G" "B" "G" "B"
+[18] "B" "B" "G"
 ```
 
 
@@ -431,11 +431,11 @@ mat
 
 ```
      [,1] [,2] [,3] [,4] [,5]
-[1,]   67   88   32   82   12
-[2,]   66   27    9   97   51
-[3,]   10    4   24   83   84
-[4,]   41   62   59    1   54
-[5,]   50   44   28   14   89
+[1,]   68   62   42   16   40
+[2,]   49   87   90   74    5
+[3,]   61   33    8    6   96
+[4,]   66    2   23   84   71
+[5,]   18   54    7   47   29
 ```
 
 ```r
@@ -457,7 +457,7 @@ out
 ```
 
 ```
-[1] 82 66 83 59 50
+[1] 62 87 61 71 47
 ```
 
 ```r
@@ -466,7 +466,7 @@ apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 ```
 
 ```
-[1] 82 66 83 59 50
+[1] 62 87 61 71 47
 ```
 Vectorisation - lapply() and sapply()
 ========================================================
@@ -566,7 +566,7 @@ apply(mat, 1, FunSecondLargest)
 ```
 
 ```
-[1] 82 66 83 59 50
+[1] 62 87 61 71 47
 ```
 
 Writing your own functions
@@ -797,10 +797,9 @@ summarise(gr, pop = mean(population),
 ```
 
 ```
-Source: local data frame [101 x 5]
-
+# A tibble: 101 × 5
      AGE    pop   area count   second
-   (int)  (dbl)  (dbl) (int)    (int)
+   <int>  <dbl>  <dbl> <int>    <int>
 1      0 282738 578149   456 11355900
 2      1 278558 578149   456 11177984
 3      2 275981 578149   456 11082923
@@ -811,7 +810,7 @@ Source: local data frame [101 x 5]
 8      7 264164 578149   456 11040174
 9      8 262954 578149   456 11030910
 10     9 262510 578149   456 11016559
-..   ...    ...    ...   ...      ...
+# ... with 91 more rows
 ```
 
 Sorting data
@@ -889,10 +888,9 @@ summarise(data.grouped, count = n(), mean.density = mean(density))
 ```
 
 ```
-Source: local data frame [3 x 3]
-
+# A tibble: 3 × 3
         NAME count mean.density
-      (fctr) (int)        (dbl)
+      <fctr> <int>        <dbl>
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -916,10 +914,9 @@ final.table
 ```
 
 ```
-Source: local data frame [3 x 3]
-
+# A tibble: 3 × 3
         NAME count mean.density
-      (fctr) (int)        (dbl)
+      <fctr> <int>        <dbl>
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -952,7 +949,7 @@ Using the `population2010.csv` file find the answers to the following:
 
 * How many 20 year-old males were there in Tanzania in 2010
 * Which country has the lowest total population?
-* In which country do women outnuber men in the most age groups?
+* In which country do women outnumber men in the most age groups?
 
 PRACTICAL III.I solutions
 ========================================================
@@ -984,10 +981,9 @@ tidy.population2010 %>%
 ```
 
 ```
-Source: local data frame [228 x 2]
-
+# A tibble: 228 × 2
                         NAME population
-                      (fctr)      (int)
+                      <fctr>      <int>
 1                 Montserrat       5118
 2  Saint Pierre and Miquelon       5943
 3           Saint Barthelemy       7406
@@ -998,7 +994,7 @@ Source: local data frame [228 x 2]
 8                   Anguilla      14766
 9          Wallis and Futuna      15343
 10                     Palau      20879
-..                       ...        ...
+# ... with 218 more rows
 ```
 
 PRACTICAL III.I solutions
@@ -1018,10 +1014,9 @@ tidy.population2010 %>%
 ```
 
 ```
-Source: local data frame [228 x 2]
-
+# A tibble: 228 × 2
                    NAME most.ages
-                 (fctr)     (dbl)
+                 <fctr>     <dbl>
 1          Sierra Leone        98
 2              Cambodia        92
 3               Comoros        92
@@ -1032,5 +1027,193 @@ Source: local data frame [228 x 2]
 8            Mozambique        88
 9                Uganda        88
 10             Djibouti        87
-..                  ...       ...
+# ... with 218 more rows
+```
+
+Literate programming with `knitr`
+========================================================
+incremental:true
+
+> Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.
+
+*Donald Knuth (1984)*
+
+* Pure code:
+  + **what** and **how** BUT not **why**
+* Pure text:  
+  + **what** and **why** BUT not **how**
+  
+Literate programming with `knitr`
+========================================================
+incremental:true
+
+a text file that combines:
+
+* text (with formatting instructions)
+  + LaTeX
+  + Markdown
+
+* code to be executed 
+  + R
+  + Python, C, Fortran, Ruby...
+  
+And can be `knitted` to output into:
+
+* html, docx, pdf
+* shiny applications, dashboards, books, websites.. [gallery](http://rmarkdown.rstudio.com/gallery.html
+  )
+  
+Markdown
+========================================================
+incremental:true
+
+A lightweight *markup* language for writing formatting syntax but keeping your text human readable.
+
+RStudio will automatically recognize and render markdown if you save it with the `.md` extension.
+
+But if you save it as `.Rmd` then it will not only render the markdown, but also execute any code chunks. 
+
+Code chunks and in-line code
+========================================================
+
+<!--![source: https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf](../../figures/code.png)-->
+
+    ```{r chunk_name, chunk_options}
+    print('hello world!')
+    1 + 2
+    ```
+
+
+```
+[1] "hello world!"
+```
+
+```
+[1] 3
+```
+
+You can also use code in-line like this: `` `r 1 + 1` ``
+
+Which produces: 
+
+You can also use code in-line like this: 2    
+
+
+Code chunk options
+========================================================
+
+* `chunk_name` - optional
+* `echo = TRUE`
+* `eval = TRUE`
+* `message = TRUE`
+* `warning = TRUE`
+* `results = 'markup'`
+* `fig.show = 'asis'`
+* `fig.height, fig.width = 7` 
+
+Setup code chunk:
+========================================================
+incremental:true
+
+Global options:
+
+    ```{r global_options, include=FALSE}
+    knitr::opts_chunk$set(fig.width=10, fig.height=5, 
+                      echo=FALSE, warning=FALSE, message=FALSE)
+    ```
+* Load libraries
+* source other `.R scripts`
+
+
+Images in Rmarkdown 
+========================================================
+incremental:true
+R Markdown version:
+
+    ![Image Title](path/to/your/image)
+
+As code chunk:    
+
+    ```{r fig.width=4, fig.height=2,echo=FALSE}
+    library(png)
+    library(grid)
+    img <- readPNG("path/to/your/image")
+    grid.raster(img)
+
+html solution (also works in RPresentaitons): 
+
+    <div align="center">
+    <img src="path/to/your/image" width=300>
+    </div>
+    
+    
+YAML headers
+========================================================
+
+
+    ---
+    title: "Test knitted document"
+    author: "me"
+    output: html_document
+    date: "7 March 2017"
+    ---
+
+R Presentations
+========================================================
+incremental:true
+
+Everything we just said, but save as `.Rpres` 
+
+and just add:
+
+    Title of slide 
+    ================================================
+
+to make a new slide.     
+    
+R Presentations
+========================================================
+incremental:true
+
+
+    Slide with options
+    ================================================
+    incremental: true
+    transition: none
+    autosize: true
+    
+* Transitions
+* Navigations
+* Hierarchy/sectioning
+* Slide IDs
+
+Publishing to RPubs
+========================================================
+
+Register a new account at <https://rpubs.com/users/new> 
+
+Use the Publish icon from an `.Rpres` or `.Rmd` file to publish it on-line. 
+
+<div align="center">
+<img src="../../figures/blue.png" width=300>
+</div>
+
+
+RPubs is public - but not searchable.
+
+If you want to replace a presentation with a more updated version you must first delete the old one.
+
+PRACTICAL IV Bring it all together
+========================================================
+
+
+```r
+############################################
+## Creating a report and presentation 
+############################################
+## 4.0 Clear project structure: data, functions, report
+## 4.1 Load and source them all from a .Rmd or .Rpres file
+## 4.2 Create report with multiple populaiton pyramids
+## 4.3 
+############################################
 ```

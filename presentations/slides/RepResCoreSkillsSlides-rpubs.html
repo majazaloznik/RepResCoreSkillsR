@@ -799,8 +799,8 @@ hljs.initHighlightingOnLoad();
 <li>click on the green button <code>Clone or download</code></li>
 <li>select Download zip</li>
 <li>save it to your PC</li>
-<li>rightclick on the file and select <code>Extract all</code></li>
-<li>then open the <code>RepResCoreSkillsR.Rproj</code> file which should lauch RStudio</li>
+<li>right click on the file and select <code>Extract all</code></li>
+<li>then open the <code>RepResCoreSkillsR.Rproj</code> file which should launch RStudio</li>
 </ul>
 
 </div>
@@ -1134,7 +1134,7 @@ if (x &gt;= 0.6) {
 }
 </code></pre>
 
-<pre class="fragment"><code>[1] &quot;Bad&quot;
+<pre class="fragment"><code>[1] &quot;Good&quot;
 </code></pre>
 
 </div>
@@ -1174,8 +1174,8 @@ ifelse(x &gt;= 0.6, &quot;G&quot;,
        ifelse(x&lt;=0.4, &quot;B&quot;, &quot;N&quot;))
 </code></pre>
 
-<pre class="fragment"><code> [1] &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;N&quot; &quot;N&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;N&quot; &quot;B&quot;
-[18] &quot;B&quot; &quot;N&quot; &quot;G&quot;
+<pre class="fragment"><code> [1] &quot;G&quot; &quot;G&quot; &quot;G&quot; &quot;B&quot; &quot;N&quot; &quot;B&quot; &quot;G&quot; &quot;N&quot; &quot;B&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;G&quot; &quot;B&quot; &quot;G&quot; &quot;B&quot;
+[18] &quot;N&quot; &quot;B&quot; &quot;G&quot;
 </code></pre>
 
 </div>
@@ -1237,11 +1237,11 @@ mat
 </code></pre>
 
 <pre class="fragment"><code>     [,1] [,2] [,3] [,4] [,5]
-[1,]   67   88   32   82   12
-[2,]   66   27    9   97   51
-[3,]   10    4   24   83   84
-[4,]   41   62   59    1   54
-[5,]   50   44   28   14   89
+[1,]   67   35   22   62   91
+[2,]   99   65   31   71   66
+[3,]   70   41   56   39   87
+[4,]   64   49   17   80   13
+[5,]   58   29   78   18   94
 </code></pre>
 
 <pre class="fragment"><code class="r"># find the second largest value in each row
@@ -1263,14 +1263,14 @@ for (i in 1:nrow(mat)) {
 out
 </code></pre>
 
-<pre class="fragment"><code>[1] 82 66 83 59 50
+<pre class="fragment"><code>[1] 67 71 70 64 78
 </code></pre>
 
 <pre class="fragment"><code class="r"># using apply()
 apply(mat, 1, function(x) sort(x, decreasing = TRUE)[2])
 </code></pre>
 
-<pre class="fragment"><code>[1] 82 66 83 59 50
+<pre class="fragment"><code>[1] 67 71 70 64 78
 </code></pre>
 
 </div>
@@ -1365,7 +1365,7 @@ FunSecondLargest(test.vector)
 <pre class="fragment"><code class="r">apply(mat, 1, FunSecondLargest)
 </code></pre>
 
-<pre class="fragment"><code>[1] 82 66 83 59 50
+<pre class="fragment"><code>[1] 67 71 70 64 78
 </code></pre>
 
 </div>
@@ -1593,10 +1593,9 @@ summarise(gr, pop = mean(population),
           second = FunSecondLargest(population))
 </code></pre>
 
-<pre class="fragment"><code>Source: local data frame [101 x 5]
-
+<pre class="fragment"><code># A tibble: 101 × 5
      AGE    pop   area count   second
-   (int)  (dbl)  (dbl) (int)    (int)
+   &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;    &lt;int&gt;
 1      0 282738 578149   456 11355900
 2      1 278558 578149   456 11177984
 3      2 275981 578149   456 11082923
@@ -1607,7 +1606,7 @@ summarise(gr, pop = mean(population),
 8      7 264164 578149   456 11040174
 9      8 262954 578149   456 11030910
 10     9 262510 578149   456 11016559
-..   ...    ...    ...   ...      ...
+# ... with 91 more rows
 </code></pre>
 
 </div>
@@ -1685,10 +1684,9 @@ arrange(tidy.economic.situation, perception, desc(bad.s))
 <pre class="fragment"><code class="r">summarise(data.grouped, count = n(), mean.density = mean(density)) 
 </code></pre>
 
-<pre class="fragment"><code>Source: local data frame [3 x 3]
-
+<pre class="fragment"><code># A tibble: 3 × 3
         NAME count mean.density
-      (fctr) (int)        (dbl)
+      &lt;fctr&gt; &lt;int&gt;        &lt;dbl&gt;
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -1711,10 +1709,9 @@ arrange(tidy.economic.situation, perception, desc(bad.s))
 <pre class="fragment"><code class="r">final.table
 </code></pre>
 
-<pre class="fragment"><code>Source: local data frame [3 x 3]
-
+<pre class="fragment"><code># A tibble: 3 × 3
         NAME count mean.density
-      (fctr) (int)        (dbl)
+      &lt;fctr&gt; &lt;int&gt;        &lt;dbl&gt;
 1 Gaza Strip     2        78.92
 2  Hong Kong     2        28.07
 3  Singapore     2        26.25
@@ -1751,7 +1748,7 @@ arrange(tidy.economic.situation, perception, desc(bad.s))
 <ul>
 <li>How many 20 year-old males were there in Tanzania in 2010</li>
 <li>Which country has the lowest total population?</li>
-<li>In which country do women outnuber men in the most age groups?</li>
+<li>In which country do women outnumber men in the most age groups?</li>
 </ul>
 
 </div>
@@ -1782,10 +1779,9 @@ tidy.population2010 %&gt;%
   arrange(population)
 </code></pre>
 
-<pre class="fragment"><code>Source: local data frame [228 x 2]
-
+<pre class="fragment"><code># A tibble: 228 × 2
                         NAME population
-                      (fctr)      (int)
+                      &lt;fctr&gt;      &lt;int&gt;
 1                 Montserrat       5118
 2  Saint Pierre and Miquelon       5943
 3           Saint Barthelemy       7406
@@ -1796,7 +1792,7 @@ tidy.population2010 %&gt;%
 8                   Anguilla      14766
 9          Wallis and Futuna      15343
 10                     Palau      20879
-..                       ...        ...
+# ... with 218 more rows
 </code></pre>
 
 </div>
@@ -1815,10 +1811,9 @@ tidy.population2010 %&gt;%
   arrange(desc(most.ages))
 </code></pre>
 
-<pre class="fragment"><code>Source: local data frame [228 x 2]
-
+<pre class="fragment"><code># A tibble: 228 × 2
                    NAME most.ages
-                 (fctr)     (dbl)
+                 &lt;fctr&gt;     &lt;dbl&gt;
 1          Sierra Leone        98
 2              Cambodia        92
 3               Comoros        92
@@ -1829,7 +1824,247 @@ tidy.population2010 %&gt;%
 8            Mozambique        88
 9                Uganda        88
 10             Djibouti        87
-..                  ...       ...
+# ... with 218 more rows
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Literate programming with `knitr`</h3>
+<div class="slideContent" >
+<blockquote class="fragment">
+<p>Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.</p>
+</blockquote>
+
+<p class="fragment"><em>Donald Knuth (1984)</em></p>
+
+<ul>
+<li class="fragment">Pure code:
+
+<ul>
+<li class="fragment"><strong>what</strong> and <strong>how</strong> BUT not <strong>why</strong></li>
+</ul></li>
+<li class="fragment">Pure text:<br/>
+
+<ul>
+<li class="fragment"><strong>what</strong> and <strong>why</strong> BUT not <strong>how</strong></li>
+</ul></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Literate programming with `knitr`</h3>
+<div class="slideContent" >
+<p>a text file that combines:</p>
+
+<ul>
+<li class="fragment"><p class="fragment">text (with formatting instructions)</p>
+
+<ul>
+<li class="fragment">LaTeX</li>
+<li class="fragment">Markdown</li>
+</ul></li>
+<li class="fragment"><p class="fragment">code to be executed </p>
+
+<ul>
+<li class="fragment">R</li>
+<li class="fragment">Python, C, Fortran, Ruby&hellip;</li>
+</ul></li>
+</ul>
+
+<p class="fragment">And can be <code>knitted</code> to output into:</p>
+
+<ul>
+<li class="fragment">html, docx, pdf</li>
+<li class="fragment">shiny applications, dashboards, books, websites.. <a href="http://rmarkdown.rstudio.com/gallery.html">gallery</a></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Markdown</h3>
+<div class="slideContent" >
+<p>A lightweight <em>markup</em> language for writing formatting syntax but keeping your text human readable.</p>
+
+<p class="fragment">RStudio will automatically recognize and render markdown if you save it with the <code>.md</code> extension.</p>
+
+<p class="fragment">But if you save it as <code>.Rmd</code> then it will not only render the markdown, but also execute any code chunks. </p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Code chunks and in-line code</h3>
+<div class="slideContent" >
+<!--![source: https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf](../../figures/code.png)-->
+
+<pre><code>```{r chunk_name, chunk_options}
+print(&#39;hello world!&#39;)
+1 + 2
+```
+</code></pre>
+
+<pre><code>[1] &quot;hello world!&quot;
+</code></pre>
+
+<pre><code>[1] 3
+</code></pre>
+
+<p>You can also use code in-line like this: <code>`r 1 + 1`</code></p>
+
+<p>Which produces: </p>
+
+<p>You can also use code in-line like this: 2    </p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Code chunk options</h3>
+<div class="slideContent" >
+<ul>
+<li><code>chunk_name</code> - optional</li>
+<li><code>echo = TRUE</code></li>
+<li><code>eval = TRUE</code></li>
+<li><code>message = TRUE</code></li>
+<li><code>warning = TRUE</code></li>
+<li><code>results = &#39;markup&#39;</code></li>
+<li><code>fig.show = &#39;asis&#39;</code></li>
+<li><code>fig.height, fig.width = 7</code> </li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Setup code chunk:</h3>
+<div class="slideContent" >
+<p>Global options:</p>
+
+<pre class="fragment"><code>```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=10, fig.height=5, 
+                  echo=FALSE, warning=FALSE, message=FALSE)
+```
+</code></pre>
+
+<ul>
+<li class="fragment">Load libraries</li>
+<li class="fragment">source other <code>.R scripts</code></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Images in Rmarkdown </h3>
+<div class="slideContent" >
+<p>R Markdown version:</p>
+
+<pre class="fragment"><code>![Image Title](path/to/your/image)
+</code></pre>
+
+<p class="fragment">As code chunk:    </p>
+
+<pre class="fragment"><code>```{r fig.width=4, fig.height=2,echo=FALSE}
+library(png)
+library(grid)
+img &lt;- readPNG(&quot;path/to/your/image&quot;)
+grid.raster(img)
+</code></pre>
+
+<p class="fragment">html solution (also works in RPresentaitons): </p>
+
+<pre class="fragment"><code>&lt;div align=&quot;center&quot;&gt;
+&lt;img src=&quot;path/to/your/image&quot; width=300&gt;
+&lt;/div&gt;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>YAML headers</h3>
+<div class="slideContent" >
+<pre><code>---
+title: &quot;Test knitted document&quot;
+author: &quot;me&quot;
+output: html_document
+date: &quot;7 March 2017&quot;
+---
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Presentations</h3>
+<div class="slideContent" >
+<p>Everything we just said, but save as <code>.Rpres</code> </p>
+
+<p class="fragment">and just add:</p>
+
+<pre class="fragment"><code>Title of slide 
+================================================
+</code></pre>
+
+<p class="fragment">to make a new slide.     </p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Presentations</h3>
+<div class="slideContent" >
+<pre class="fragment"><code>Slide with options
+================================================
+incremental: true
+transition: none
+autosize: true
+</code></pre>
+
+<ul>
+<li class="fragment">Transitions</li>
+<li class="fragment">Navigations</li>
+<li class="fragment">Hierarchy/sectioning</li>
+<li class="fragment">Slide IDs</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Publishing to RPubs</h3>
+<div class="slideContent" >
+<p>Register a new account at <a href="https://rpubs.com/users/new">https://rpubs.com/users/new</a> </p>
+
+<p>Use the Publish icon from an <code>.Rpres</code> or <code>.Rmd</code> file to publish it on-line. </p>
+
+<div align="center">
+<img src="data:image/png;base64,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" width=300>
+</div>
+
+<p>RPubs is public - but not searchable.</p>
+
+<p>If you want to replace a presentation with a more updated version you must first delete the old one.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>PRACTICAL IV Bring it all together</h3>
+<div class="slideContent" >
+<pre><code class="r">##########################################################
+## Creating a report and presentation 
+##########################################################
+## 4.0 Clear project structure: data, functions, report
+## 4.1 Load and source them all from a .Rmd or .Rpres file
+## 4.2 Create report with multiple populaiton pyramids
+## 4.3 
+##########################################################
 </code></pre>
 
 </div>
@@ -1889,7 +2124,7 @@ function commandsForSlide(indexh) {
       transition: 'linear',
       transitionSpeed: 'default',
       rtl: false,
-      width: 1200,
+      width: 960,
       height: 700,
     
       dependencies: []

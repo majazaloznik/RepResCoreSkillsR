@@ -7,6 +7,7 @@
 ##########################################################
 # in case you skipped on the first and second practical, uncomment the following line and 
 # run it to get all the data you need:
+library(tidyr)
 library(dplyr)
 library(plotrix)
 load("data/tidy.data.RData")

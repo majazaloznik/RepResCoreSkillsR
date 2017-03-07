@@ -1,6 +1,6 @@
 R: Core Skills for Reproducible Research
 ========================================================
-width:1200
+autosize: true
 
 Maja Zalo&#x17e;nik
 
@@ -43,8 +43,8 @@ Go to this url:  [http://tinyurl.com/RCSRepRes](http://tinyurl.com/RCSRepRes)
 - click on the green button `Clone or download`
 - select Download zip
 - save it to your PC
-- rightclick on the file and select `Extract all`
-- then open the `RepResCoreSkillsR.Rproj` file which should lauch RStudio
+- right click on the file and select `Extract all`
+- then open the `RepResCoreSkillsR.Rproj` file which should launch RStudio
 
 
 RStudio
@@ -628,7 +628,7 @@ Using the `population2010.csv` file find the answers to the following:
 
 * How many 20 year-old males were there in Tanzania in 2010
 * Which country has the lowest total population?
-* In which country do women outnuber men in the most age groups?
+* In which country do women outnumber men in the most age groups?
 
 PRACTICAL III.I solutions
 ========================================================
@@ -667,4 +667,187 @@ tidy.population2010 %>%
   group_by(NAME) %>%
   summarise(most.ages = sum(morewomen)) %>%
   arrange(desc(most.ages))
+```
+
+Literate programming with `knitr`
+========================================================
+incremental:true
+
+> Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do.
+
+*Donald Knuth (1984)*
+
+* Pure code:
+  + **what** and **how** BUT not **why**
+* Pure text:  
+  + **what** and **why** BUT not **how**
+  
+Literate programming with `knitr`
+========================================================
+incremental:true
+
+a text file that combines:
+
+* text (with formatting instructions)
+  + LaTeX
+  + Markdown
+
+* code to be executed 
+  + R
+  + Python, C, Fortran, Ruby...
+  
+And can be `knitted` to output into:
+
+* html, docx, pdf
+* shiny applications, dashboards, books, websites.. [gallery](http://rmarkdown.rstudio.com/gallery.html
+  )
+  
+Markdown
+========================================================
+incremental:true
+
+A lightweight *markup* language for writing formatting syntax but keeping your text human readable.
+
+RStudio will automatically recognize and render markdown if you save it with the `.md` extension.
+
+But if you save it as `.Rmd` then it will not only render the markdown, but also execute any code chunks. 
+
+Code chunks and in-line code
+========================================================
+
+<!--![source: https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf](../../figures/code.png)-->
+
+    `r ''````{r chunk_name, chunk_options}
+    print('hello world!')
+    1 + 2
+    ```
+
+```{r foo, echo = FALSE}
+print('hello world!')
+1 + 2
+```
+
+You can also use code in-line like this: `` `r '\x60r 1 + 1\x60'` ``
+
+Which produces: 
+
+You can also use code in-line like this: `r 1 + 1`    
+
+
+Code chunk options
+========================================================
+
+* `chunk_name` - optional
+* `echo = TRUE`
+* `eval = TRUE`
+* `message = TRUE`
+* `warning = TRUE`
+* `results = 'markup'`
+* `fig.show = 'asis'`
+* `fig.height, fig.width = 7` 
+
+Setup code chunk:
+========================================================
+incremental:true
+
+Global options:
+
+    `r ''````{r global_options, include=FALSE}
+    knitr::opts_chunk$set(fig.width=10, fig.height=5, 
+                      echo=FALSE, warning=FALSE, message=FALSE)
+    ```
+* Load libraries
+* source other `.R scripts`
+
+
+Images in Rmarkdown 
+========================================================
+incremental:true
+R Markdown version:
+
+    `r ''`![Image Title](path/to/your/image)
+
+As code chunk:    
+
+    `r ''````{r fig.width=4, fig.height=2,echo=FALSE}
+    library(png)
+    library(grid)
+    img <- readPNG("path/to/your/image")
+    grid.raster(img)
+
+html solution (also works in RPresentaitons): 
+
+    <div align="center">
+    <img src="path/to/your/image" width=300>
+    </div>
+    
+    
+YAML headers
+========================================================
+
+
+    `r ''`---
+    title: "Test knitted document"
+    author: "me"
+    output: html_document
+    date: "7 March 2017"
+    ---
+
+R Presentations
+========================================================
+incremental:true
+
+Everything we just said, but save as `.Rpres` 
+
+and just add:
+
+    `r ''`Title of slide 
+    ================================================
+
+to make a new slide.     
+    
+R Presentations
+========================================================
+incremental:true
+
+
+    `r ''`Slide with options
+    ================================================
+    incremental: true
+    transition: none
+    autosize: true
+    
+* Transitions
+* Navigations
+* Hierarchy/sectioning
+* Slide IDs
+
+Publishing to RPubs
+========================================================
+
+Register a new account at <https://rpubs.com/users/new> 
+
+Use the Publish icon from an `.Rpres` or `.Rmd` file to publish it on-line. 
+
+<div align="center">
+<img src="../../figures/blue.png" width=300>
+</div>
+
+
+RPubs is public - but not searchable.
+
+If you want to replace a presentation with a more updated version you must first delete the old one.
+
+PRACTICAL IV Bring it all together
+========================================================
+
+```{r}
+############################################
+## Creating a report and presentation 
+############################################
+## 4.0 Clear project structure: data, functions, report
+## 4.1 Load and source them all from a .Rmd or .Rpres file
+## 4.2 Create report with multiple populaiton pyramids
+## 4.3 
+############################################
 ```
