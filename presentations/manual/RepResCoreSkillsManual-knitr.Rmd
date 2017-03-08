@@ -1,4 +1,7 @@
 ---
+title: "Core skills for reproducible data analysis in R"
+subtitle: "Supplementary materials"
+date: "March 8. 2017"
 output:
   pdf_document:
     toc: true
@@ -19,7 +22,6 @@ opts_chunk$set(warning=FALSE, message=FALSE)
 options(scipen=999, digits=4)
 ```
 
-\newpage
 
 # Literate programming with `knitr` and `rmarkdown` 
 
@@ -234,7 +236,7 @@ Two columns will be rendered on a slide if you separate them using `***`:
     ***
     Second column
 
-You can specify transitions between slides using the `transition` option. I The default is `linear`, other options are: none, linear, rotate,  fade, zoom, concave. f you define it on the first slide it will apply to the whole deck, otherwise just to the slide it is on:
+You can specify transitions between slides using the `transition` option. The default is `linear`, other options are: `none`, `rotate`,  `fade`, `zoom`, `concave`. If you define it on the first slide it will apply to the whole deck, otherwise just to the slide it is on:
 
 
     `r ''`First slide
@@ -242,9 +244,9 @@ You can specify transitions between slides using the `transition` option. I The 
     author: Maja
     transition: linear
 
-Slides can also have a `type`, which changes its formatting, the types are: section, sub-section, alert, prompt.
+Slides can also have a `type`, which changes its formatting, the types are: `section`, `sub-section`, `alert`, `prompt`.
 
-Another useful option is the `id` field, which allows you to link to a specific slide:
+Another useful option is the `id` field, which allows you to link to a specific slide by name:
 
     `r ''`Slide 1
     ====================================
@@ -270,7 +272,7 @@ Then select Rpubs, and follow the instructions: add the title and description to
 
 RPubs does not automatically overwrite an existing presentation or report with a newer version - if you try to give it the same "slug" that has already been taken you will get an error - you have to delete the first one instead, then you can upload a new version with the same slug. 
 
-# PRACTICAL 4 - Creating html reports and presentations in a reproducible, dynamic and modular manner
+# PRACTICAL 4 - Creating html reports and presentations in a reproducible, dynamic and modular manner {-}
 
 In this final practical you will bring together all the elements covered in this course. You will create a report and/or presentation using the data you cleaned in the first practical and the functions you created in the third practical.
 
